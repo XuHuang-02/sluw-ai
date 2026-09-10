@@ -18,6 +18,12 @@ public final class RuleEngine {
 
     public Report evaluate(Input input, RuleSet set, List<Upload> uploads,
             List<Extraction> extractions, Services services, java.util.function.IntConsumer progress) {
+        return evaluate(input, set, uploads, extractions, services, progress, Map.of());
+    }
+
+    Report evaluate(Input input, RuleSet set, List<Upload> uploads,
+            List<Extraction> extractions, Services services, java.util.function.IntConsumer progress,
+            Map<String, String> blocked) {
         List<Check> checks = new ArrayList<>();
         List<String> notices = new ArrayList<>();
         boolean scopeMatches = !blank(set.channel()) && !blank(set.product())
@@ -39,6 +45,7 @@ public final class RuleEngine {
                 require(!duplicateIds.contains(rule.id())
                         && !duplicateBranches.contains(Arrays.asList(rule.code(), rule.branch())),
                         "规则分支标识重复，不能确定检查范围。");
+                require(!blocked.containsKey(rule.id()), "必查项目无法完成：" + blocked.get(rule.id()));
                 validate(rule);
                 check = evaluateOne(input, rule, uploads, extractions, services, evidence);
             } catch (IncompleteCheck e) {
@@ -125,7 +132,7 @@ public final class RuleEngine {
     }
 
     /** Validate executable conditions before deciding a rule is not applicable. */
-    private void validate(Rule r) {
+    void validate(Rule r) {
         require(!blank(r.id()) && !blank(r.code()) && !blank(r.branch()), "规则或条件分支标识缺失。");
         require(r.kind() != null && r.condition() != null, "规则检查类型或适用条件缺失。");
         Source source = r.source();
@@ -159,7 +166,7 @@ public final class RuleEngine {
     private static void require(boolean condition, String message) {
         if (!condition) throw new IncompleteCheck(message);
     }
-    private static final class IncompleteCheck extends RuntimeException {
+    private static final class IncompleteCheck extends IllegalArgumentException {
         private IncompleteCheck(String message) { super(message); }
     }
     static boolean blank(String s) { return s == null || s.isBlank(); }

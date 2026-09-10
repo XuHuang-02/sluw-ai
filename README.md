@@ -5,7 +5,7 @@ Java 核保问答应用与独立问题件判断模块。此仓库用于私有版
 ## 项目结构
 
 - `src/`：原 Spring Boot 核保问答应用。
-- `assessment/`：独立问题件判断模块，目前完成模块一核心实现及80个测试用例。
+- `assessment/`：独立问题件判断模块，目前完成模块一判断核心和模块二规则版本管理；共124个测试通过。
 - `CONTEXT.md`：业务术语。
 - `.scratch/policy-problem-assessment/`：已确认需求及实施记录，仅该需求目录纳入版本管理。
 - `docker/`：原应用部署脚本。
@@ -18,7 +18,7 @@ Java 核保问答应用与独立问题件判断模块。此仓库用于私有版
 mvn -f assessment/pom.xml test
 ```
 
-详见 [模块一验证记录](assessment/docs/module-1-verification.md)。这些测试使用合成数据和服务替身，不能替代真实业务验收。模块二尚未实施，独立模块尚无完整上传、登录、报告页面。
+详见 [模块一验证记录](assessment/docs/module-1-verification.md)。这些测试使用合成数据和服务替身，不能替代真实业务验收。模块二已实现规则草稿、确认、发布、固定依据与受鉴权保护的管理接口。独立模块尚无完整上传、人员管理和报告页面。详见 [模块二使用与验证](assessment/docs/module-2-rule-versions.md)。
 
 ## 原应用本地配置
 
