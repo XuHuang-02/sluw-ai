@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.mapper.TransactionTrackMapper">
+	
+	
+	<!-- 查询列表-->
+    <select id="list" parameterType="com.sinosig.sluw.application.commons.entity.TransactionTrackEntity"
+            resultMap="mybatis.generated.TransactionTrackMapper.TransactionTrackResultMap">
+        select a.BankCode,a.ProposalNo,a.RCode,a.Descr,a.MakeDate,a.MakeTime
+        from
+        TransactionTrack a
+        where 1=1
+        and a.TransactionCode = 'CalculateTransaction'
+        <if test="transNo != null and transNo != ''">
+            and a.TransNo = #{transNo}
+        </if>
+        <if test="bankCode != null and bankCode != ''">
+            and a.BankCode = #{bankCode}
+        </if>
+        <if test="proposalNo != null and proposalNo != ''">
+            and a.ProposalNo = #{proposalNo}
+        </if>
+        order by a.MakeDate desc,a.MakeTime desc
+    </select>
+
+</mapper>

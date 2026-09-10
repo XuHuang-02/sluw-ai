@@ -1,0 +1,80 @@
+package com.sinosig.sluw.application.config;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestClientCustomizer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
+
+import java.time.Duration;
+
+/**
+ * AI客户端配置类
+ * 提供RestTemplate、ChatModel、ChatClient等Bean定义
+ *
+ * @author
+ * @version 1.0
+ */
+@Configuration
+public class AiClientConfig {
+
+    private static final Logger logger = LoggerFactory.getLogger(AiClientConfig.class);
+
+
+    /**
+     * 创建RestTemplate Bean
+     * 用于HTTP请求
+     *
+     * @return RestTemplate实例
+     */
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    @Bean
+    public RestClientCustomizer dashScopeTimeoutCustomizer(
+            @Value("${spring.ai.dashscope.rest-client.timeout:60s}") Duration timeout) {
+
+        return builder -> {
+            // Spring 6.1 自带的工厂，支持超时，无 deprecation
+            SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+            factory.setConnectTimeout((int) timeout.toMillis());
+            factory.setReadTimeout((int) timeout.toMillis());
+            builder.requestFactory(factory);
+        };
+    }
+
+//    @Bean
+//    public ChatMemory chatMemory() {
+//        /*
+//        老版本的InMemoryChatMemory删除了，用MessageWindowChatMemory替换
+//        MessageWindowChatMemory 默认缓存的数量为20，此处先设置为5
+//        */
+//        return MessageWindowChatMemory.builder().maxMessages(5).build(); // 默认内存存储
+//    }
+
+//    @Bean
+//    public ChatModel initDeepseekModel(){
+//        return new DeepSeekChatModel();
+//    }
+
+    /**
+     * 创建普通 ChatClient Bean（无工具，无自动历史注入）。
+     * 历史对话由业务层通过 PromptTemplateConfig 手动注入。
+     */
+    @Bean
+    public ChatClient chatClient(ChatModel chatModel) {
+        logger.info("初始化普通 ChatClient（无自动历史）");
+        return ChatClient.builder(chatModel)
+                .defaultAdvisors(new SimpleLoggerAdvisor())
+                .build();
+    }
+}

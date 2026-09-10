@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: @profileActive@  # Maven过滤注入环境标识
+  config:
+    import: optional:file:./local-settings.properties

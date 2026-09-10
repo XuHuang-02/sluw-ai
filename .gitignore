@@ -1,0 +1,44 @@
+# Build products and local vendor runtime
+**/target/
+/install/
+/appserver/
+/ext-lib/*
+!/ext-lib/README.md
+*.class
+*.jar
+*.war
+*.zip
+*.log
+*.lic
+
+# IDE and machine-specific files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+__pycache__/
+
+# Credentials and real environment configuration
+.env
+.env.*
+!.env.example
+local-settings.properties
+/src/main/resources/application-dev.yml
+/src/main/resources/application-test.yml
+/src/main/resources/application-prod.yml
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Documents describing requirements are versioned; downloaded tools/cache are not.
+/.scratch/*
+!/.scratch/policy-problem-assessment/
+/.scratch/policy-problem-assessment/**/backups/
+
+# Uploaded policy data and local run data
+**/assessment-data/
+**/uploads/
+**/logs/
+**/*.hprof

@@ -1,0 +1,69 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: sluw-ai
+
+  data:
+    redis:
+      database: 5
+      host: +variable+
+      port: 6380
+      password: +variable+
+      timeout: 5000ms
+      lettuce:
+        pool:
+          max-active: 20
+          max-idle: 8
+          min-idle: 0
+    jackson:
+      date-format: yyyy-MM-dd
+      time-zone: GMT+8
+  datasource:
+    active: true
+    default:
+      url: +variable+
+      username: +variable+
+      password: +variable+
+      initialSize: 15
+      minIdle: 15
+      maxActive: 30
+
+  ai:
+    deepseek:
+      base-url: +variable+
+      api-key: +variable+
+      chat:
+        completions-path: /v2/chat/completions
+        options:
+          model: deepseek-v3-2-com
+          temperature: 0.5
+          max-tokens: 2048
+
+    dashscope:
+      api-key: +variable+
+      enabled: false
+
+mybatis:
+  mapper-locations: classpath*:mybatis/generated/*.xml, classpath*:mybatis/mapper/*.xml
+
+
+application:
+  config:
+    qnb:
+      security-url: +variable+
+      platform: "biupDetailed"
+      openFlag: 'N'
+    aes:
+      key: +variable+
+    ragFlow:
+      apiUrl: +variable+
+      apiKey: +variable+
+      datasetId: +variable+
+      page: 1
+      pageSize: 60
+      similarityThreshold: 0.3
+      vectorSimilarityWeight: 0.7
+      topK: 8
+      keyword: true
+      highlight: false

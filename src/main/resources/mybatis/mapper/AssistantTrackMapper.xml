@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.mapper.AssistantTrackMapper">
+
+    <resultMap type="com.sinosig.sluw.application.commons.entity.AssistantTrackEntity" id="AssistantTrackResultMap">
+        <result property="id" column="id"/>
+        <result property="conversationId" column="conversationId"/>
+        <result property="userCode" column="userCode"/>
+        <result property="userType" column="userType"/>
+        <result property="manageCom" column="manageCom"/>
+        <result property="question" column="question"/>
+        <result property="answer" column="answer"/>
+        <result property="mark" column="mark"/>
+        <result property="markDetail" column="markDetail"/>
+        <result property="massageId" column="massageId"/>
+        <result property="duration" column="duration"/>
+        <result property="totalPromptTokens" column="totalPromptTokens"/>
+        <result property="totalCompletionTokens" column="totalCompletionTokens"/>
+        <result property="totalTokens" column="totalTokens"/>
+        <result property="makeDate" column="makeDate"/>
+        <result property="makeTime" column="makeTime"/>
+        <result property="modifyDate" column="modifyDate"/>
+        <result property="modifyTime" column="modifyTime"/>
+        <result property="remark1" column="remark1"/>
+        <result property="remark2" column="remark2"/>
+        <result property="remark3" column="remark3"/>
+        <result property="remark4" column="remark4"/>
+        <result property="remark5" column="remark5"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        conversationId,
+        userCode,
+        userType,
+        manageCom,
+        question,
+        answer,
+        mark,
+        markDetail,
+        massageId,
+        duration,
+        totalPromptTokens,
+        totalCompletionTokens,
+        totalTokens,
+        makeDate,
+        makeTime,
+        modifyDate,
+        modifyTime,
+        remark1,
+        remark2,
+        remark3,
+        remark4,
+        remark5
+    </sql>
+    <sql id="Select_Column_List">
+        a.id
+        ,a.conversationId
+        ,a.userCode
+        ,a.userType
+        ,a.manageCom
+        ,a.question
+        ,a.answer
+        ,a.mark
+        ,a.markDetail
+        ,a.massageId
+        ,a.duration
+        ,a.totalPromptTokens
+        ,a.totalCompletionTokens
+        ,a.totalTokens
+        ,a.makeDate
+        ,a.makeTime
+        ,a.modifyDate
+        ,a.modifyTime
+        ,a.remark1
+        ,a.remark2
+        ,a.remark3
+        ,a.remark4
+        ,a.remark5
+    </sql>
+
+    <update id="updateMark" parameterType="com.sinosig.sluw.application.commons.entity.AssistantTrackEntity">
+        update AssistantTrack set
+                mark = #{mark},
+                markDetail = #{markDetail},
+                modifyDate = #{modifyDate},
+                modifyTime = #{modifyTime}
+        where 1=1
+        and massageId = #{massageId}
+    </update>
+
+</mapper>

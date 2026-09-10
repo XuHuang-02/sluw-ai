@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.generated.TransactionTrackMapper">
+	
+	<resultMap type="com.sinosig.sluw.application.commons.entity.TransactionTrackEntity" id="TransactionTrackResultMap">
+		 <result property="trackNo" column="TrackNo"/> 
+		 <result property="transNo" column="TransNo"/> 
+		 <result property="bankCode" column="BankCode"/> 
+		 <result property="zoneNo" column="ZoneNo"/> 
+		 <result property="bankNode" column="BankNode"/> 
+		 <result property="relativeTranNo" column="RelativeTranNo"/> 
+		 <result property="transactionCode" column="TransactionCode"/> 
+		 <result property="salesType" column="SalesType"/> 
+		 <result property="salesMode" column="SalesMode"/> 
+		 <result property="transDate" column="TransDate"/> 
+		 <result property="transTime" column="TransTime"/> 
+		 <result property="transAmnt" column="TransAmnt"/> 
+		 <result property="isBala" column="IsBala"/> 
+		 <result property="proposalNo" column="ProposalNo"/> 
+		 <result property="contNo" column="ContNo"/> 
+		 <result property="status" column="status"/> 
+		 <result property="rCode" column="RCode"/> 
+		 <result property="descr" column="Descr"/> 
+		 <result property="operator" column="Operator"/> 
+		 <result property="makeDate" column="MakeDate"/> 
+		 <result property="makeTime" column="MakeTime"/> 
+		 <result property="modifyDate" column="ModifyDate"/> 
+		 <result property="modifyTime" column="ModifyTime"/> 
+		 <result property="standBy1" column="StandBy1"/> 
+		 <result property="standBy2" column="StandBy2"/> 
+		 <result property="standBy3" column="StandBy3"/> 
+		 <result property="standBy4" column="StandBy4"/> 
+		 <result property="standBy5" column="StandBy5"/> 
+		 <result property="standBy6" column="StandBy6"/> 
+		 <result property="standBy7" column="StandBy7"/> 
+		 <result property="standBy8" column="StandBy8"/> 
+		 <result property="standBy9" column="StandBy9"/> 
+		 <result property="standBy10" column="StandBy10"/> 
+		 <result property="standBy11" column="StandBy11"/> 
+		 <result property="standBy12" column="StandBy12"/> 
+	</resultMap>
+	<sql id="Base_Column_List">
+				TrackNo,	
+				TransNo,	
+				BankCode,	
+				ZoneNo,	
+				BankNode,	
+				RelativeTranNo,	
+				TransactionCode,	
+				SalesType,	
+				SalesMode,	
+				TransDate,	
+				TransTime,	
+				TransAmnt,	
+				IsBala,	
+				ProposalNo,	
+				ContNo,	
+				status,	
+				RCode,	
+				Descr,	
+				Operator,	
+				MakeDate,	
+				MakeTime,	
+				ModifyDate,	
+				ModifyTime,	
+				StandBy1,	
+				StandBy2,	
+				StandBy3,	
+				StandBy4,	
+				StandBy5,	
+				StandBy6,	
+				StandBy7,	
+				StandBy8,	
+				StandBy9,	
+				StandBy10,	
+				StandBy11,	
+				StandBy12
+	</sql>
+	<!-- 新增-->
+	<insert id="save" parameterType="com.sinosig.sluw.application.commons.entity.TransactionTrackEntity">
+		insert into TransactionTrack(
+			TrackNo,	
+			TransNo,	
+			BankCode,	
+			ZoneNo,	
+			BankNode,	
+			RelativeTranNo,	
+			TransactionCode,	
+			SalesType,	
+			SalesMode,	
+			TransDate,	
+			TransTime,	
+			TransAmnt,	
+			IsBala,	
+			ProposalNo,	
+			ContNo,	
+			status,	
+			RCode,	
+			Descr,	
+			Operator,	
+			MakeDate,	
+			MakeTime,	
+			ModifyDate,	
+			ModifyTime,	
+			StandBy1,	
+			StandBy2,	
+			StandBy3,	
+			StandBy4,	
+			StandBy5,	
+			StandBy6,	
+			StandBy7,	
+			StandBy8,	
+			StandBy9,	
+			StandBy10,	
+			StandBy11,	
+			StandBy12
+		) values (
+			#{trackNo},
+			#{transNo},
+			#{bankCode},
+			#{zoneNo},
+			#{bankNode},
+			#{relativeTranNo},
+			#{transactionCode},
+			#{salesType},
+			#{salesMode},
+			#{transDate},
+			#{transTime},
+			#{transAmnt},
+			#{isBala},
+			#{proposalNo},
+			#{contNo},
+			#{status},
+			#{rCode},
+			#{descr},
+			#{operator},
+			#{makeDate},
+			#{makeTime},
+			#{modifyDate},
+			#{modifyTime},
+			#{standBy1},
+			#{standBy2},
+			#{standBy3},
+			#{standBy4},
+			#{standBy5},
+			#{standBy6},
+			#{standBy7},
+			#{standBy8},
+			#{standBy9},
+			#{standBy10},
+			#{standBy11},
+			#{standBy12}
+		)
+	</insert>
+	
+	
+	<!--通过主键删除删除-->
+	<delete id="delete" parameterType="com.sinosig.sluw.application.commons.entity.TransactionTrackEntity">
+		delete from TransactionTrack
+		where 1=1
+			and TrackNo = #{trackNo}
+	</delete>
+	
+	<!-- 修改Selective -->
+	<update id="update" parameterType="com.sinosig.sluw.application.commons.entity.TransactionTrackEntity">
+		update TransactionTrack
+		<set>
+				<if test="trackNo != null and trackNo != ''">
+				TrackNo = #{trackNo},
+				</if>
+				<if test="transNo != null and transNo != ''">
+				TransNo = #{transNo},
+				</if>
+				<if test="bankCode != null and bankCode != ''">
+				BankCode = #{bankCode},
+				</if>
+				<if test="zoneNo != null and zoneNo != ''">
+				ZoneNo = #{zoneNo},
+				</if>
+				<if test="bankNode != null and bankNode != ''">
+				BankNode = #{bankNode},
+				</if>
+				<if test="relativeTranNo != null and relativeTranNo != ''">
+				RelativeTranNo = #{relativeTranNo},
+				</if>
+				<if test="transactionCode != null and transactionCode != ''">
+				TransactionCode = #{transactionCode},
+				</if>
+				<if test="salesType != null and salesType != ''">
+				SalesType = #{salesType},
+				</if>
+				<if test="salesMode != null and salesMode != ''">
+				SalesMode = #{salesMode},
+				</if>
+				<if test="transDate != null">
+				TransDate = #{transDate},
+				</if>
+				<if test="transTime != null and transTime != ''">
+				TransTime = #{transTime},
+				</if>
+				<if test="transAmnt != null">
+				TransAmnt = #{transAmnt},
+				</if>
+				<if test="isBala != null and isBala != ''">
+				IsBala = #{isBala},
+				</if>
+				<if test="proposalNo != null and proposalNo != ''">
+				ProposalNo = #{proposalNo},
+				</if>
+				<if test="contNo != null and contNo != ''">
+				ContNo = #{contNo},
+				</if>
+				<if test="status != null and status != ''">
+				status = #{status},
+				</if>
+				<if test="rCode != null and rCode != ''">
+				RCode = #{rCode},
+				</if>
+				<if test="descr != null and descr != ''">
+				Descr = #{descr},
+				</if>
+				<if test="operator != null and operator != ''">
+				Operator = #{operator},
+				</if>
+				<if test="makeDate != null">
+				MakeDate = #{makeDate},
+				</if>
+				<if test="makeTime != null and makeTime != ''">
+				MakeTime = #{makeTime},
+				</if>
+				<if test="modifyDate != null">
+				ModifyDate = #{modifyDate},
+				</if>
+				<if test="modifyTime != null and modifyTime != ''">
+				ModifyTime = #{modifyTime},
+				</if>
+				<if test="standBy1 != null and standBy1 != ''">
+				StandBy1 = #{standBy1},
+				</if>
+				<if test="standBy2 != null and standBy2 != ''">
+				StandBy2 = #{standBy2},
+				</if>
+				<if test="standBy3 != null and standBy3 != ''">
+				StandBy3 = #{standBy3},
+				</if>
+				<if test="standBy4 != null and standBy4 != ''">
+				StandBy4 = #{standBy4},
+				</if>
+				<if test="standBy5 != null and standBy5 != ''">
+				StandBy5 = #{standBy5},
+				</if>
+				<if test="standBy6 != null and standBy6 != ''">
+				StandBy6 = #{standBy6},
+				</if>
+				<if test="standBy7 != null and standBy7 != ''">
+				StandBy7 = #{standBy7},
+				</if>
+				<if test="standBy8 != null and standBy8 != ''">
+				StandBy8 = #{standBy8},
+				</if>
+				<if test="standBy9 != null and standBy9 != ''">
+				StandBy9 = #{standBy9},
+				</if>
+				<if test="standBy10 != null and standBy10 != ''">
+				StandBy10 = #{standBy10},
+				</if>
+				<if test="standBy11 != null and standBy11 != ''">
+				StandBy11 = #{standBy11},
+				</if>
+				<if test="standBy12 != null and standBy12 != ''">
+				StandBy12 = #{standBy12},
+				</if>
+		</set>
+		where 1=1
+			and TrackNo = #{trackNo}	
+	</update>
+	<!-- 修改 -->
+	<update id="Update" parameterType="com.sinosig.sluw.application.commons.entity.TransactionTrackEntity">
+		update  TransactionTrack
+		<set>
+				TrackNo = #{trackNo},
+				TransNo = #{transNo},
+				BankCode = #{bankCode},
+				ZoneNo = #{zoneNo},
+				BankNode = #{bankNode},
+				RelativeTranNo = #{relativeTranNo},
+				TransactionCode = #{transactionCode},
+				SalesType = #{salesType},
+				SalesMode = #{salesMode},
+				TransDate = #{transDate},
+				TransTime = #{transTime},
+				TransAmnt = #{transAmnt},
+				IsBala = #{isBala},
+				ProposalNo = #{proposalNo},
+				ContNo = #{contNo},
+				status = #{status},
+				RCode = #{rCode},
+				Descr = #{descr},
+				Operator = #{operator},
+				MakeDate = #{makeDate},
+				MakeTime = #{makeTime},
+				ModifyDate = #{modifyDate},
+				ModifyTime = #{modifyTime},
+				StandBy1 = #{standBy1},
+				StandBy2 = #{standBy2},
+				StandBy3 = #{standBy3},
+				StandBy4 = #{standBy4},
+				StandBy5 = #{standBy5},
+				StandBy6 = #{standBy6},
+				StandBy7 = #{standBy7},
+				StandBy8 = #{standBy8},
+				StandBy9 = #{standBy9},
+				StandBy10 = #{standBy10},
+				StandBy11 = #{standBy11},
+				StandBy12 = #{standBy12},
+		</set>
+		where 1=1
+			and TrackNo = #{trackNo}	
+	</update>
+	
+	<!-- 通过主键获取数据 -->
+	<select id="get" parameterType="com.sinosig.sluw.application.commons.entity.TransactionTrackEntity" resultMap="TransactionTrackResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from 
+			TransactionTrack
+		where 1=1
+			and TrackNo = #{trackNo}	
+	</select>
+	
+	<!-- 查询列表-->
+	<select id="list" parameterType="com.sinosig.sluw.application.commons.entity.TransactionTrackEntity" resultMap="TransactionTrackResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from 
+			TransactionTrack a
+		where 1=1
+				<if test="trackNo != null and trackNo != ''">
+				and a.TrackNo = #{trackNo}
+				</if>
+				<if test="transNo != null and transNo != ''">
+				and a.TransNo = #{transNo}
+				</if>
+				<if test="bankCode != null and bankCode != ''">
+				and a.BankCode = #{bankCode}
+				</if>
+				<if test="zoneNo != null and zoneNo != ''">
+				and a.ZoneNo = #{zoneNo}
+				</if>
+				<if test="bankNode != null and bankNode != ''">
+				and a.BankNode = #{bankNode}
+				</if>
+				<if test="relativeTranNo != null and relativeTranNo != ''">
+				and a.RelativeTranNo = #{relativeTranNo}
+				</if>
+				<if test="transactionCode != null and transactionCode != ''">
+				and a.TransactionCode = #{transactionCode}
+				</if>
+				<if test="salesType != null and salesType != ''">
+				and a.SalesType = #{salesType}
+				</if>
+				<if test="salesMode != null and salesMode != ''">
+				and a.SalesMode = #{salesMode}
+				</if>
+				<if test="transDate != null">
+				and a.TransDate = #{transDate}
+				</if>
+				<if test="transTime != null and transTime != ''">
+				and a.TransTime = #{transTime}
+				</if>
+				<if test="transAmnt != null">
+				and a.TransAmnt = #{transAmnt}
+				</if>
+				<if test="isBala != null and isBala != ''">
+				and a.IsBala = #{isBala}
+				</if>
+				<if test="proposalNo != null and proposalNo != ''">
+				and a.ProposalNo = #{proposalNo}
+				</if>
+				<if test="contNo != null and contNo != ''">
+				and a.ContNo = #{contNo}
+				</if>
+				<if test="status != null and status != ''">
+				and a.status = #{status}
+				</if>
+				<if test="rCode != null and rCode != ''">
+				and a.RCode = #{rCode}
+				</if>
+				<if test="descr != null and descr != ''">
+				and a.Descr = #{descr}
+				</if>
+				<if test="operator != null and operator != ''">
+				and a.Operator = #{operator}
+				</if>
+				<if test="makeDate != null">
+				and a.MakeDate = #{makeDate}
+				</if>
+				<if test="makeTime != null and makeTime != ''">
+				and a.MakeTime = #{makeTime}
+				</if>
+				<if test="modifyDate != null">
+				and a.ModifyDate = #{modifyDate}
+				</if>
+				<if test="modifyTime != null and modifyTime != ''">
+				and a.ModifyTime = #{modifyTime}
+				</if>
+				<if test="standBy1 != null and standBy1 != ''">
+				and a.StandBy1 = #{standBy1}
+				</if>
+				<if test="standBy2 != null and standBy2 != ''">
+				and a.StandBy2 = #{standBy2}
+				</if>
+				<if test="standBy3 != null and standBy3 != ''">
+				and a.StandBy3 = #{standBy3}
+				</if>
+				<if test="standBy4 != null and standBy4 != ''">
+				and a.StandBy4 = #{standBy4}
+				</if>
+				<if test="standBy5 != null and standBy5 != ''">
+				and a.StandBy5 = #{standBy5}
+				</if>
+				<if test="standBy6 != null and standBy6 != ''">
+				and a.StandBy6 = #{standBy6}
+				</if>
+				<if test="standBy7 != null and standBy7 != ''">
+				and a.StandBy7 = #{standBy7}
+				</if>
+				<if test="standBy8 != null and standBy8 != ''">
+				and a.StandBy8 = #{standBy8}
+				</if>
+				<if test="standBy9 != null and standBy9 != ''">
+				and a.StandBy9 = #{standBy9}
+				</if>
+				<if test="standBy10 != null and standBy10 != ''">
+				and a.StandBy10 = #{standBy10}
+				</if>
+				<if test="standBy11 != null and standBy11 != ''">
+				and a.StandBy11 = #{standBy11}
+				</if>
+				<if test="standBy12 != null and standBy12 != ''">
+				and a.StandBy12 = #{standBy12}
+				</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="com.sinosig.sluw.application.commons.entity.TransactionTrackEntity" resultMap="TransactionTrackResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from 
+			TransactionTrack a where 1=1
+	</select>
+
+</mapper>

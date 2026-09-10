@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.generated.AssistantTrackMapper">
+
+    <resultMap type="com.sinosig.sluw.application.commons.entity.AssistantTrackEntity" id="AssistantTrackResultMap">
+        <result property="id" column="id"/>
+        <result property="conversationId" column="conversationId"/>
+        <result property="userCode" column="userCode"/>
+        <result property="userType" column="userType"/>
+        <result property="manageCom" column="manageCom"/>
+        <result property="question" column="question"/>
+        <result property="answer" column="answer"/>
+        <result property="mark" column="mark"/>
+        <result property="markDetail" column="markDetail"/>
+        <result property="massageId" column="massageId"/>
+        <result property="duration" column="duration"/>
+        <result property="totalPromptTokens" column="totalPromptTokens"/>
+        <result property="totalCompletionTokens" column="totalCompletionTokens"/>
+        <result property="totalTokens" column="totalTokens"/>
+        <result property="makeDate" column="makeDate"/>
+        <result property="makeTime" column="makeTime"/>
+        <result property="modifyDate" column="modifyDate"/>
+        <result property="modifyTime" column="modifyTime"/>
+        <result property="remark1" column="remark1"/>
+        <result property="remark2" column="remark2"/>
+        <result property="remark3" column="remark3"/>
+        <result property="remark4" column="remark4"/>
+        <result property="remark5" column="remark5"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        conversationId,
+        userCode,
+        userType,
+        manageCom,
+        question,
+        answer,
+        mark,
+        markDetail,
+        massageId,
+        duration,
+        totalPromptTokens,
+        totalCompletionTokens,
+        totalTokens,
+        makeDate,
+        makeTime,
+        modifyDate,
+        modifyTime,
+        remark1,
+        remark2,
+        remark3,
+        remark4,
+        remark5
+    </sql>
+    <sql id="Select_Column_List">
+        a.id
+        ,a.conversationId
+        ,a.userCode
+        ,a.userType
+        ,a.manageCom
+        ,a.question
+        ,a.answer
+        ,a.mark
+        ,a.markDetail
+        ,a.massageId
+        ,a.duration
+        ,a.totalPromptTokens
+        ,a.totalCompletionTokens
+        ,a.totalTokens
+        ,a.makeDate
+        ,a.makeTime
+        ,a.modifyDate
+        ,a.modifyTime
+        ,a.remark1
+        ,a.remark2
+        ,a.remark3
+        ,a.remark4
+        ,a.remark5
+    </sql>
+
+    <!-- 新增-->
+    <insert id="save" parameterType="com.sinosig.sluw.application.commons.entity.AssistantTrackEntity">
+        insert into AssistantTrack(
+        <include refid="Base_Column_List" />
+        ) values (
+        #{id},
+        #{conversationId},
+        #{userCode},
+        #{userType},
+        #{manageCom},
+        #{question},
+        #{answer},
+        #{mark},
+        #{markDetail},
+        #{massageId},
+        #{duration},
+        #{totalPromptTokens},
+        #{totalCompletionTokens},
+        #{totalTokens},
+        #{makeDate},
+        #{makeTime},
+        #{modifyDate},
+        #{modifyTime},
+        #{remark1},
+        #{remark2},
+        #{remark3},
+        #{remark4},
+        #{remark5}
+        )
+    </insert>
+
+    <!--通过主键删除删除-->
+    <delete id="delete" parameterType="com.sinosig.sluw.application.commons.entity.AssistantTrackEntity">
+        delete from AssistantTrack
+        where 1=1
+        and id = #{id}
+    </delete>
+
+    <!-- 修改Selective -->
+    <update id="update" parameterType="com.sinosig.sluw.application.commons.entity.AssistantTrackEntity">
+        update AssistantTrack
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="conversationId != null and conversationId != ''">
+                conversationId = #{conversationId},
+            </if>
+            <if test="userCode != null and userCode != ''">
+                userCode = #{userCode},
+            </if>
+            <if test="userType != null and userType != ''">
+                userType = #{userType},
+            </if>
+            <if test="manageCom != null and manageCom != ''">
+                manageCom = #{manageCom},
+            </if>
+            <if test="question != null and question != ''">
+                question = #{question},
+            </if>
+            <if test="answer != null and answer != ''">
+                answer = #{answer},
+            </if>
+            <if test="mark != null and mark != ''">
+                mark = #{mark},
+            </if>
+            <if test="markDetail != null and markDetail != ''">
+                markDetail = #{markDetail},
+            </if>
+            <if test="massageId != null and massageId != ''">
+                massageId = #{massageId},
+            </if>
+            <if test="duration != null">
+                duration = #{duration},
+            </if>
+            <if test="totalPromptTokens != null">
+                totalPromptTokens = #{totalPromptTokens},
+            </if>
+            <if test="totalCompletionTokens != null">
+                totalCompletionTokens = #{totalCompletionTokens},
+            </if>
+            <if test="totalTokens != null">
+                totalTokens = #{totalTokens},
+            </if>
+            <if test="makeDate != null">
+                makeDate = #{makeDate},
+            </if>
+            <if test="makeTime != null and makeTime != ''">
+                makeTime = #{makeTime},
+            </if>
+            <if test="modifyDate != null">
+                modifyDate = #{modifyDate},
+            </if>
+            <if test="modifyTime != null and modifyTime != ''">
+                modifyTime = #{modifyTime},
+            </if>
+            <if test="remark1 != null and remark1 != ''">
+                remark1 = #{remark1},
+            </if>
+            <if test="remark2 != null and remark2 != ''">
+                remark2 = #{remark2},
+            </if>
+            <if test="remark3 != null and remark3 != ''">
+                remark3 = #{remark3},
+            </if>
+            <if test="remark4 != null and remark4 != ''">
+                remark4 = #{remark4},
+            </if>
+            <if test="remark5 != null and remark5 != ''">
+                remark5 = #{remark5},
+            </if>
+        </set>
+        where 1=1
+        and id = #{id}
+    </update>
+    <!-- 修改 -->
+    <update id="Update" parameterType="com.sinosig.sluw.application.commons.entity.AssistantTrackEntity">
+        update  AssistantTrack
+        <set>
+            id = #{id},
+            conversationId = #{conversationId},
+            userCode = #{userCode},
+            userType = #{userType},
+            manageCom = #{manageCom},
+            question = #{question},
+            answer = #{answer},
+            mark = #{mark},
+            markDetail = #{markDetail},
+            massageId = #{massageId},
+            duration = #{duration},
+            totalPromptTokens = #{totalPromptTokens},
+            totalCompletionTokens = #{totalCompletionTokens},
+            totalTokens = #{totalTokens},
+            makeDate = #{makeDate},
+            makeTime = #{makeTime},
+            modifyDate = #{modifyDate},
+            modifyTime = #{modifyTime},
+            remark1 = #{remark1},
+            remark2 = #{remark2},
+            remark3 = #{remark3},
+            remark4 = #{remark4},
+            remark5 = #{remark5},
+        </set>
+        where 1=1
+        and id = #{id}
+    </update>
+
+    <!-- 通过主键获取数据 -->
+    <select id="get" parameterType="com.sinosig.sluw.application.commons.entity.AssistantTrackEntity" resultMap="AssistantTrackResultMap">
+        select
+        <include refid="Select_Column_List" />
+        from
+        AssistantTrack a
+        where 1=1
+        and id = #{id}
+    </select>
+    <!-- 查询列表-->
+    <select id="list" parameterType="com.sinosig.sluw.application.commons.entity.AssistantTrackEntity" resultMap="AssistantTrackResultMap">
+        select
+        <include refid="Select_Column_List" />
+        from
+        AssistantTrack a
+        where 1=1
+        <if test="id != null">
+            and a.id = #{id}
+        </if>
+        <if test="conversationId != null and conversationId != ''">
+            and a.conversationId = #{conversationId}
+        </if>
+        <if test="userCode != null and userCode != ''">
+            and a.userCode = #{userCode}
+        </if>
+        <if test="userType != null and userType != ''">
+            userType = #{userType}
+        </if>
+        <if test="manageCom != null and manageCom != ''">
+            and a.manageCom = #{manageCom}
+        </if>
+        <if test="question != null and question != ''">
+            and a.question = #{question}
+        </if>
+        <if test="answer != null and answer != ''">
+            and a.answer = #{answer}
+        </if>
+        <if test="mark != null and mark != ''">
+            and a.mark = #{mark}
+        </if>
+        <if test="markDetail != null and markDetail != ''">
+            markDetail = #{markDetail}
+        </if>
+        <if test="massageId != null and massageId != ''">
+            massageId = #{massageId}
+        </if>
+        <if test="duration != null">
+            duration = #{duration}
+        </if>
+        <if test="totalPromptTokens != null">
+            totalPromptTokens = #{totalPromptTokens}
+        </if>
+        <if test="totalCompletionTokens != null">
+            totalCompletionTokens = #{totalCompletionTokens}
+        </if>
+        <if test="totalTokens != null">
+            totalTokens = #{totalTokens}
+        </if>
+        <if test="makeDate != null">
+            and a.makeDate = #{makeDate}
+        </if>
+        <if test="makeTime != null and makeTime != ''">
+            and a.makeTime = #{makeTime}
+        </if>
+        <if test="modifyDate != null">
+            and a.modifyDate = #{modifyDate}
+        </if>
+        <if test="modifyTime != null and modifyTime != ''">
+            and a.modifyTime = #{modifyTime}
+        </if>
+        <if test="remark1 != null and remark1 != ''">
+            and a.remark1 = #{remark1}
+        </if>
+        <if test="remark2 != null and remark2 != ''">
+            and a.remark2 = #{remark2}
+        </if>
+        <if test="remark3 != null and remark3 != ''">
+            and a.remark3 = #{remark3}
+        </if>
+        <if test="remark4 != null and remark4 != ''">
+            and a.remark4 = #{remark4}
+        </if>
+        <if test="remark5 != null and remark5 != ''">
+            and a.remark5 = #{remark5}
+        </if>
+    </select>
+
+    <!-- 列表(全部) -->
+    <select id="listAll" parameterType="com.sinosig.sluw.application.commons.entity.AssistantTrackEntity" resultMap="AssistantTrackResultMap">
+        select
+        <include refid="Select_Column_List" />
+        from
+        AssistantTrack a where 1=1
+    </select>
+
+</mapper>

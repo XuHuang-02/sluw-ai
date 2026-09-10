@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICAC不太智能小助手·登录</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7ec 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e293b;
+        }
+
+        /* 横版容器 */
+        .login-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 600px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        /* 左侧欢迎区域 */
+        .welcome-section {
+            flex: 1;
+            background: linear-gradient(135deg, #2a6eff 0%, #1a4fd2 100%);
+            color: white;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .welcome-content {
+            max-width: 400px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .welcome-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* 右侧登录表单 */
+        .login-section {
+            flex: 1;
+            padding: 60px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-form-container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1e2b4f;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: #64748b;
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            color: #1e293b;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2a6eff;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(42, 110, 255, 0.1);
+        }
+
+        .form-input.error {
+            border-color: #ef4444;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* 验证码区域 */
+        .captcha-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .captcha-input {
+            flex: 1;
+        }
+
+        .captcha-image-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f9;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 120px;
+        }
+
+        .captcha-image-container:hover {
+            background: #e2e8f0;
+        }
+
+        .captcha-image {
+            font-family: 'Courier New', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 8px;
+            color: #1e2b4f;
+            user-select: none;
+        }
+
+        .captcha-image i {
+            color: #94a3b8;
+        }
+
+        .captcha-refresh {
+            margin-left: 8px;
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .captcha-refresh:hover {
+            color: #2a6eff;
+        }
+
+        .remember-checkbox {
+            display: none;
+        }
+
+        .remember-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #475569;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .checkmark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #cbd5e1;
+
+
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .remember-checkbox:checked + .checkmark {
+            background: #2a6eff;
+            border-color: #2a6eff;
+        }
+
+        .remember-checkbox:checked + .checkmark::after {
+            content: "✓";
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        /* 登录按钮 */
+        .login-button {
+            width: 100%;
+            padding: 16px;
+            background: #2a6eff;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .login-button:hover:not(:disabled) {
+            background: #1a4fd2;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(26, 79, 210, 0.2);
+        }
+
+        .login-button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .login-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        .login-button.loading .loading-spinner {
+            display: block;
+        }
+
+        .login-button.loading .button-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 消息提示 */
+        .message {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .message.success {
+            display: block;
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .message.error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 900px) {
+            .login-container {
+                flex-direction: column;
+                max-width: 90%;
+                min-height: auto;
+            }
+
+            .welcome-section {
+                padding: 40px 20px;
+            }
+
+            .login-section {
+                padding: 40px 20px;
+            }
+
+            .welcome-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                max-width: 100%;
+                border-radius: 0;
+                min-height: 100vh;
+            }
+
+            .captcha-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <!-- 左侧欢迎区域 -->
+    <div class="welcome-section">
+        <div class="welcome-content">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h1>ICAC不太智能小助手</h1>
+            </div>
+            <h2 class="welcome-title">欢迎回来</h2>
+            <p class="welcome-text">
+                登录ICAC不太智能小助手，体验更智能、更高效的对话服务。我和我的小脑袋将为主人提供专业的AI支持，为主人排忧解难！
+            </p>
+        </div>
+    </div>
+
+    <!-- 右侧登录表单 -->
+    <div class="login-section">
+        <div class="login-form-container">
+            <h2 class="form-title">登录账户</h2>
+            <p class="form-subtitle">请输入主人的账号信息以继续访问</p>
+
+            <div id="message" class="message"></div>
+
+            <form id="loginForm">
+                <!-- 用户名 -->
+                <div class="form-group">
+                    <label for="username" class="form-label">用户名</label>
+                    <input
+                            type="text"
+                            id="username"
+                            class="form-input"
+                            placeholder="请输入用户名"
+                            required
+                    >
+                    <div id="usernameError" class="error-message">请输入有效的用户名</div>
+                </div>
+
+                <!-- 密码 -->
+                <div class="form-group">
+                    <label for="password" class="form-label">密码</label>
+                    <input
+                            type="password"
+                            id="password"
+                            class="form-input"
+                            placeholder="请输入密码"
+                            required
+                    >
+                    <div id="passwordError" class="error-message">请输入密码</div>
+                </div>
+
+                <!-- 验证码 -->
+                <div class="form-group">
+                    <label for="captcha" class="form-label">验证码</label>
+                    <div class="captcha-group">
+                        <input
+                                type="text"
+                                id="captcha"
+                                class="form-input captcha-input"
+                                placeholder="请输入验证码"
+                                maxlength="4"
+                                required
+                        >
+                        <div class="captcha-image-container" id="captchaContainer" onclick="refreshCaptcha()">
+                            <div class="captcha-image" id="captchaImage"></div>
+                            <i class="fas fa-redo captcha-refresh"></i>
+                        </div>
+                    </div>
+                    <div id="captchaError" class="error-message">请输入正确的验证码</div>
+                </div>
+
+                <!-- 登录按钮 -->
+                <button type="submit" class="login-button" id="loginButton" onclick="handleLogin(event)">
+                    <span class="button-text">登录</span>
+                    <div class="loading-spinner"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+        // 验证码相关逻辑
+        let currentCaptcha = ''; // 用于存储后端返回的验证码
+
+        // 从后端获取验证码
+        async function fetchCaptchaFromBackend() {
+            try {
+                const response = await fetch('/api/auth/captcha'); // 调用后端接口
+                const data = await response.json();
+
+                if (data.success) {
+                    currentCaptcha = data.captcha; // 存储后端生成的验证码
+                    updateCaptchaDisplay(); // 更新页面显示
+                } else {
+                    console.error('获取验证码失败:', data.message);
+                }
+            } catch (error) {
+                console.error('请求验证码接口失败:', error);
+                showMessage('error', '获取验证码失败，请刷新页面');
+            }
+        }
+
+
+        // 更新验证码显示
+        function updateCaptchaDisplay() {
+            const captchaImage = document.getElementById('captchaImage');
+            const displayText = currentCaptcha.split('').join(' ');
+            captchaImage.textContent = displayText;
+        }
+
+        // 刷新验证码
+        function refreshCaptcha() {
+            fetchCaptchaFromBackend(); // 改为从后端获取
+            clearError('captcha');
+        }
+
+        // 初始化验证码
+        function initCaptcha() {
+            fetchCaptchaFromBackend(); // 改为从后端获取
+        }
+
+        // 验证表单输入
+        function validateForm() {
+            let isValid = true;
+            hideMessage();
+
+            // 验证用户名
+            const username = document.getElementById('username').value.trim();
+            if (!username) {
+                showError('username', '请输入用户名');
+                isValid = false;
+            } else if (username.length < 3 || username.length > 20) {
+                showError('username', '用户名长度需在3-20个字符之间');
+                isValid = false;
+            } else {
+                clearError('username');
+            }
+
+            // 验证密码
+            const password = document.getElementById('password').value;
+            if (!password) {
+                showError('password', '请输入密码');
+                isValid = false;
+            } else if (password.length < 6) {
+                showError('password', '密码长度至少6位');
+                isValid = false;
+            } else {
+                clearError('password');
+            }
+
+            const captchaInput = document.getElementById('captcha').value.trim().toUpperCase();
+            if (!captchaInput) {
+                showError('captcha', '请输入验证码');
+                isValid = false;
+            } else if (captchaInput.length !== 4) {
+                showError('captcha', '验证码必须为4位');
+                isValid = false;
+            } else {
+                clearError('captcha');
+            }
+
+            return isValid; // 最终的正确性由后端 /api/auth/login 接口判断
+        }
+
+        // 显示错误信息
+        function showError(fieldId, message) {
+            const input = document.getElementById(fieldId);
+            const errorDiv = document.getElementById(fieldId + 'Error');
+
+            input.classList.add('error');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+        }
+
+        // 清除错误信息
+        function clearError(fieldId) {
+            const input = document.getElementById(fieldId);
+            const errorDiv = document.getElementById(fieldId + 'Error');
+
+            input.classList.remove('error');
+            errorDiv.classList.remove('show');
+        }
+
+        // 显示消息提示
+        function showMessage(type, text) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = 'message ' + type;
+        }
+
+        // 隐藏消息提示
+        function hideMessage() {
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = 'message';
+        }
+
+        // 处理登录
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            if (!validateForm()) {
+                return;
+            }
+
+            const loginButton = document.getElementById('loginButton');
+            loginButton.disabled = true;
+            loginButton.classList.add('loading');
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const captcha = document.getElementById('captcha').value.trim().toUpperCase();
+
+            try {
+                // 调用后端登录接口
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        captcha: captcha
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showMessage('success', '登录成功，正在加载...');
+
+                    // 存储登录状态
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    sessionStorage.setItem('username', username);
+
+                    window.location.href = 'index.html';
+                    // 2秒后跳转到主页面
+                    //setTimeout(() => {
+                    //    window.location.href = 'index.html';
+                    //}, 2000);
+                } else {
+                    showMessage('error', data.message || '登录失败，请检查用户名、密码和验证码');
+                    // 登录失败时刷新验证码
+                    refreshCaptcha();
+                }
+            } catch (error) {
+                console.error('登录请求失败:', error);
+                showMessage('error', '网络错误，请稍后重试');
+                refreshCaptcha();
+            } finally {
+                loginButton.disabled = false;
+                loginButton.classList.remove('loading');
+            }
+        }
+
+        // 检查登录状态
+        function checkLoginStatus() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn && window.location.pathname.includes('login.html')) {
+                // 如果已登录且当前是登录页，跳转到主页面
+                window.location.href = 'index.html';
+            } else if (!isLoggedIn && !window.location.pathname.includes('login.html')) {
+                // 如果未登录且当前不是登录页，跳转到登录页
+                window.location.href = 'login.html';
+            }
+        }
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initCaptcha();
+            checkLoginStatus();
+
+            // 为表单添加提交事件
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+            // 为输入框添加输入事件，实时清除错误状态
+            ['username', 'password', 'captcha'].forEach(fieldId => {
+                const input = document.getElementById(fieldId);
+                input.addEventListener('input', () => clearError(fieldId));
+            });
+        });
+
+        // 回车键提交表单
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') {
+                handleLogin(event);
+            }
+        });
+    </script>
+</body>
+</html>
