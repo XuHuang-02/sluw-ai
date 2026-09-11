@@ -1,0 +1,267 @@
+[
+  {
+    "id": "agency-only",
+    "input": {
+      "experimentStage": "BEFORE_SEND_INTERNAL_AGENCY",
+      "entryConfirmed": true,
+      "contno": "SYNTHETIC-CONT-001",
+      "completeness": {
+        "candidateErrors": true,
+        "lcissuepol": true
+      },
+      "candidateErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "SYNTHETIC-AGENCY",
+          "lettertype": "6",
+          "uwerror": "候选提示：请机构核实材料",
+          "insuredno": "PERSON-1",
+          "serialno": "SYNTHETIC-ROW-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lcissuepol": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "backobjtype": "3",
+          "issuecont": "合成案例：请机构核实投保资料签名是否齐全。",
+          "issuetype": "SYNTHETIC-AGENCY-TYPE",
+          "senddate": null,
+          "replyresult": null,
+          "standbyflag1": null
+        }
+      ]
+    },
+    "expected": "拟从lcissuepol[0].issuecont生成一条内部件，类型000006；成功后才尝试机构标记更新。",
+    "status": "按代码整理，待业务核对及真实模型试验"
+  },
+  {
+    "id": "internal-and-agency",
+    "input": {
+      "experimentStage": "BEFORE_SEND_INTERNAL_AGENCY",
+      "entryConfirmed": true,
+      "contno": "SYNTHETIC-CONT-001",
+      "completeness": {
+        "candidateErrors": true,
+        "lcissuepol": true
+      },
+      "candidateErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "SYNTHETIC-AGENCY",
+          "lettertype": "6",
+          "uwerror": "候选提示：请机构核实材料",
+          "insuredno": "PERSON-1",
+          "serialno": "SYNTHETIC-ROW-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        },
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "SYNTHETIC-INTERNAL",
+          "lettertype": "4",
+          "uwerror": "合成内部问题：请补充签名页。",
+          "insuredno": "PERSON-1",
+          "serialno": "SYNTHETIC-ROW-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lcissuepol": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "backobjtype": "3",
+          "issuecont": "合成案例：请机构核实投保资料签名是否齐全。",
+          "issuetype": "SYNTHETIC-AGENCY-TYPE",
+          "senddate": null,
+          "replyresult": null,
+          "standbyflag1": null
+        }
+      ]
+    },
+    "expected": "拟使用内部候选话术创建内部件，不额外伴生；成功后尝试机构标记更新。",
+    "status": "按代码整理，待业务核对及真实模型试验"
+  },
+  {
+    "id": "internal-only",
+    "input": {
+      "experimentStage": "BEFORE_SEND_INTERNAL_AGENCY",
+      "entryConfirmed": true,
+      "contno": "SYNTHETIC-CONT-001",
+      "completeness": {
+        "candidateErrors": true,
+        "lcissuepol": false
+      },
+      "candidateErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "SYNTHETIC-INTERNAL",
+          "lettertype": "4",
+          "uwerror": "合成内部问题：请补充签名页。",
+          "insuredno": "PERSON-1",
+          "serialno": "SYNTHETIC-ROW-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lcissuepol": null
+    },
+    "expected": "拟使用内部候选话术创建内部件；没有机构标记更新，不因lcissuepol未提供而否认内部主计划。",
+    "status": "按代码整理，待业务核对及真实模型试验"
+  },
+  {
+    "id": "missing-agency-content",
+    "input": {
+      "experimentStage": "BEFORE_SEND_INTERNAL_AGENCY",
+      "entryConfirmed": true,
+      "contno": "SYNTHETIC-CONT-001",
+      "completeness": {
+        "candidateErrors": true,
+        "lcissuepol": false
+      },
+      "candidateErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "SYNTHETIC-AGENCY",
+          "lettertype": "6",
+          "uwerror": "候选提示：请机构核实材料",
+          "insuredno": "PERSON-1",
+          "serialno": "SYNTHETIC-ROW-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lcissuepol": null
+    },
+    "expected": "机构内容未获取，无法确定内部内容；不能使用候选uwerror代替，不能声称查无记录。",
+    "status": "按代码整理，待业务核对及真实模型试验"
+  },
+  {
+    "id": "no-agency-record",
+    "input": {
+      "experimentStage": "BEFORE_SEND_INTERNAL_AGENCY",
+      "entryConfirmed": true,
+      "contno": "SYNTHETIC-CONT-001",
+      "completeness": {
+        "candidateErrors": true,
+        "lcissuepol": true
+      },
+      "candidateErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "SYNTHETIC-AGENCY",
+          "lettertype": "6",
+          "uwerror": "候选提示：请机构核实材料",
+          "insuredno": "PERSON-1",
+          "serialno": "SYNTHETIC-ROW-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lcissuepol": []
+    },
+    "expected": "完整查询无记录时dealNoticedata返回false，不会进入成功后的标记更新。",
+    "status": "按代码整理，待业务核对及真实模型试验"
+  },
+  {
+    "id": "empty-agency-content",
+    "input": {
+      "experimentStage": "BEFORE_SEND_INTERNAL_AGENCY",
+      "entryConfirmed": true,
+      "contno": "SYNTHETIC-CONT-001",
+      "completeness": {
+        "candidateErrors": true,
+        "lcissuepol": true
+      },
+      "candidateErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "SYNTHETIC-AGENCY",
+          "lettertype": "6",
+          "uwerror": "候选提示：请机构核实材料",
+          "insuredno": "PERSON-1",
+          "serialno": "SYNTHETIC-ROW-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lcissuepol": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "backobjtype": "3",
+          "issuecont": "   ",
+          "issuetype": "SYNTHETIC-AGENCY-TYPE",
+          "senddate": null,
+          "replyresult": null,
+          "standbyflag1": null
+        }
+      ]
+    },
+    "expected": "查询有记录但拼接内容为空，代码无第二次非空拦截；应暴露问题，不宣称安全可发送或代码已拒绝。",
+    "status": "按代码整理，待业务核对及真实模型试验"
+  },
+  {
+    "id": "no-candidates",
+    "input": {
+      "experimentStage": "BEFORE_SEND_INTERNAL_AGENCY",
+      "entryConfirmed": true,
+      "contno": "SYNTHETIC-CONT-001",
+      "completeness": {
+        "candidateErrors": true,
+        "lcissuepol": true
+      },
+      "candidateErrors": [],
+      "lcissuepol": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "backobjtype": "3",
+          "issuecont": "合成案例：请机构核实投保资料签名是否齐全。",
+          "issuetype": "SYNTHETIC-AGENCY-TYPE",
+          "senddate": null,
+          "replyresult": null,
+          "standbyflag1": null
+        }
+      ]
+    },
+    "expected": "tContent为空且无机构标志，sendnbwtj直接return，无下发动作。",
+    "status": "按代码整理，待业务核对及真实模型试验"
+  },
+  {
+    "id": "entry-unconfirmed",
+    "input": {
+      "experimentStage": "BEFORE_SEND_INTERNAL_AGENCY",
+      "entryConfirmed": null,
+      "contno": "SYNTHETIC-CONT-001",
+      "completeness": {
+        "candidateErrors": true,
+        "lcissuepol": true
+      },
+      "candidateErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "SYNTHETIC-AGENCY",
+          "lettertype": "6",
+          "uwerror": "候选提示：请机构核实材料",
+          "insuredno": "PERSON-1",
+          "serialno": "SYNTHETIC-ROW-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lcissuepol": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "backobjtype": "3",
+          "issuecont": "合成案例：请机构核实投保资料签名是否齐全。",
+          "issuetype": "SYNTHETIC-AGENCY-TYPE",
+          "senddate": null,
+          "replyresult": null,
+          "standbyflag1": null
+        }
+      ]
+    },
+    "expected": "入口未确认，只能给出条件性模拟，不能给无条件下发建议或声称已验证前置流程。",
+    "status": "按代码整理，待业务核对及真实模型试验"
+  }
+]

@@ -771,10 +771,11 @@
                                 <div class="options-group">
                                     <label class="option-item">
                                         <input type="checkbox" id="issueSubmissionTrial">
-                                        <span class="option-text">问题件提交试判（每次完整JSON）</span>
+                                        <span class="option-text">问题件试判：内部/机构下发前</span>
                                     </label>
-                                    <a href="/trial/issue-submission-template.json" download>下载试判模板</a>
-                                    <a href="/trial/issue-submission-example.json" download>下载合成示例</a>
+                                    <a href="/trial/send-preparation-template.json" download>下载本实验模板</a>
+                                    <a href="/trial/send-preparation-example.json" download>下载可直接粘贴的示例</a>
+                                    <button type="button" onclick="loadSendPreparationExample()">填入合成示例</button>
                                     <label class="option-item">
                                         <input type="checkbox" id="useRefiner">
                                         <span class="option-text">问题润色</span>
@@ -1080,6 +1081,22 @@
         let pendingRender = false;
         let lastRenderedText = '';
         let currentContentDiv = null;
+
+        async function loadSendPreparationExample() {
+            const input = document.getElementById('messageInput');
+            if (input.value.trim() && !window.confirm('用合成示例替换当前尚未发送的内容？')) return;
+            try {
+                const response = await fetch('/trial/send-preparation-example.json');
+                if (!response.ok) throw new Error('unavailable');
+                const sample = await response.json();
+                input.value = JSON.stringify(sample, null, 2);
+                document.getElementById('issueSubmissionTrial').checked = true;
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                input.focus();
+            } catch (error) {
+                window.alert('示例读取失败，请使用下载链接或刷新页面后重试。');
+            }
+        }
 
         function renderMarkdown(contentDiv, markdownText, isFinal = false) {
             if (!contentDiv) return;

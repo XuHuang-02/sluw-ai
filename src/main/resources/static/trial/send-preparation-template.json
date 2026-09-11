@@ -1,0 +1,11 @@
+{
+  "experimentStage": "BEFORE_SEND_INTERNAL_AGENCY",
+  "entryConfirmed": null,
+  "contno": "SYNTHETIC-CONT-001",
+  "completeness": {
+    "candidateErrors": false,
+    "lcissuepol": false
+  },
+  "candidateErrors": null,
+  "lcissuepol": null
+}

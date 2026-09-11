@@ -1,0 +1,32 @@
+{
+  "experimentStage": "BEFORE_SEND_INTERNAL_AGENCY",
+  "entryConfirmed": true,
+  "contno": "SYNTHETIC-CONT-001",
+  "completeness": {
+    "candidateErrors": true,
+    "lcissuepol": true
+  },
+  "candidateErrors": [
+    {
+      "contno": "SYNTHETIC-CONT-001",
+      "uwno": 2,
+      "uwrulecode": "SYNTHETIC-AGENCY",
+      "lettertype": "6",
+      "uwerror": "候选提示：请机构核实材料",
+      "insuredno": "PERSON-1",
+      "serialno": "SYNTHETIC-ROW-1",
+      "proposalno": "SYNTHETIC-PROPOSAL"
+    }
+  ],
+  "lcissuepol": [
+    {
+      "contno": "SYNTHETIC-CONT-001",
+      "backobjtype": "3",
+      "issuecont": "合成案例：请机构核实投保资料签名是否齐全。",
+      "issuetype": "SYNTHETIC-AGENCY-TYPE",
+      "senddate": null,
+      "replyresult": null,
+      "standbyflag1": null
+    }
+  ]
+}
