@@ -770,6 +770,12 @@
                             <div class="input-actions" TYPE="hidden">
                                 <div class="options-group">
                                     <label class="option-item">
+                                        <input type="checkbox" id="issueSubmissionTrial">
+                                        <span class="option-text">问题件提交试判（每次完整JSON）</span>
+                                    </label>
+                                    <a href="/trial/issue-submission-template.json" download>下载试判模板</a>
+                                    <a href="/trial/issue-submission-example.json" download>下载合成示例</a>
+                                    <label class="option-item">
                                         <input type="checkbox" id="useRefiner">
                                         <span class="option-text">问题润色</span>
                                     </label>
@@ -1077,6 +1083,12 @@
 
         function renderMarkdown(contentDiv, markdownText, isFinal = false) {
             if (!contentDiv) return;
+            if (contentDiv.dataset.issueTrial === 'true') {
+                contentDiv.textContent = markdownText;
+                contentDiv.style.whiteSpace = 'pre-wrap';
+                conditionalScrollToBottom();
+                return;
+            }
             try {
                 let html;
                 try {
@@ -1129,14 +1141,17 @@
             let timeoutId = null;
             const TIMEOUT_MS = 60000;
 
+            const isIssueTrial = document.getElementById("issueSubmissionTrial").checked;
+            aiContentDiv.dataset.issueTrial = String(isIssueTrial);
             const encryptedQuestion = await encryptChatRequest(questionText);
             const currentMessageId = generateMessageId();
 
             try {
                 const requestData = {
                     question: encryptedQuestion,
-                    useRefiner: useRefinerCheckbox.checked,
-                    useRefinerMemory: useRefinerMemoryCheckbox.checked,
+                    issueSubmissionTrial: isIssueTrial,
+                    useRefiner: !document.getElementById("issueSubmissionTrial").checked && useRefinerCheckbox.checked,
+                    useRefinerMemory: !document.getElementById("issueSubmissionTrial").checked && useRefinerMemoryCheckbox.checked,
                     conversationId: conversationId,
                     userId: userId,
                     messageId: currentMessageId

@@ -1,0 +1,18 @@
+{
+  "contno": "SYNTHETIC-CONT-001",
+  "maxuwno": null,
+  "completeness": {
+    "currentErrors": false,
+    "historyErrors": false,
+    "lwmission": false,
+    "lbmission": false,
+    "lwnotepad": false,
+    "autoallotbyerr": false
+  },
+  "currentErrors": null,
+  "historyErrors": null,
+  "lwmission": null,
+  "lbmission": null,
+  "lwnotepad": null,
+  "autoallotbyerr": null
+}

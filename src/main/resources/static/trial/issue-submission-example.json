@@ -1,0 +1,46 @@
+{
+  "contno": "SYNTHETIC-CONT-001",
+  "maxuwno": 2,
+  "currentErrors": [
+    {
+      "contno": "SYNTHETIC-CONT-001",
+      "uwno": 2,
+      "uwrulecode": "CS0001",
+      "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+      "lettertype": null,
+      "autoflag": null,
+      "peitem": null,
+      "positivesign": null,
+      "insuredno": "PERSON-1",
+      "serialno": "ROW-CS0001-2",
+      "proposalno": "SYNTHETIC-PROPOSAL"
+    }
+  ],
+  "historyErrors": [
+    {
+      "contno": "SYNTHETIC-CONT-001",
+      "uwno": 1,
+      "uwrulecode": "OLD-INTERNAL",
+      "uwerror": "rule",
+      "lettertype": "4",
+      "autoflag": "1",
+      "peitem": null,
+      "positivesign": null,
+      "insuredno": "PERSON-1",
+      "serialno": "ROW-OLD-INTERNAL-1",
+      "proposalno": "SYNTHETIC-PROPOSAL"
+    }
+  ],
+  "lwmission": [],
+  "lbmission": [],
+  "lwnotepad": [],
+  "autoallotbyerr": [],
+  "completeness": {
+    "currentErrors": true,
+    "historyErrors": true,
+    "lwmission": true,
+    "lbmission": true,
+    "lwnotepad": true,
+    "autoallotbyerr": true
+  }
+}

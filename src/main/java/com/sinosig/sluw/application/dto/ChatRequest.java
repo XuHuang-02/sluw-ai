@@ -10,6 +10,10 @@ public class ChatRequest {
 
     /** 用户提出的问题，必填字段，不能为空 */
     private String question;
+    private boolean issueSubmissionTrial;
+    public boolean isIssueSubmissionTrial() { return issueSubmissionTrial; }
+    public void setIssueSubmissionTrial(boolean value) { issueSubmissionTrial = value; }
+
 
     /** A/B测试开关：true表示使用问题润色，false表示不使用润色直接检索，默认值为true */
     private boolean useRefiner = true;

@@ -1,24 +1,20 @@
 # sluw-ai
 
-Java 核保问答应用与独立问题件判断模块。此仓库用于私有版本管理。
+Java 核保问答应用。此仓库用于私有版本管理。
 
 ## 项目结构
 
 - `src/`：原 Spring Boot 核保问答应用。
-- `assessment/`：独立问题件判断模块，目前完成模块一判断核心和模块二规则版本管理；共124个测试通过。
 - `CONTEXT.md`：业务术语。
-- `.scratch/policy-problem-assessment/`：已确认需求及实施记录，仅该需求目录纳入版本管理。
 - `docker/`：原应用部署脚本。
 
-## 验证模块一
+## 当前需求
 
-使用 JDK 17 或以上版本和 Maven：
+2026-09-11：按用户要求移除此前新增的独立判断模块及规则管理模块。已按重新确认的范围在原聊天中加入问题件提交试判。
 
-```sh
-mvn -f assessment/pom.xml test
-```
-
-详见 [模块一验证记录](assessment/docs/module-1-verification.md)。这些测试使用合成数据和服务替身，不能替代真实业务验收。模块二已实现规则草稿、确认、发布、固定依据与受鉴权保护的管理接口。独立模块尚无完整上传、人员管理和报告页面。详见 [模块二使用与验证](assessment/docs/module-2-rule-versions.md)。
+- 当前需求记录：[对话试判](.scratch/chat-issue-review/spec.md)。
+- 旧独立系统方案停止执行，历史实现可从 Git 历史查看。
+- 普通问答保留；开启试判后使用完整JSON独立调用模型，不接入业务数据库或执行业务流转。使用方式见 [试判说明](docs/trial/README.md)。
 
 ## 原应用本地配置
 
@@ -27,13 +23,13 @@ mvn -f assessment/pom.xml test
 1. 将所需的 `config/examples/application-<环境>.example.yml` 复制至 `src/main/resources/application-<环境>.yml`，填写环境变量或本机值。
 2. 将 `config/examples/local-settings.example.properties` 复制为项目根目录的 `local-settings.properties`，配置原登录用户及业务接口参数。原应用通过 `spring.config.import` 可选加载此文件；部署时应将该文件放在进程工作目录，或通过 Spring 外部配置提供同名属性。
 3. 从公司批准渠道取得 `ext-lib/README.md` 中的厂商依赖。
-4. 使用原有 Maven profile 构建，例如 `mvn -Pdev package`。原应用全量构建与环境联调未包含在模块一验证范围内。
+4. 使用原有 Maven profile 构建，例如 `mvn -Pdev package`。原应用全量构建与真实环境联调尚未验证。
 
 Docker 基础镜像通过 `--build-arg BASE_IMAGE=<批准的镜像>` 传入，不在仓库保存内部镜像地址。原部署脚本按现状保留，投入部署前另行验证。
 
 ## 版本管理约定
 
-- 主分支为 `main`。按模块提交，保留可复现测试和需求记录。
+- 主分支为 `main`。按明确的改动范围提交，保留测试和需求记录。
 - 不提交真实保单、影像、数据库导出、账号密码、密钥、令牌或许可证。
 - 本机配置和缓存由 `.gitignore` 排除；提交前使用 `git diff --cached` 检查。
 - 不自动部署，不自动邀请协作者或发布 GitHub Pages；远程仓库必须保持 Private。

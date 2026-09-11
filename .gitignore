@@ -35,6 +35,9 @@ local-settings.properties
 # Documents describing requirements are versioned; downloaded tools/cache are not.
 /.scratch/*
 !/.scratch/policy-problem-assessment/
+!/.scratch/chat-issue-review/
+/.scratch/chat-issue-review/*
+!/.scratch/chat-issue-review/spec.md
 /.scratch/policy-problem-assessment/**/backups/
 
 # Uploaded policy data and local run data

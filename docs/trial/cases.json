@@ -1,0 +1,938 @@
+[
+  {
+    "id": "pass",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "CS0001",
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-CS0001-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "建议尝试核保通过",
+      "basis": "dealIssue 178、182、183；不代表通过执行成功"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "outside-auto",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "CS0001",
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-CS0001-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [
+        {
+          "missionprop1": "SYNTHETIC-CONT-001",
+          "activityid": "0000001100",
+          "lastoperator": "HUMAN"
+        }
+      ],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "退出本自动处理方法",
+      "basis": "dealIssue 143-145；未实际转人工"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "historical-special",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "CS0001",
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-CS0001-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        },
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "EXT2",
+          "uwerror": "rule",
+          "lettertype": "3",
+          "autoflag": "4",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-EXT2-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "建议人工处理",
+      "basis": "dealIssue 148-152；全轮次查询，实际仅return"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "no-prior-auto",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "CS0001",
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-CS0001-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "退出本自动处理方法",
+      "basis": "dealIssue 154-159"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "manual-rule",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "MANUAL",
+          "uwerror": "rule",
+          "lettertype": null,
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-MANUAL-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "建议人工处理",
+      "basis": "isAllAuto为true，dealIssue 171-173"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "internal-before-note",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "NEW-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-NEW-INTERNAL-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [
+        {
+          "otherno": "SYNTHETIC-CONT-001",
+          "noteflag": "kidamntrisk"
+        }
+      ],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "建议下发内部问题件",
+      "basis": "getnbwtj2匹配编码及人员；202-206先于214"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "note-manual",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "CS0001",
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-CS0001-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [
+        {
+          "otherno": "SYNTHETIC-CONT-001",
+          "noteflag": "kidamntrisk"
+        }
+      ],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "建议人工处理",
+      "basis": "dealIssue 191-193"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "note-no-send",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "CS0001",
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-CS0001-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [
+        {
+          "otherno": "SYNTHETIC-CONT-001",
+          "noteflag": "other"
+        }
+      ],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "调用记事本阳性处理但无可发送记录",
+      "basis": "sendjsbyx须第一轮阳性记录及autope；不能判已通过"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "external-rounds-1",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "EXT1",
+          "uwerror": "rule",
+          "lettertype": "2",
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-EXT1-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        },
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "EXT1",
+          "uwerror": "rule",
+          "lettertype": "2",
+          "autoflag": "3",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-EXT1-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "建议下发外1问题件",
+      "basis": "dealIssue 220按相同规则不同uwno计数，阈值2"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "external-rounds-2",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "EXT1",
+          "uwerror": "rule",
+          "lettertype": "2",
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-EXT1-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        },
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "EXT1",
+          "uwerror": "rule",
+          "lettertype": "2",
+          "autoflag": "3",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-EXT1-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        },
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 0,
+          "uwrulecode": "EXT1",
+          "uwerror": "rule",
+          "lettertype": "2",
+          "autoflag": "3",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-EXT1-0",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "建议人工处理",
+      "basis": "dealIssue 220按相同规则不同uwno计数，阈值2"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "duplicate-round",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "EXT1",
+          "uwerror": "rule",
+          "lettertype": "2",
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-EXT1-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        },
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "EXT1",
+          "uwerror": "rule",
+          "lettertype": "2",
+          "autoflag": "3",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-EXT1-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        },
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "EXT1",
+          "uwerror": "rule",
+          "lettertype": "2",
+          "autoflag": "3",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-EXT1-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "建议下发外1问题件",
+      "basis": "同轮重复记录不增加count(distinct uwno)"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "external2",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "external2",
+          "uwerror": "rule",
+          "lettertype": "3",
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-external2-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "appntno": "APPLICANT-1"
+    },
+    "expected": {
+      "direction": "建议处理外2问题件",
+      "basis": "check(1)、extractCustomerLetters、dealAll；调用建议非执行成功"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "exam",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "exam",
+          "uwerror": "rule",
+          "lettertype": null,
+          "autoflag": null,
+          "peitem": "TEST-EXAM",
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-exam-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "建议体检处理",
+      "basis": "check(1)、extractCustomerLetters、dealAll；调用建议非执行成功"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "report",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "report",
+          "uwerror": "rule",
+          "lettertype": "1",
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-report-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "建议契调处理",
+      "basis": "check(1)、extractCustomerLetters、dealAll；调用建议非执行成功"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "missing-history",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "CS0001",
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-CS0001-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": null,
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": false,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "暂无法确定处理去向",
+      "basis": "无法排除历史特殊下发记录，也不能证明曾自动下发内部或外1"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  },
+  {
+    "id": "repeat-internal",
+    "input": {
+      "contno": "SYNTHETIC-CONT-001",
+      "maxuwno": 2,
+      "currentErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 2,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": null,
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-2",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "historyErrors": [
+        {
+          "contno": "SYNTHETIC-CONT-001",
+          "uwno": 1,
+          "uwrulecode": "OLD-INTERNAL",
+          "uwerror": "rule",
+          "lettertype": "4",
+          "autoflag": "1",
+          "peitem": null,
+          "positivesign": null,
+          "insuredno": "PERSON-1",
+          "serialno": "ROW-OLD-INTERNAL-1",
+          "proposalno": "SYNTHETIC-PROPOSAL"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [],
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      }
+    },
+    "expected": {
+      "direction": "建议尝试核保通过",
+      "basis": "nbOnlyAndExists按编码匹配任一历史，记事本为空"
+    },
+    "reviewStatus": "按代码整理，待业务人工核对"
+  }
+]

@@ -26,8 +26,10 @@ public class AgentController {
 
     private static final Logger logger = LoggerFactory.getLogger(AgentController.class);
     private final AgentService agentService;
+    private final com.sinosig.sluw.application.service.IssueSubmissionTrialService trialService;
 
-    public AgentController(AgentService agentService) {
+    public AgentController(AgentService agentService, com.sinosig.sluw.application.service.IssueSubmissionTrialService trialService) {
+        this.trialService = trialService;
         this.agentService = agentService;
     }
 
@@ -41,6 +43,10 @@ public class AgentController {
     public Mono<AgentState> chat(@RequestBody ChatRequest request) {
         if (request == null || !request.isValid()) {
             return Mono.error(new IllegalArgumentException("Question cannot be empty"));
+        }
+        if (request.isIssueSubmissionTrial()) {
+            return trialService.answer(request.getQuestion())
+                    .map(text -> { AgentState state = new AgentState(); state.setResponse(text); return state; });
         }
         String question = request.getQuestion();
         String conversationId = request.getConversationId();
@@ -64,6 +70,11 @@ public class AgentController {
      */
     @PostMapping(value = "/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<ServerSentEvent<String>> chatStream(@RequestBody ChatRequest request, HttpServletRequest httpRequest) {
+        if (request != null && request.isIssueSubmissionTrial()) {
+            return trialService.answer(request.getQuestion())
+                    .map(text -> ServerSentEvent.<String>builder().data(text).build())
+                    .concatWith(Flux.just(ServerSentEvent.<String>builder().data("[DONE]").build()));
+        }
         //从Cookie中获取用户Token
         String userToken = getUserToken(httpRequest);
         String question = request.getQuestion();
