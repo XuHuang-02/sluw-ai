@@ -45,3 +45,8 @@ local-settings.properties
 **/uploads/
 **/logs/
 **/*.hprof
+
+# Explicitly versioned vendor dependencies
+!/ext-lib/bes-lite-spring-boot-starter-11.5.0.004.jar
+!/ext-lib/bes-jdbcra-11.5.0.004.jar
+!/ext-lib/bes-websocket-11.5.0.004.jar
