@@ -64,3 +64,10 @@ dealIssue 读取已有核保错误、历史下发、任务和记事本记录，�
 新增experimentStage=BEFORE_SEND_INTERNAL_AGENCY、entryConfirmed、candidateErrors和lcissuepol输入；专用提示词只分析sendnbwtj及dealNoticedata。解释伴生条件、内部内容与机构内容来源、拟更新范围；不改变类型和规则，不执行动作。原完整去向试判兼容保留。
 
 11个工程测试通过；新增8个对照场景和一键填入合成示例。模型替身仅验证接线，不证明真实模型判断准确。操作文档：docs/trial/send-preparation.md。
+
+
+## 2026-09-14：试判入口交互修复
+
+修复局部函数被 HTML 内联 onclick 调用导致的 ReferenceError，改为独立脚本中绑定按钮事件；试判开关明确显示。新增工具按钮沿用蓝灰色圆角样式，提供读取中、成功、失败与模式切换提示，读取失败保留原输入。
+
+使用隔离浏览器页面与合成接口复现旧错误，修复后验证六项：示例填入并启用试判、切回普通问答、取消覆盖、读取失败保留内容、窄屏布局、外部 CDN 不可用时示例填入。未调用真实模型或登录服务。

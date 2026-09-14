@@ -262,6 +262,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <layout>JAR</layout>
+                    <mainClass>com.sinosig.sluw.application.SluwAssistantApplication</mainClass>
                     <!-- 打包包含本地jar包  -->
                     <includeSystemScope>true</includeSystemScope>
                     <finalName>${project.name}</finalName>
