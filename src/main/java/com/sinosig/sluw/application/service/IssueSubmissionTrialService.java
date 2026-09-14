@@ -1,91 +1,61 @@
 package com.sinosig.sluw.application.service;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.*;
+import com.sinosig.sluw.application.service.routing.*;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.ai.chat.messages.*;
 import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.ai.chat.messages.*;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.List;
 
-/** Stateless trial: no memory, advisors, tools, retrieval or business writes. */
+/** Reuses the existing trial entry: isolated current snapshot, no advisors, RAG or business tools. */
 @Service
 public class IssueSubmissionTrialService {
-    private final ChatClient client;
-    private final String instructions;
-    private final String preparationInstructions;
-    static final String PREPARATION_STAGE = "BEFORE_SEND_INTERNAL_AGENCY";
-    private final ObjectMapper json = new ObjectMapper()
-            .enable(JsonParser.Feature.STRICT_DUPLICATE_DETECTION)
-            .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
-
-    public IssueSubmissionTrialService(ChatModel model) throws java.io.IOException {
-        client = ChatClient.builder(model).build();
-        preparationInstructions = new ClassPathResource("prompts/issue-send-preparation.txt")
-                .getContentAsString(StandardCharsets.UTF_8);
-        instructions = new ClassPathResource("prompts/issue-submission-trial.txt")
-                .getContentAsString(StandardCharsets.UTF_8);
+    private static final Logger LOG=LoggerFactory.getLogger(IssueSubmissionTrialService.class);
+    private volatile ChatClient client;
+    private final java.util.function.Supplier<ChatModel> modelSupplier;
+    private final RoutingPolicy policy;
+    @org.springframework.beans.factory.annotation.Autowired
+    public IssueSubmissionTrialService(ChatModel model, RoutingModelFactory factory) throws java.io.IOException {
+        this(() -> factory.isolate(model));
     }
-
+    IssueSubmissionTrialService(ChatModel model) throws java.io.IOException { this(() -> model); }
+    private IssueSubmissionTrialService(java.util.function.Supplier<ChatModel> supplier) throws java.io.IOException {
+        modelSupplier=supplier;policy=new RoutingPolicy();
+    }
+    private synchronized ChatClient client() {
+        if(client==null)client=ChatClient.builder(modelSupplier.get()).build();
+        return client;
+    }
     public Mono<String> answer(String input) {
-        return Mono.fromCallable(() -> {
-            String normalized;
-            try { normalized = validate(input); }
-            catch (IllegalArgumentException e) { return "【问题件提交试判】\n处理去向：暂无法确定。\n命中的代码条件：未执行，输入格式不合要求。\n引用的输入记录：无。\n缺失信息：" + e.getMessage(); }
-            String text = client.prompt(new Prompt(List.of(new SystemMessage(instructionsFor(normalized)),
-                    new UserMessage(normalized)))).call().content();
-            if (text == null || text.isBlank()) throw new IllegalStateException("empty model response");
-            return "【AI流程试判，仅供核对，未执行任何业务操作】\n" + text;
-        }).subscribeOn(Schedulers.boundedElastic())
-          .timeout(Duration.ofSeconds(50))
-          .onErrorReturn("【问题件提交试判】\n处理去向：暂无法确定。\n命中的代码条件：模型调用未完成。\n引用的输入记录：无。\n缺失信息：服务暂不可用，请稍后重新提交完整JSON。");
-    }
-
-    private String instructionsFor(String normalized) throws java.io.IOException {
-        return PREPARATION_STAGE.equals(json.readTree(normalized).path("experimentStage").asText())
-                ? preparationInstructions : instructions;
-    }
-
-    String validate(String input) {
-        if (input == null || input.isBlank() || input.length() > 60000)
-            throw new IllegalArgumentException("请提交不超过60000字符的完整JSON对象。");
-        try {
-            JsonNode root = json.readTree(input);
-            if (!root.isObject() || !root.path("contno").isTextual() || root.path("contno").asText().isBlank())
-                throw new IllegalArgumentException("需要JSON对象及非空contno；请使用模板。");
-            JsonNode stage = root.get("experimentStage");
-            if (stage != null && (!stage.isTextual() ||
-                    !(PREPARATION_STAGE.equals(stage.asText()) || "ISSUE_FLOW".equals(stage.asText()))))
-                throw new IllegalArgumentException("experimentStage仅支持BEFORE_SEND_INTERNAL_AGENCY或ISSUE_FLOW。");
-            JsonNode entry = root.get("entryConfirmed");
-            if (entry != null && !entry.isNull() && !entry.isBoolean())
-                throw new IllegalArgumentException("entryConfirmed仅允许true、false或null。");
-            for (String name : List.of("candidateErrors", "lcissuepol", "currentErrors", "historyErrors", "lwmission", "lbmission", "lwnotepad", "autoallotbyerr")) {
-                JsonNode value = root.get(name);
-                if (value != null && !value.isNull() && !value.isArray())
-                    throw new IllegalArgumentException(name + "必须为数组，未获取时用null。");
+        return Mono.fromCallable(()->{
+            RoutingInput snapshot;
+            try { snapshot=RoutingInput.parse(input); }
+            catch(IllegalArgumentException e){return "【输入不合要求，未执行选路】\n"+e.getMessage();}
+            var facts=new RoutingPrecalculator(snapshot).calculate();
+            long start=System.nanoTime();
+            var response=client().prompt(new Prompt(List.of(new SystemMessage(policy.prompt()),
+                new UserMessage(RoutingInput.JSON.writeValueAsString(facts))))).call().chatResponse();
+            if(response==null||response.getResult()==null)throw new IllegalStateException("empty response");
+            long elapsed=(System.nanoTime()-start)/1_000_000;
+            Integer reported=response.getMetadata().getUsage().getTotalTokens();
+            Integer tokens=reported!=null&&reported>0?reported:null;
+            String modelId=response.getMetadata().getModel();
+            try {
+                var result=policy.validate(response.getResult().getOutput().getText(),facts);
+                LOG.info("选路实验 version={} promptHash={} model={} outcome={} formatCorrect=true routeCorrect=true pathCorrect=true referencesCorrect=true itemsCorrect=true elapsedMs={} totalTokens={}",RoutingInput.VERSION,policy.fingerprint(),modelId,result.status(),elapsed,tokens);
+                return policy.display(result,facts)+"\n模型调用耗时："+elapsed+"ms；Token："+(tokens==null?"服务未提供":tokens)+"；费用：未配置价格，不估算。";
+            }catch(RoutingPolicy.Rejected e){
+                LOG.info("选路实验 version={} promptHash={} model={} outcome=REJECTED audit={} elapsedMs={} totalTokens={}",RoutingInput.VERSION,policy.fingerprint(),modelId,e.audit(),elapsed,tokens);
+                return "【本次选路失败】\n模型输出未通过四层校验，未生成有效去向。未自动修正或重试，未执行业务操作。";
             }
-            if (!root.path("completeness").isObject())
-                throw new IllegalArgumentException("需要completeness说明各组资料是否完整。");
-            var flags = root.path("completeness").elements();
-            while (flags.hasNext()) {
-                JsonNode flag = flags.next();
-                if (!flag.isBoolean() && !flag.isNull())
-                    throw new IllegalArgumentException("completeness值仅允许true、false或null。");
-            }
-            for (String name : List.of("candidateErrors", "lcissuepol", "currentErrors", "historyErrors", "lwmission", "lbmission", "lwnotepad")) {
-                JsonNode rows = root.get(name);
-                if (rows != null && rows.isArray()) for (JsonNode row : rows)
-                    if (!row.isObject()) throw new IllegalArgumentException(name + "中的记录必须为对象。");
-            }
-            return json.writeValueAsString(root);
-        } catch (IllegalArgumentException e) { throw e; }
-        catch (Exception e) { throw new IllegalArgumentException("JSON无法解析，检查格式、重复字段和多余内容。"); }
+        }).subscribeOn(Schedulers.boundedElastic()).timeout(Duration.ofSeconds(50))
+          .onErrorResume(e->{LOG.warn("选路实验 version={} outcome=FAILED",RoutingInput.VERSION);
+              return Mono.just("【本次选路失败】\n模型调用或条件计算未完成，未生成有效去向。未执行业务操作，请核查服务后重新提交完整JSON。");});
     }
 }

@@ -1,3 +1,5 @@
+> 本文为历史实验说明。当前选路实验请使用 [新操作与字段说明](deal-issue-routing.md)，旧模板已退役。
+
 # 问题件提交试判
 
 本次在原 sluw-ai 中增加聊天试验，不包含独立 assessment 工程，不执行业务查询或核保、下发操作。
@@ -23,7 +25,7 @@
 
 ## 输入约定
 
-[空模板](../../src/main/resources/static/trial/issue-submission-template.json)默认全部资料未获取，不能用来演示完整判断。[合成示例](../../src/main/resources/static/trial/issue-submission-example.json)提供可填写的完整记录结构，非真实保单。
+[空模板](archive/issue-submission-template.json)默认全部资料未获取，不能用来演示完整判断。[合成示例](archive/issue-submission-example.json)提供可填写的完整记录结构，非真实保单。
 
 | 字段 | 来源和含义 |
 | --- | --- |
@@ -46,7 +48,7 @@ lcuwerror记录保留：contno、uwno、uwrulecode、uwerror、lettertype、auto
 
 ## 流程依据
 
-prompts/issue-submission-trial.txt保存AutoSendBL中dealIssue及相关依赖方法的只读文本，来源是用户提供的GBK原文件，保留原始行号。这不是自动同步机制；业务代码修改后需人工更新说明并重新核对案例。
+archive/issue-submission-trial.txt保存AutoSendBL中dealIssue及相关依赖方法的只读文本，来源是用户提供的GBK原文件，保留原始行号。这不是自动同步机制；业务代码修改后需人工更新说明并重新核对案例。
 
 注意：isAllAuto为true表示存在非自动处理规则；新增内部问题的判断顺序、历史重复规则的匹配粒度、count(distinct uwno)和SQL NULL语义均不可改写。代码return或拟调用uwPass不等于已转人工、已通过或已下发。
 

@@ -1,0 +1,1835 @@
+[
+  {
+    "id": "pass",
+    "expectedBranch": "PASS",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "task_exit_ignores_missing_history",
+    "expectedBranch": "E01",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": false,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": null,
+      "lwmission": [
+        {
+          "activityid": "0000001100",
+          "lastoperator": "OTHER"
+        }
+      ],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "archive_task_exit",
+    "expectedBranch": "E01",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [
+        {
+          "activityid": "0000001100",
+          "lastoperator": "OTHER"
+        }
+      ],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "null_operator",
+    "expectedBranch": "PASS",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [
+        {
+          "activityid": "0000001100",
+          "lastoperator": null
+        }
+      ],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "prior_auto_1",
+    "expectedBranch": "E02",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        },
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "1",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "6"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "prior_auto_3",
+    "expectedBranch": "E02",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        },
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "3",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "6"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "prior_auto_5",
+    "expectedBranch": "E02",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        },
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "5",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "6"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "no_prior",
+    "expectedBranch": "E03",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "nonautomatic",
+    "expectedBranch": "E04",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "missing_historyErrors",
+    "expectedBranch": "D02",
+    "expectedStatus": "INSUFFICIENT",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": false,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": null,
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "missing_lwmission",
+    "expectedBranch": "D01",
+    "expectedStatus": "INSUFFICIENT",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": false,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": null,
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "dictionary_R",
+    "expectedBranch": "PASS",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [
+        "R"
+      ]
+    }
+  },
+  {
+    "id": "dictionary_None",
+    "expectedBranch": "PASS",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": [
+        null
+      ]
+    }
+  },
+  {
+    "id": "unknown_dictionary",
+    "expectedBranch": "D04",
+    "expectedStatus": "INSUFFICIENT",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": false
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": null
+    }
+  },
+  {
+    "id": "internal_before_note",
+    "expectedBranch": "INTERNAL",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [
+      "INTERNAL"
+    ],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [
+        {
+          "noteflag": "disagree"
+        }
+      ],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "repeat_internal_ignores_person",
+    "expectedBranch": "PASS",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P2",
+          "uwerror": "合成规则",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "internal_match_P1",
+    "expectedBranch": "EXT",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [
+      "EXTERNAL1"
+    ],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        },
+        {
+          "uwno": 2,
+          "uwrulecode": "EXT",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "internal_match_P2",
+    "expectedBranch": "INTERNAL",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [
+      "INTERNAL"
+    ],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P2",
+          "uwerror": "合成规则",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        },
+        {
+          "uwno": 2,
+          "uwrulecode": "EXT",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "external_once",
+    "expectedBranch": "EXT",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [
+      "EXTERNAL1"
+    ],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 3,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "3"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "duplicate_batch",
+    "expectedBranch": "EXT",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [
+      "EXTERNAL1"
+    ],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 3,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "3"
+        },
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P2",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "3"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "exact_two",
+    "expectedBranch": "E14",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 3,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "3"
+        },
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "3"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "different_rule",
+    "expectedBranch": "EXT",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [
+      "EXTERNAL1"
+    ],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 3,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "3"
+        },
+        {
+          "uwno": 2,
+          "uwrulecode": "OTHER",
+          "insuredno": "P1",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "3"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "different_person_counts",
+    "expectedBranch": "E14",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 3,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "3"
+        },
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P2",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "3"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "positive_pass_path",
+    "expectedBranch": "E07",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        },
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": "1",
+          "autoflag": null
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [
+        {
+          "noteflag": "other"
+        }
+      ],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "blocking_note_pass_path",
+    "expectedBranch": "E08",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [
+        {
+          "noteflag": "kidamntrisk"
+        }
+      ],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "note_no_action",
+    "expectedBranch": "NO_NOTE",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [
+        {
+          "noteflag": "other"
+        }
+      ],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "exam",
+    "expectedBranch": "NOTE",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [
+      "EXAM"
+    ],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        },
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": null,
+          "peitem": "PE1",
+          "positivesign": "1",
+          "autoflag": null
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [
+        {
+          "noteflag": "autope"
+        }
+      ],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "exam_no_pe",
+    "expectedBranch": "NOTE",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [
+      "EXAM"
+    ],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        },
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": "1",
+          "autoflag": null
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [
+        {
+          "noteflag": "autope"
+        }
+      ],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "positive_nonpass_path",
+    "expectedBranch": "E11",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        },
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": "1",
+          "autoflag": null
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "note_nonpass_path",
+    "expectedBranch": "E12",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "2",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [
+        {
+          "noteflag": "disagree"
+        }
+      ],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "no_combination",
+    "expectedBranch": "NO_COMBO",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "6",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "combined_three_types",
+    "expectedBranch": "COMBO",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [
+      "EXAM",
+      "EXTERNAL2",
+      "INVESTIGATION"
+    ],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": null,
+          "peitem": "PE1",
+          "positivesign": null,
+          "autoflag": null
+        },
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "1",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        },
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "3",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    },
+    "expectedSubjects": [
+      "PERSON:P1",
+      "APPLICANT",
+      "PERSON:P1"
+    ]
+  },
+  {
+    "id": "applicant_investigation",
+    "expectedBranch": "COMBO",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [
+      "INVESTIGATION"
+    ],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "5",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    },
+    "expectedSubjects": [
+      "APPLICANT"
+    ]
+  },
+  {
+    "id": "positive_blocks_investigation",
+    "expectedBranch": "NO_COMBO",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "1",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        },
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "1",
+          "peitem": null,
+          "positivesign": "1",
+          "autoflag": null
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "unsupported_combined_type",
+    "expectedBranch": "NO_SERVICE",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "uwerror": "合成规则",
+          "lettertype": "6",
+          "peitem": "PE1",
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [],
+      "autoallotbyerr": []
+    }
+  },
+  {
+    "id": "note_exam_keeps_original_insured_subject",
+    "expectedBranch": "NOTE",
+    "expectedStatus": "SELECTED",
+    "expectedKinds": [
+      "EXAM"
+    ],
+    "input": {
+      "schemaVersion": "DEAL_ISSUE_V1",
+      "contno": "SYNTHETIC-001",
+      "completeness": {
+        "currentErrors": true,
+        "historyErrors": true,
+        "lwmission": true,
+        "lbmission": true,
+        "lwnotepad": true,
+        "autoallotbyerr": true
+      },
+      "currentErrors": [
+        {
+          "uwno": 2,
+          "uwrulecode": null,
+          "insuredno": null,
+          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
+          "lettertype": null,
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": null
+        }
+      ],
+      "historyErrors": [
+        {
+          "uwno": 1,
+          "uwrulecode": "SYNTHETIC-R01",
+          "insuredno": "P1",
+          "lettertype": "4",
+          "peitem": null,
+          "positivesign": null,
+          "autoflag": "1"
+        },
+        {
+          "uwno": 1,
+          "uwrulecode": "R",
+          "insuredno": "P1",
+          "lettertype": "5",
+          "peitem": null,
+          "positivesign": "1",
+          "autoflag": null
+        }
+      ],
+      "lwmission": [],
+      "lbmission": [],
+      "lwnotepad": [
+        {
+          "noteflag": "autope"
+        }
+      ],
+      "autoallotbyerr": []
+    },
+    "expectedSubjects": [
+      "PERSON:P1"
+    ]
+  }
+]
