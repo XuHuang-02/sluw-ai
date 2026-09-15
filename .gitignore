@@ -2,8 +2,7 @@
 **/target/
 /install/
 /appserver/
-/ext-lib/*
-!/ext-lib/README.md
+/ext-lib/
 *.class
 *.jar
 *.war
@@ -46,7 +45,24 @@ local-settings.properties
 **/logs/
 **/*.hprof
 
-# Explicitly versioned vendor dependencies
-!/ext-lib/bes-lite-spring-boot-starter-11.5.0.004.jar
-!/ext-lib/bes-jdbcra-11.5.0.004.jar
-!/ext-lib/bes-websocket-11.5.0.004.jar
+# Local test sources (keep test-environment deployment scripts versioned)
+/test/
+/src/test/
+
+# Additional local build, editor and temporary files
+/out/
+/build/
+/tmp/
+/temp/
+.classpath
+.project
+.settings/
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+node_modules/
+.pytest_cache/
+.venv/
