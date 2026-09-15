@@ -50,7 +50,7 @@ public final class RoutingInput {
                 if (!rows.isArray() || rows.size() > 3000) throw new IllegalArgumentException(group + "必须为数组，且不超过3000条。");
                 for (JsonNode row : rows) {
                     if (group.equals("autoallotbyerr")) {
-                        if (!row.isNull() && !row.isTextual()) throw new IllegalArgumentException("排除规则编码必须为字符串或null。");
+                        if (!row.isNull() && (!row.isTextual() || row.asText().isEmpty())) throw new IllegalArgumentException("排除规则编码必须为非空字符串或null，数据库空值请明确填写null。");
                         continue;
                     }
                     Set<String> names = group.endsWith("Errors") ? errorFields(group) : group.equals("lwnotepad") ? NOTE_FIELDS : TASK_FIELDS;

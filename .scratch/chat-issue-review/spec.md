@@ -191,3 +191,14 @@ dealIssue 读取已有核保错误、历史下发、任务和记事本记录，�
 ## 2026-09-15：SQL边界复现与修复
 
 依据原码纠正审查假设：hasOther用于DISTINCT唯一值判定，不是SQL <>；空类型有体检项映射peitem有明确原码依据。已复现真实问题：NULL编码NOT IN空字典的组合候选被漏掉（72组SQLite独立预期中4组失败），expected缺失items返回null（1组失败）。修复SQL三值在WHERE边界转换，正向命名规则筛选；缺失items与未就绪叶子均内部失败。候选完整性UNKNOWN即返回UNKNOWN，Ready门槛继续保留。144项Java测试通过，实际业务数据库SQL对拍仍未执行。
+
+
+## 2026-09-15：候选就绪与审计引用修复
+
+删除hasNoteExam为FALSE时覆盖noteExamReady的逻辑，完整空列表保持Ready=TRUE。当前D09无候选本来就走NO_NOTE，之前没有复现报告失败，但Ready语义错误已修正。
+
+hasCombined是原查询是否有候选，hasCombinedServices是是否有可执行服务；两者允许不同。D15经R_COMBO及D16，在没有服务时走NO_SERVICE，不补造映射，也不把查询改为排除原有类型。回归覆盖此路径。
+
+NULL规则编码且字典非空时引用具体uwrulecode字段与整个字典（证明非空），不把第0项误写为匹配值。firstBatch同时保留当前行及顶层uwno。Ready的负向引用仍保留，使用appendAuditEvidence明确表示完整列表审计；exists命中后停止，其否定证据仍保留。输入拒绝字典空字符串，SQL NULL继续接受。
+
+新增4项测试，修复前3项失败，修复后148项Java测试全部通过。此前5413549已通过GitHub API验证同步，仓库为私有。本节为后续补充修复；未修改用户新出现的test.py。

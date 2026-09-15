@@ -172,3 +172,14 @@ expected与报告组装错误包装为InternalFailure，保留cause和阶段；�
 候选列表有任何未解决来源时返回UNKNOWN；保留R_INTERNAL/R_EXT/R_NOTE/R_COMBO门槛。叶子取得处理项还必须验证对应Ready为TRUE且列表存在、非空、类型和对象合法；缺失列表抛内部错误，禁止用空列表兜底。
 
 144项Java测试通过，其中72组用本地SQLite执行原SQL筛选/DISTINCT逻辑生成预期的对拍覆盖编码NULL、类型NULL、空/含NULL字典和体检项组合。修复前有4个SQL结果不一致与1个缺失items失败，修复后通过。此为独立本地SQL语义验证，未在公司实际数据库及驱动上验证，不代替业务数据库方言验收。原36个分支案例继续通过。
+
+
+## 2026-09-15：候选就绪与审计引用修复
+
+删除hasNoteExam为FALSE时覆盖noteExamReady的逻辑，完整空列表保持Ready=TRUE。当前D09无候选本来就走NO_NOTE，之前没有复现报告失败，但Ready语义错误已修正。
+
+hasCombined是原查询是否有候选，hasCombinedServices是是否有可执行服务；两者允许不同。D15经R_COMBO及D16，在没有服务时走NO_SERVICE，不补造映射，也不把查询改为排除原有类型。回归覆盖此路径。
+
+NULL规则编码且字典非空时引用具体uwrulecode字段与整个字典（证明非空），不把第0项误写为匹配值。firstBatch同时保留当前行及顶层uwno。Ready的负向引用仍保留，使用appendAuditEvidence明确表示完整列表审计；exists命中后停止，其否定证据仍保留。输入拒绝字典空字符串，SQL NULL继续接受。
+
+新增4项测试，修复前3项失败，修复后148项Java测试全部通过。此前5413549已通过GitHub API验证同步，仓库为私有。本节为后续补充修复；未修改用户新出现的test.py。

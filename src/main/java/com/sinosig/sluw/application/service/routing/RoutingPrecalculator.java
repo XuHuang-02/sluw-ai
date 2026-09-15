@@ -16,7 +16,9 @@ public final class RoutingPrecalculator {
     private static final Set<String> OTHER_AUTO_TYPES = Set.of("1", "3", "5");
     private static final Set<String> PRIOR_AUTO_FLAGS = Set.of("1", "2", "3");
     private int batch(Row r) { return r.ref().startsWith("currentErrors[") ? input.currentBatch() : r.data().path("uwno").asInt(); }
-    private Fact firstBatch(Row r) { return known(batch(r)==1, r.ref().startsWith("currentErrors[") ? "uwno" : r.ref()); }
+    private Fact firstBatch(Row r) {
+        return r.ref().startsWith("currentErrors[") ? known(batch(r)==1,r.ref(),"uwno") : known(batch(r)==1,r.ref());
+    }
     private record Row(JsonNode data, String ref) {}
     private final RoutingInput input;
     private final Map<String, Fact> facts = new LinkedHashMap<>();
@@ -41,7 +43,12 @@ public final class RoutingPrecalculator {
     }
     private Fact exists(String group, Function<Row, Fact> predicate) {
         Fact result=known(false);
-        for(Row r:rows(group))result=or(result,predicate.apply(r));
+        // A positive witness suffices; a negative EXISTS retains the inspected rows and
+        // completeness proof so the report can explain why no record matched.
+        for(Row r:rows(group)) {
+            result=or(result,predicate.apply(r));
+            if(result.value()==Truth.TRUE)return result;
+        }
         if(result.value()==Truth.TRUE)return result;
         return input.complete(group) ? merge(result.value(),result,known(false,"completeness."+group)) : or(result,unknown(group));
     }
@@ -66,10 +73,13 @@ public final class RoutingPrecalculator {
     }
     private Fact matchesDictionaryNotInWhere(Row r) {
         String code=value(r,"uwrulecode");var dict=input.rows("autoallotbyerr");
+        // NULL NOT IN a nonempty set never passes WHERE. The dictionary is cited only
+        // as proof of nonemptiness, not as if its first value matched the NULL code.
+        if(code==null && !dict.isEmpty())return known(false,r.ref(),r.ref()+".uwrulecode","autoallotbyerr");
         var values=new ArrayList<String>();int blocker=-1;
         for(int i=0;i<dict.size();i++) {
             String member=dict.get(i).isNull()?null:dict.get(i).asText();values.add(member);
-            if(blocker<0 && (code==null||member==null||code.equals(member)))blocker=i;
+            if(blocker<0 && (member==null||Objects.equals(code,member)))blocker=i;
         }
         // Complete SQL predicates are reduced to WHERE membership only here. With partial
         // input, a known blocking dictionary row suffices; otherwise completeness is required.
@@ -106,7 +116,7 @@ public final class RoutingPrecalculator {
             for(Row r:rows(group)){
                 Fact selected=predicate.apply(r);
                 if(selected.value()==Truth.UNKNOWN){ready=and(ready,selected);continue;}
-                ready=merge(ready.value(),ready,new Fact(Truth.TRUE,selected.refs(),List.of()));
+                ready=appendAuditEvidence(ready,selected);
                 if(selected.value()!=Truth.TRUE)continue;
                 Kind k=kind.apply(r);
                 if(k==null)continue; // dealAll has no service arm for this type; do not invent one.
@@ -121,6 +131,11 @@ public final class RoutingPrecalculator {
         Fact has=known(!out.isEmpty());
         if(ready.value()==Truth.UNKNOWN)has=ready;
         return has;
+    }
+    /** Preserve inclusion AND exclusion evidence. Ready proves the whole list was checked;
+     * its refs are used by R_* nodes in the report, not just the selected service items. */
+    private static Fact appendAuditEvidence(Fact ready, Fact evaluatedRow) {
+        return new Fact(ready.value(),union(ready.refs(),evaluatedRow.refs()),ready.missing());
     }
     private String resolveSubject(String key, Kind kind, Row row) {
         if (kind==Kind.INTERNAL || kind==Kind.EXTERNAL1) return "POLICY";
@@ -163,8 +178,7 @@ public final class RoutingPrecalculator {
         };
         facts.put("hasCombined",allErrors(combined));
         facts.put("hasCombinedServices",candidates("combined",autope.value()==Truth.FALSE?List.of("currentErrors"):List.of("currentErrors","historyErrors"),combined,this::combinedKind));
-        // Empty optional candidate queries can be resolved without requiring unrelated groups.
-        if(facts.get("hasNoteExam").value()==Truth.FALSE)facts.put("noteExamReady",facts.get("hasNoteExam"));
+        // Readiness comes only from candidates(): a complete empty list is ready, not present.
         if (!facts.keySet().equals(CONDITION_KEYS) || !items.keySet().equals(ITEM_KEYS)) throw new IllegalStateException("precalculation contract mismatch");
         return new Facts(RoutingInput.VERSION,Collections.unmodifiableMap(facts),Collections.unmodifiableMap(items));
     }
