@@ -7,7 +7,7 @@
 - 继续使用 AgentController、ChatRequest.issueSubmissionTrial、原同步/SSE接口和页面消息展示；普通问答与其 RAGFlow 不变。
 - 在原 IssueSubmissionTrialService 中替换旧的自由文本试判；新增纯条件计算、共享分支规范和严格结果校验。
 - 复用已配置 ChatModel 的服务选择和连接设置。DashScope复制现有实例配置，DeepSeek复用现有Spring配置属性及HTTP构建器。选路实例温度固定为0，最多尝试一次，禁用工具执行及正文观察日志；不改普通问答实例。
-- 复用现有 Jackson 和 Spring AI BeanOutputConverter。后者生成输出契约提示；实际输出仍由严格Jackson解析和业务校验核验，不依赖模型原生JSON Schema支持。
+- 复用现有 Jackson 和 Spring AI BeanOutputConverter。后者同时生成输出契约提示并将返回值转换为Decision；传入严格Jackson映射器，保留重复键、额外字段、尾随内容和缺失构造字段检查，不依赖模型原生JSON Schema支持。
 - 原始业务 Java 文件不修改、不引入其数据库或工作流依赖。通知单生成、任务池、下发标记更新等由未来服务执行。
 - 旧 BEFORE_SEND_INTERNAL_AGENCY / ISSUE_FLOW 模板已退役，旧输入会提示使用新模板，不会静默按新含义判断。旧模板和提示词已移到docs/trial/archive，仅供历史核对，不随应用发布。
 
@@ -109,7 +109,7 @@
 
 ## 验收与模型评测
 
-当前工程验证：48项Java测试通过（含36个代码分支案例），6项页面交互检查通过；未调用真实模型。
+当前工程验证：51项Java测试通过（含36个代码分支案例、用户返回值回放与日志配置验证）。此前6项页面交互检查通过；未重新调用真实模型。测试代码按用户要求仅保留本地，不再随仓库提供。
 
 工程对照集：`docs/trial/deal-issue-cases.json`。案例预期依据原代码推导，仍需业务负责人审阅。单元测试使用模型替身，不代表真实模型达标。
 
@@ -130,3 +130,16 @@
 首轮固定案例不得出现错误去向、漏项或越过未知前置条件。真实模型评测未完成前，不宣称具备真实业务选路准确率。
 
 原始GBK业务文件SHA-256：4cb8da1734b783125c04339d8750dd750afc511df13950d6550cfdf1ad8a12d2。
+
+
+## 2026-09-15：结构化转换与诊断修复
+
+模型返回的单个JSON代码块通过Spring AI的BeanOutputConverter转换；复用WhitespaceCleaner和MarkdownCodeBlockCleaner处理外围包装，不启用ThinkingTagCleaner，不从任意解释文字中截取JSON。不修补JSON字段、引用或去向。
+
+明确缺失字段仍拒绝，包括允许显式null但不允许省略的route；多段JSON、尾随文字、重复键、额外字段和非法枚举仍拒绝。业务校验与不重试约定不变。
+
+失败页面区分结构无法转换、去向/分支错误、路径错误、引用错误、处理项错误。缺少引用时仅显示程序预期中的引用位置，不回显模型编造的原文。
+
+用户提供的合成返回值在去掉格式阻碍后，仍因缺少completeness.lwmission被正确拦截；修正该引用的回放通过。这不代表线上模型已不再漏引用。
+
+logback-spring.xml关闭BeanOutputConverter自身的原文错误日志，应用保留安全诊断。AesKeyController不再打印AES密钥，RequestDecryptionFilter只记录字符数，不打印解密正文。

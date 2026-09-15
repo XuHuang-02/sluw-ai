@@ -63,7 +63,7 @@ public class RequestDecryptionFilter implements Filter {
                 JsonNode rootNode = objectMapper.readTree(encryptedRequestBody);
                 String encryptedQuestion = rootNode.get("question").asText();
                 String decryptedQuestion = AesUtil.decrypt(encryptedQuestion);
-                logger.info("解密后的问题内容："+decryptedQuestion);
+                logger.debug("聊天请求解密完成，字符数={}", decryptedQuestion.length());
 
                 //  用解密后的问题替换原JSON中的字段
                 ((com.fasterxml.jackson.databind.node.ObjectNode) rootNode).put("question", decryptedQuestion);

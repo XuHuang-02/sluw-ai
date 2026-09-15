@@ -52,7 +52,7 @@ public class IssueSubmissionTrialService {
                 return policy.display(result,facts)+"\n模型调用耗时："+elapsed+"ms；Token："+(tokens==null?"服务未提供":tokens)+"；费用：未配置价格，不估算。";
             }catch(RoutingPolicy.Rejected e){
                 LOG.info("选路实验 version={} promptHash={} model={} outcome=REJECTED audit={} elapsedMs={} totalTokens={}",RoutingInput.VERSION,policy.fingerprint(),modelId,e.audit(),elapsed,tokens);
-                return "【本次选路失败】\n模型输出未通过四层校验，未生成有效去向。未自动修正或重试，未执行业务操作。";
+                return "【本次选路失败】\n"+e.getMessage()+"\n未生成有效去向，未自动修改业务内容或重试，未执行业务操作。";
             }
         }).subscribeOn(Schedulers.boundedElastic()).timeout(Duration.ofSeconds(50))
           .onErrorResume(e->{LOG.warn("选路实验 version={} outcome=FAILED",RoutingInput.VERSION);
