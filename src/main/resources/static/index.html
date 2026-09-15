@@ -871,7 +871,7 @@
                 const response = await fetch('/trial/deal-issue-example.json', { signal: controller.signal });
                 if (!response.ok) throw new Error('unavailable');
                 const sample = await response.json();
-                if (sample.schemaVersion !== 'DEAL_ISSUE_V1') throw new Error('invalid sample');
+                if (!Number.isInteger(sample.uwno) || sample.uwno < 1 || !Array.isArray(sample.currentErrors)) throw new Error('invalid sample');
                 input.value = JSON.stringify(sample, null, 2);
                 toggle.checked = true;
                 toggle.dispatchEvent(new Event('change', { bubbles: true }));

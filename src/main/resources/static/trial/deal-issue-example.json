@@ -1,6 +1,6 @@
 {
-  "schemaVersion": "DEAL_ISSUE_V1",
   "contno": "SYNTHETIC-001",
+  "uwno": 2,
   "completeness": {
     "currentErrors": true,
     "historyErrors": true,
@@ -11,14 +11,13 @@
   },
   "currentErrors": [
     {
-      "uwno": 2,
       "uwrulecode": null,
       "insuredno": null,
-      "uwerror": "问题件修改完毕后，没有未通过的核保规则",
       "lettertype": null,
       "peitem": null,
       "positivesign": null,
-      "autoflag": null
+      "autoflag": null,
+      "noFailedRules": true
     }
   ],
   "historyErrors": [

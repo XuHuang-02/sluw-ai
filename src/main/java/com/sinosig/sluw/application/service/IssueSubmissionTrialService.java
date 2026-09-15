@@ -40,7 +40,7 @@ public class IssueSubmissionTrialService {
             var facts=new RoutingPrecalculator(snapshot).calculate();
             long start=System.nanoTime();
             var response=client().prompt(new Prompt(List.of(new SystemMessage(policy.prompt()),
-                new UserMessage(RoutingInput.JSON.writeValueAsString(facts))))).call().chatResponse();
+                new UserMessage(RoutingInput.writeJson(policy.modelInput(facts)))))).call().chatResponse();
             if(response==null||response.getResult()==null)throw new IllegalStateException("empty response");
             long elapsed=(System.nanoTime()-start)/1_000_000;
             Integer reported=response.getMetadata().getUsage().getTotalTokens();
@@ -48,11 +48,18 @@ public class IssueSubmissionTrialService {
             String modelId=response.getMetadata().getModel();
             try {
                 var result=policy.validate(response.getResult().getOutput().getText(),facts);
-                LOG.info("选路实验 version={} promptHash={} model={} outcome={} formatCorrect=true routeCorrect=true pathCorrect=true referencesCorrect=true itemsCorrect=true elapsedMs={} totalTokens={}",RoutingInput.VERSION,policy.fingerprint(),modelId,result.status(),elapsed,tokens);
+                LOG.info("选路实验 version={} promptHash={} model={} outcome={} modelFormatCorrect=true modelBranchCorrect=true serverReportCorrect=true elapsedMs={} totalTokens={}",RoutingInput.VERSION,policy.fingerprint(),modelId,result.status(),elapsed,tokens);
                 return policy.display(result,facts)+"\n模型调用耗时："+elapsed+"ms；Token："+(tokens==null?"服务未提供":tokens)+"；费用：未配置价格，不估算。";
             }catch(RoutingPolicy.Rejected e){
                 LOG.info("选路实验 version={} promptHash={} model={} outcome=REJECTED audit={} elapsedMs={} totalTokens={}",RoutingInput.VERSION,policy.fingerprint(),modelId,e.audit(),elapsed,tokens);
                 return "【本次选路失败】\n"+e.getMessage()+"\n未生成有效去向，未自动修改业务内容或重试，未执行业务操作。";
+            }catch(RoutingPolicy.InternalFailure e){
+                LOG.warn("选路实验 version={} promptHash={} outcome=SERVER_ERROR phase={} causeType={} elapsedMs={} totalTokens={}",
+                    RoutingInput.VERSION,policy.fingerprint(),e.phase(),e.getCause().getClass().getSimpleName(),elapsed,tokens);
+                return "【本次选路失败】\n服务端规则核验或报告组装失败，未生成有效去向，未重试或执行业务操作。";
+            }catch(IllegalStateException e){
+                LOG.warn("选路实验 version={} outcome=SERVER_REPORT_FAILED elapsedMs={} totalTokens={}",RoutingInput.VERSION,elapsed,tokens);
+                return "【本次选路失败】\n服务端规则核验或报告组装失败，未生成有效去向，未重试或执行业务操作。";
             }
         }).subscribeOn(Schedulers.boundedElastic()).timeout(Duration.ofSeconds(50))
           .onErrorResume(e->{LOG.warn("选路实验 version={} outcome=FAILED",RoutingInput.VERSION);

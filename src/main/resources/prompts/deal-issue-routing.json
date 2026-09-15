@@ -1,344 +1,347 @@
-[
-  {
-    "id": "D01",
-    "condition": "nonAutoTask",
-    "yes": "E01",
-    "no": "D02",
-    "route": null,
-    "itemKey": null,
-    "description": "AutoSendBL:140-145；存在非指定操作员的1100任务记录，退出自动处理。"
-  },
-  {
-    "id": "D02",
-    "condition": "priorOtherAuto",
-    "yes": "E02",
-    "no": "D03",
-    "route": null,
-    "itemKey": null,
-    "description": "148-152；任意批次存在autoflag非空且lettertype为1/3/5的记录。"
-  },
-  {
-    "id": "D03",
-    "condition": "priorInternalOrExternal1",
-    "yes": "D04",
-    "no": "E03",
-    "route": null,
-    "itemKey": null,
-    "description": "154-159；任意批次存在autoflag为1/2/3的记录才继续。"
-  },
-  {
-    "id": "D04",
-    "condition": "nonAutomaticRule",
-    "yes": "E04",
-    "no": "D05",
-    "route": null,
-    "itemKey": null,
-    "description": "171-178、286-290；当前批次存在非自动下发规则则退出。"
-  },
-  {
-    "id": "D05",
-    "condition": "passCandidate",
-    "yes": "D06",
-    "no": "D10",
-    "route": null,
-    "itemKey": null,
-    "description": "176-178、263-280；无未通过话术、全部排除或仅重复内部问题件，三者任一成立。"
-  },
-  {
-    "id": "D06",
-    "condition": "hasNote",
-    "yes": "D07",
-    "no": "PASS",
-    "route": null,
-    "itemKey": null,
-    "description": "181-195；没有非空记事本标记则建议调用核保通过服务。"
-  },
-  {
-    "id": "D07",
-    "condition": "positiveUnmarked",
-    "yes": "E07",
-    "no": "D08",
-    "route": null,
-    "itemKey": null,
-    "description": "186-189；存在任意批次阳性且函件类型和体检项为空的记录则退出。"
-  },
-  {
-    "id": "D08",
-    "condition": "blockingNote",
-    "yes": "E08",
-    "no": "D09",
-    "route": null,
-    "itemKey": null,
-    "description": "191-195；disagree/kidamntrisk退出，否则检查记事本体检候选。"
-  },
-  {
-    "id": "D09",
-    "condition": "hasNoteExam",
-    "yes": "R_NOTE",
-    "no": "NO_NOTE",
-    "route": null,
-    "itemKey": null,
-    "description": "500-525；autope记事本且批次1阳性记录。原查询未要求peitem非空。"
-  },
-  {
-    "id": "D10",
-    "condition": "newInternal",
-    "yes": "R_INTERNAL",
-    "no": "D11",
-    "route": null,
-    "itemKey": null,
-    "description": "202-206、302-307；优先新增内部问题件，历史按规则编码及insuredno匹配。"
-  },
-  {
-    "id": "D11",
-    "condition": "positiveUnmarked",
-    "yes": "E11",
-    "no": "D12",
-    "route": null,
-    "itemKey": null,
-    "description": "209-212；在内部问题件之后检查阳性退出条件。"
-  },
-  {
-    "id": "D12",
-    "condition": "blockingNote",
-    "yes": "E12",
-    "no": "D13",
-    "route": null,
-    "itemKey": null,
-    "description": "214-216；在内部问题件之后检查记事本退出条件。"
-  },
-  {
-    "id": "D13",
-    "condition": "hasExternal1",
-    "yes": "D14",
-    "no": "D15",
-    "route": null,
-    "itemKey": null,
-    "description": "218-234；先处理当前外1，否则检查组合处理。"
-  },
-  {
-    "id": "D14",
-    "condition": "external1Limit",
-    "yes": "E14",
-    "no": "R_EXT",
-    "route": null,
-    "itemKey": null,
-    "description": "220-227；任一当前外1规则在历史其他批次自动下发达到2次，退出整个分支。"
-  },
-  {
-    "id": "D15",
-    "condition": "hasCombined",
-    "yes": "R_COMBO",
-    "no": "NO_COMBO",
-    "route": null,
-    "itemKey": null,
-    "description": "231-234、369-404；check(1)无候选则本段代码不再产生处理动作。"
-  },
-  {
-    "id": "R_NOTE",
-    "condition": "noteExamReady",
-    "yes": "NOTE",
-    "no": "INVALID",
-    "route": null,
-    "itemKey": null,
-    "description": "完整处理项已可确定才返回有效去向；未知则停止，不能漏项。"
-  },
-  {
-    "id": "R_INTERNAL",
-    "condition": "internalReady",
-    "yes": "INTERNAL",
-    "no": "INVALID",
-    "route": null,
-    "itemKey": null,
-    "description": "完整处理项已可确定才返回有效去向；未知则停止，不能漏项。"
-  },
-  {
-    "id": "R_EXT",
-    "condition": "external1Ready",
-    "yes": "EXT",
-    "no": "INVALID",
-    "route": null,
-    "itemKey": null,
-    "description": "完整处理项已可确定才返回有效去向；未知则停止，不能漏项。"
-  },
-  {
-    "id": "R_COMBO",
-    "condition": "combinedReady",
-    "yes": "D16",
-    "no": "INVALID",
-    "route": null,
-    "itemKey": null,
-    "description": "完整处理项已可确定才返回有效去向；未知则停止，不能漏项。"
-  },
-  {
-    "id": "E01",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "EXIT_AUTO",
-    "itemKey": null,
-    "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
-  },
-  {
-    "id": "E02",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "EXIT_AUTO",
-    "itemKey": null,
-    "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
-  },
-  {
-    "id": "E03",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "EXIT_AUTO",
-    "itemKey": null,
-    "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
-  },
-  {
-    "id": "E04",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "EXIT_AUTO",
-    "itemKey": null,
-    "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
-  },
-  {
-    "id": "E07",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "EXIT_AUTO",
-    "itemKey": null,
-    "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
-  },
-  {
-    "id": "E08",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "EXIT_AUTO",
-    "itemKey": null,
-    "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
-  },
-  {
-    "id": "E11",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "EXIT_AUTO",
-    "itemKey": null,
-    "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
-  },
-  {
-    "id": "E12",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "EXIT_AUTO",
-    "itemKey": null,
-    "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
-  },
-  {
-    "id": "E14",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "EXIT_AUTO",
-    "itemKey": null,
-    "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
-  },
-  {
-    "id": "PASS",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "RECOMMEND_PASS",
-    "itemKey": null,
-    "description": "建议调用核保通过服务，未执行，不代表已通过。"
-  },
-  {
-    "id": "INTERNAL",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "INTERNAL",
-    "itemKey": "internal",
-    "description": "内部问题件处理建议。"
-  },
-  {
-    "id": "EXT",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "EXTERNAL1",
-    "itemKey": "external1",
-    "description": "外1问题件处理建议；不生成下发内容。"
-  },
-  {
-    "id": "NOTE",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "NOTE_EXAM",
-    "itemKey": "noteExam",
-    "description": "记事本阳性体检处理建议。"
-  },
-  {
-    "id": "COMBO",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "COMBINED",
-    "itemKey": "combined",
-    "description": "组合处理建议，按候选项列出体检、契调及外2。"
-  },
-  {
-    "id": "NO_NOTE",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "NO_ACTION",
-    "itemKey": null,
-    "description": "进入sendjsbyx但查询无候选；代码未规定其他后续动作。"
-  },
-  {
-    "id": "NO_COMBO",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "NO_ACTION",
-    "itemKey": null,
-    "description": "check(1)无候选；代码未规定其他后续动作。"
-  },
-  {
-    "id": "INVALID",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "NO_ACTION",
-    "itemKey": null,
-    "description": "不可达保护节点；候选计算异常时不能输出有效结果。"
-  },
-  {
-    "id": "D16",
-    "condition": "hasCombinedServices",
-    "yes": "COMBO",
-    "no": "NO_SERVICE",
-    "route": null,
-    "itemKey": null,
-    "description": "1088-1102；候选分组仅peitem/report/3匹配处理服务，其他类型不推断服务。"
-  },
-  {
-    "id": "NO_SERVICE",
-    "condition": null,
-    "yes": null,
-    "no": null,
-    "route": "NO_ACTION",
-    "itemKey": null,
-    "description": "组合查询有记录，但原代码未匹配任何处理服务；不推断人工流转。"
-  }
-]
+{
+  "entry": "D01",
+  "nodes": [
+    {
+      "id": "D01",
+      "condition": "nonAutoTask",
+      "yes": "E01",
+      "no": "D02",
+      "route": null,
+      "itemKey": null,
+      "description": "AutoSendBL:140-145；存在非指定操作员的1100任务记录，退出自动处理。"
+    },
+    {
+      "id": "D02",
+      "condition": "priorOtherAuto",
+      "yes": "E02",
+      "no": "D03",
+      "route": null,
+      "itemKey": null,
+      "description": "148-152；任意批次存在autoflag非空且lettertype为1/3/5的记录。"
+    },
+    {
+      "id": "D03",
+      "condition": "priorInternalOrExternal1",
+      "yes": "D04",
+      "no": "E03",
+      "route": null,
+      "itemKey": null,
+      "description": "154-159；任意批次存在autoflag为1/2/3的记录才继续。"
+    },
+    {
+      "id": "D04",
+      "condition": "nonAutomaticRule",
+      "yes": "E04",
+      "no": "D05",
+      "route": null,
+      "itemKey": null,
+      "description": "171-178、286-290；当前批次存在非自动下发规则则退出。"
+    },
+    {
+      "id": "D05",
+      "condition": "passCandidate",
+      "yes": "D06",
+      "no": "D10",
+      "route": null,
+      "itemKey": null,
+      "description": "176-178、263-280；无未通过话术、全部排除或仅重复内部问题件，三者任一成立。"
+    },
+    {
+      "id": "D06",
+      "condition": "hasNote",
+      "yes": "D07",
+      "no": "PASS",
+      "route": null,
+      "itemKey": null,
+      "description": "181-195；没有非空记事本标记则建议调用核保通过服务。"
+    },
+    {
+      "id": "D07",
+      "condition": "positiveUnmarked",
+      "yes": "E07",
+      "no": "D08",
+      "route": null,
+      "itemKey": null,
+      "description": "186-189；存在任意批次阳性且函件类型和体检项为空的记录则退出。"
+    },
+    {
+      "id": "D08",
+      "condition": "blockingNote",
+      "yes": "E08",
+      "no": "D09",
+      "route": null,
+      "itemKey": null,
+      "description": "191-195；disagree/kidamntrisk退出，否则检查记事本体检候选。"
+    },
+    {
+      "id": "D09",
+      "condition": "hasNoteExam",
+      "yes": "R_NOTE",
+      "no": "NO_NOTE",
+      "route": null,
+      "itemKey": null,
+      "description": "500-525；autope记事本且批次1阳性记录。原查询未要求peitem非空。"
+    },
+    {
+      "id": "D10",
+      "condition": "newInternal",
+      "yes": "R_INTERNAL",
+      "no": "D11",
+      "route": null,
+      "itemKey": null,
+      "description": "202-206、302-307；优先新增内部问题件，历史按规则编码及insuredno匹配。"
+    },
+    {
+      "id": "D11",
+      "condition": "positiveUnmarked",
+      "yes": "E11",
+      "no": "D12",
+      "route": null,
+      "itemKey": null,
+      "description": "209-212；在内部问题件之后检查阳性退出条件。"
+    },
+    {
+      "id": "D12",
+      "condition": "blockingNote",
+      "yes": "E12",
+      "no": "D13",
+      "route": null,
+      "itemKey": null,
+      "description": "214-216；在内部问题件之后检查记事本退出条件。"
+    },
+    {
+      "id": "D13",
+      "condition": "hasExternal1",
+      "yes": "D14",
+      "no": "D15",
+      "route": null,
+      "itemKey": null,
+      "description": "218-234；先处理当前外1，否则检查组合处理。"
+    },
+    {
+      "id": "D14",
+      "condition": "external1Limit",
+      "yes": "E14",
+      "no": "R_EXT",
+      "route": null,
+      "itemKey": null,
+      "description": "220-227；任一当前外1规则在历史其他批次自动下发达到2次，退出整个分支。"
+    },
+    {
+      "id": "D15",
+      "condition": "hasCombined",
+      "yes": "R_COMBO",
+      "no": "NO_COMBO",
+      "route": null,
+      "itemKey": null,
+      "description": "231-234、369-404；check(1)无候选则本段代码不再产生处理动作。"
+    },
+    {
+      "id": "R_NOTE",
+      "condition": "noteExamReady",
+      "yes": "NOTE",
+      "no": "INVALID",
+      "route": null,
+      "itemKey": null,
+      "description": "完整处理项已可确定才返回有效去向；未知则停止，不能漏项。"
+    },
+    {
+      "id": "R_INTERNAL",
+      "condition": "internalReady",
+      "yes": "INTERNAL",
+      "no": "INVALID",
+      "route": null,
+      "itemKey": null,
+      "description": "完整处理项已可确定才返回有效去向；未知则停止，不能漏项。"
+    },
+    {
+      "id": "R_EXT",
+      "condition": "external1Ready",
+      "yes": "EXT",
+      "no": "INVALID",
+      "route": null,
+      "itemKey": null,
+      "description": "完整处理项已可确定才返回有效去向；未知则停止，不能漏项。"
+    },
+    {
+      "id": "R_COMBO",
+      "condition": "combinedReady",
+      "yes": "D16",
+      "no": "INVALID",
+      "route": null,
+      "itemKey": null,
+      "description": "完整处理项已可确定才返回有效去向；未知则停止，不能漏项。"
+    },
+    {
+      "id": "E01",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "EXIT_AUTO",
+      "itemKey": null,
+      "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
+    },
+    {
+      "id": "E02",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "EXIT_AUTO",
+      "itemKey": null,
+      "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
+    },
+    {
+      "id": "E03",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "EXIT_AUTO",
+      "itemKey": null,
+      "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
+    },
+    {
+      "id": "E04",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "EXIT_AUTO",
+      "itemKey": null,
+      "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
+    },
+    {
+      "id": "E07",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "EXIT_AUTO",
+      "itemKey": null,
+      "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
+    },
+    {
+      "id": "E08",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "EXIT_AUTO",
+      "itemKey": null,
+      "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
+    },
+    {
+      "id": "E11",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "EXIT_AUTO",
+      "itemKey": null,
+      "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
+    },
+    {
+      "id": "E12",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "EXIT_AUTO",
+      "itemKey": null,
+      "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
+    },
+    {
+      "id": "E14",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "EXIT_AUTO",
+      "itemKey": null,
+      "description": "退出自动处理；不代表已转人工，具体原因见命中路径。"
+    },
+    {
+      "id": "PASS",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "RECOMMEND_PASS",
+      "itemKey": null,
+      "description": "建议调用核保通过服务，未执行，不代表已通过。"
+    },
+    {
+      "id": "INTERNAL",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "INTERNAL",
+      "itemKey": "internal",
+      "description": "内部问题件处理建议。"
+    },
+    {
+      "id": "EXT",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "EXTERNAL1",
+      "itemKey": "external1",
+      "description": "外1问题件处理建议；不生成下发内容。"
+    },
+    {
+      "id": "NOTE",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "NOTE_EXAM",
+      "itemKey": "noteExam",
+      "description": "记事本阳性体检处理建议。"
+    },
+    {
+      "id": "COMBO",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "COMBINED",
+      "itemKey": "combined",
+      "description": "组合处理建议，按候选项列出体检、契调及外2。"
+    },
+    {
+      "id": "NO_NOTE",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "NO_ACTION",
+      "itemKey": null,
+      "description": "进入sendjsbyx但查询无候选；代码未规定其他后续动作。"
+    },
+    {
+      "id": "NO_COMBO",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "NO_ACTION",
+      "itemKey": null,
+      "description": "check(1)无候选；代码未规定其他后续动作。"
+    },
+    {
+      "id": "INVALID",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "NO_ACTION",
+      "itemKey": null,
+      "description": "不可达保护节点；候选计算异常时不能输出有效结果。"
+    },
+    {
+      "id": "D16",
+      "condition": "hasCombinedServices",
+      "yes": "COMBO",
+      "no": "NO_SERVICE",
+      "route": null,
+      "itemKey": null,
+      "description": "1088-1102；候选分组仅peitem/report/3匹配处理服务，其他类型不推断服务。"
+    },
+    {
+      "id": "NO_SERVICE",
+      "condition": null,
+      "yes": null,
+      "no": null,
+      "route": "NO_ACTION",
+      "itemKey": null,
+      "description": "组合查询有记录，但原代码未匹配任何处理服务；不推断人工流转。"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
-  "schemaVersion": "DEAL_ISSUE_V1",
   "contno": "请填写脱敏单号",
+  "uwno": 1,
   "completeness": {
     "currentErrors": false,
     "historyErrors": false,

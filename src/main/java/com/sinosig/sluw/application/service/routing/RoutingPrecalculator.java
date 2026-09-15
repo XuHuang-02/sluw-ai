@@ -7,6 +7,16 @@ import static com.sinosig.sluw.application.service.routing.RoutingTypes.*;
 
 /** Pure predicates transcribed from AutoSendBL SQL; no model, database or workflow calls. */
 public final class RoutingPrecalculator {
+    public static final Set<String> CONDITION_KEYS = Set.of("nonAutoTask", "priorOtherAuto", "priorInternalOrExternal1",
+        "nonAutomaticRule", "passCandidate", "hasNote", "positiveUnmarked", "blockingNote", "newInternal",
+        "internalReady", "hasExternal1", "external1Limit", "external1Ready", "hasNoteExam", "noteExamReady",
+        "hasCombined", "hasCombinedServices", "combinedReady");
+    public static final Set<String> ITEM_KEYS = Set.of("internal", "external1", "noteExam", "combined");
+    private static final Set<String> EXCLUDED_CODES = Set.of("CS0001", "CS0002");
+    private static final Set<String> OTHER_AUTO_TYPES = Set.of("1", "3", "5");
+    private static final Set<String> PRIOR_AUTO_FLAGS = Set.of("1", "2", "3");
+    private int batch(Row r) { return r.ref().startsWith("currentErrors[") ? input.currentBatch() : r.data().path("uwno").asInt(); }
+    private Fact firstBatch(Row r) { return known(batch(r)==1, r.ref().startsWith("currentErrors[") ? "uwno" : r.ref()); }
     private record Row(JsonNode data, String ref) {}
     private final RoutingInput input;
     private final Map<String, Fact> facts = new LinkedHashMap<>();
@@ -40,19 +50,35 @@ public final class RoutingPrecalculator {
     private static boolean eq(Row r,String k,String v){return v.equals(value(r,k));}
     private static boolean sqlEq(String a,String b){return a!=null&&b!=null&&a.equals(b);}
     private static Fact test(Row r,boolean b){return known(b,r.ref());}
-    private Fact excluded(Row r) {
+    // These helpers return WHERE membership, not a raw SQL boolean. Its complement means
+    // "row not selected", not SQL NOT(predicate). SQL UNKNOWN is distinct from missing data.
+    private Fact matchesRuleWhere(Row r) {
         String code=value(r,"uwrulecode");
-        if(code==null||Set.of("CS0001","CS0002").contains(code))return test(r,true);
-        return not(inDictionaryComplement(r));
+        if(code==null||EXCLUDED_CODES.contains(code))return test(r,false);
+        return matchesDictionaryNotInWhere(r);
     }
-    /** SQL NOT IN: NULL in the dictionary prevents a TRUE match even for an absent code. */
-    private Fact inDictionaryComplement(Row r) {
-        String code=value(r,"uwrulecode");
-        if(code==null)return test(r,false);
-        var dict=input.rows("autoallotbyerr");
-        for(int i=0;i<dict.size();i++)if(dict.get(i).isNull()||code.equals(dict.get(i).asText()))return known(false,r.ref(),"autoallotbyerr["+i+"]");
-        return input.complete("autoallotbyerr")?known(true,r.ref(),"completeness.autoallotbyerr"):unknown("autoallotbyerr");
+    private enum SqlTruth { TRUE, FALSE, UNKNOWN }
+    private static SqlTruth sqlNotIn(String code,List<String> values) {
+        if(values.isEmpty())return SqlTruth.TRUE;
+        if(code==null)return SqlTruth.UNKNOWN;
+        if(values.contains(code))return SqlTruth.FALSE;
+        return values.contains(null)?SqlTruth.UNKNOWN:SqlTruth.TRUE;
     }
+    private Fact matchesDictionaryNotInWhere(Row r) {
+        String code=value(r,"uwrulecode");var dict=input.rows("autoallotbyerr");
+        var values=new ArrayList<String>();int blocker=-1;
+        for(int i=0;i<dict.size();i++) {
+            String member=dict.get(i).isNull()?null:dict.get(i).asText();values.add(member);
+            if(blocker<0 && (code==null||member==null||code.equals(member)))blocker=i;
+        }
+        // Complete SQL predicates are reduced to WHERE membership only here. With partial
+        // input, a known blocking dictionary row suffices; otherwise completeness is required.
+        if(input.complete("autoallotbyerr"))
+            return known(sqlNotIn(code,values)==SqlTruth.TRUE,r.ref(),blocker>=0 ? "autoallotbyerr["+blocker+"]" : "completeness.autoallotbyerr");
+        if(blocker>=0)return known(false,r.ref(),"autoallotbyerr["+blocker+"]");
+        return unknown("autoallotbyerr");
+    }
+
     private Fact internalHistory(Row r,boolean samePerson) {
         return exists("historyErrors",h->test(h,eq(h,"lettertype","4")
             &&sqlEq(value(h,"uwrulecode"),value(r,"uwrulecode"))
@@ -68,7 +94,7 @@ public final class RoutingPrecalculator {
     }
     private Kind combinedKind(Row r) {
         String type=value(r,"lettertype");
-        if(type==null)return Kind.EXAM;
+        if(type==null)return value(r,"peitem")!=null ? Kind.EXAM : null; // extractCustomerLetters filters empty type AND empty peitem.
         return switch(type){case "1","5"->Kind.INVESTIGATION;case "3"->Kind.EXTERNAL2;default->null;};
     }
     /** Produces a complete candidate list only when every possibly contributing row is resolved. */
@@ -84,7 +110,7 @@ public final class RoutingPrecalculator {
                 if(selected.value()!=Truth.TRUE)continue;
                 Kind k=kind.apply(r);
                 if(k==null)continue; // dealAll has no service arm for this type; do not invent one.
-                String subject = k==Kind.INTERNAL||k==Kind.EXTERNAL1?"POLICY":key.equals("combined")&&(eq(r,"lettertype","3")||eq(r,"lettertype","5"))?"APPLICANT":value(r,"insuredno")==null?null:"PERSON:"+value(r,"insuredno");
+                String subject = resolveSubject(key,k,r);
                 if(subject==null){ready=and(ready,unknown(r.ref()+".insuredno"));continue;}
                 String id=k.name()+"/"+subject;kinds.put(id,k);subjects.put(id,subject);
                 grouped.computeIfAbsent(id,x->new ArrayList<>()).add(r.ref());
@@ -93,19 +119,26 @@ public final class RoutingPrecalculator {
         var out=new ArrayList<Item>();grouped.forEach((id,refs)->out.add(new Item(kinds.get(id),subjects.get(id),refs.stream().sorted().toList())));
         items.put(key,List.copyOf(out));facts.put(key+"Ready",ready);
         Fact has=known(!out.isEmpty());
-        if(out.isEmpty()&&ready.value()==Truth.UNKNOWN)has=ready;
+        if(ready.value()==Truth.UNKNOWN)has=ready;
         return has;
+    }
+    private String resolveSubject(String key, Kind kind, Row row) {
+        if (kind==Kind.INTERNAL || kind==Kind.EXTERNAL1) return "POLICY";
+        if (key.equals("combined") && (eq(row,"lettertype","3") || eq(row,"lettertype","5"))) return "APPLICANT";
+        String person=value(row,"insuredno");
+        return person==null ? null : "PERSON:"+person;
     }
     public Facts calculate() {
         facts.put("nonAutoTask",or(exists("lwmission",r->test(r,eq(r,"activityid","0000001100")&&value(r,"lastoperator")!=null&&!eq(r,"lastoperator","mzhb-lhq"))),
             exists("lbmission",r->test(r,eq(r,"activityid","0000001100")&&value(r,"lastoperator")!=null&&!eq(r,"lastoperator","mzhb-lhq")))));
-        facts.put("priorOtherAuto",allErrors(r->test(r,value(r,"autoflag")!=null&&Set.of("1","3","5").contains(Objects.toString(value(r,"lettertype"),"")))));
-        facts.put("priorInternalOrExternal1",allErrors(r->test(r,Set.of("1","2","3").contains(Objects.toString(value(r,"autoflag"),"")))));
-        facts.put("nonAutomaticRule",exists("currentErrors",r->and(test(r,value(r,"lettertype")==null&&value(r,"peitem")==null&&value(r,"positivesign")==null),not(excluded(r)))));
-        Fact noError=exists("currentErrors",r->test(r,eq(r,"uwerror","问题件修改完毕后，没有未通过的核保规则")));
-        Fact allExcluded=not(exists("currentErrors",r->not(excluded(r))));
-        Fact hasInternal=exists("currentErrors",r->and(not(excluded(r)),test(r,eq(r,"lettertype","4"))));
-        Fact hasOther=exists("currentErrors",r->and(not(excluded(r)),test(r,!eq(r,"lettertype","4"))));
+        facts.put("priorOtherAuto",allErrors(r->test(r,value(r,"autoflag")!=null&&OTHER_AUTO_TYPES.contains(Objects.toString(value(r,"lettertype"),"")))));
+        facts.put("priorInternalOrExternal1",allErrors(r->test(r,PRIOR_AUTO_FLAGS.contains(Objects.toString(value(r,"autoflag"),"")))));
+        facts.put("nonAutomaticRule",exists("currentErrors",r->and(test(r,value(r,"lettertype")==null&&value(r,"peitem")==null&&value(r,"positivesign")==null),matchesRuleWhere(r))));
+        Fact noError=exists("currentErrors",r->test(r,r.data().path("noFailedRules").asBoolean()));
+        Fact allExcluded=not(exists("currentErrors",r->matchesRuleWhere(r)));
+        Fact hasInternal=exists("currentErrors",r->and(matchesRuleWhere(r),test(r,eq(r,"lettertype","4"))));
+        // Original query uses SELECT DISTINCT, so a NULL type also prevents the singleton {4}.
+        Fact hasOther=exists("currentErrors",r->and(matchesRuleWhere(r),test(r,!eq(r,"lettertype","4"))));
         Fact onlyRepeated=and(and(hasInternal,not(hasOther)),not(exists("currentErrors",r->newInternal(r,false))));
         facts.put("passCandidate",or(or(noError,allExcluded),onlyRepeated));
         facts.put("hasNote",exists("lwnotepad",r->test(r,value(r,"noteflag")!=null)));
@@ -117,14 +150,14 @@ public final class RoutingPrecalculator {
         facts.put("external1Limit",exists("currentErrors",this::limitReached));
         candidates("external1",List.of("currentErrors"),r->test(r,eq(r,"lettertype","2")),r->Kind.EXTERNAL1);
         Fact autope=exists("lwnotepad",r->test(r,eq(r,"noteflag","autope")));
-        Function<Row,Fact> notePredicate=r->and(test(r,eq(r,"positivesign","1")&&r.data().path("uwno").asInt()==1),autope);
+        Function<Row,Fact> notePredicate=r->and(and(test(r,eq(r,"positivesign","1")),firstBatch(r)),autope);
         facts.put("hasNoteExam",allErrors(notePredicate));
         candidates("noteExam",List.of("currentErrors","historyErrors"),notePredicate,r->Kind.EXAM);
         Fact investigationPositive=allErrors(r->test(r,eq(r,"positivesign","1")&&(eq(r,"lettertype","1")||eq(r,"lettertype","5"))));
         Function<Row,Fact> combined=r->{
             boolean current=r.ref().startsWith("currentErrors[");
-            Fact a=and(test(r,current&&(eq(r,"lettertype","3")||value(r,"peitem")!=null)&&value(r,"positivesign")==null),inDictionaryComplement(r));
-            Fact b=and(test(r,eq(r,"positivesign","1")&&r.data().path("uwno").asInt()==1&&value(r,"peitem")!=null),autope);
+            Fact a=and(test(r,current&&(eq(r,"lettertype","3")||value(r,"peitem")!=null)&&value(r,"positivesign")==null),matchesDictionaryNotInWhere(r));
+            Fact b=and(and(test(r,eq(r,"positivesign","1")&&value(r,"peitem")!=null),firstBatch(r)),autope);
             Fact c=and(test(r,current&&(eq(r,"lettertype","1")||eq(r,"lettertype","5"))),not(investigationPositive));
             return or(or(a,b),c);
         };
@@ -132,6 +165,7 @@ public final class RoutingPrecalculator {
         facts.put("hasCombinedServices",candidates("combined",autope.value()==Truth.FALSE?List.of("currentErrors"):List.of("currentErrors","historyErrors"),combined,this::combinedKind));
         // Empty optional candidate queries can be resolved without requiring unrelated groups.
         if(facts.get("hasNoteExam").value()==Truth.FALSE)facts.put("noteExamReady",facts.get("hasNoteExam"));
+        if (!facts.keySet().equals(CONDITION_KEYS) || !items.keySet().equals(ITEM_KEYS)) throw new IllegalStateException("precalculation contract mismatch");
         return new Facts(RoutingInput.VERSION,Collections.unmodifiableMap(facts),Collections.unmodifiableMap(items));
     }
 }

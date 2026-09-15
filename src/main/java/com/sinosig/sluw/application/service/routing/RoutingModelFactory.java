@@ -1,56 +1,76 @@
 package com.sinosig.sluw.application.service.routing;
 
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
+import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
+import io.micrometer.observation.ObservationRegistry;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.deepseek.DeepSeekChatModel;
 import org.springframework.ai.deepseek.DeepSeekChatOptions;
 import org.springframework.ai.deepseek.api.DeepSeekApi;
-import org.springframework.ai.model.deepseek.autoconfigure.DeepSeekChatProperties;
-import org.springframework.ai.model.deepseek.autoconfigure.DeepSeekConnectionProperties;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-import org.springframework.web.client.RestClient;
-import org.springframework.web.client.ResponseErrorHandler;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.util.ReflectionUtils;
 
-/** Reuses configured provider credentials/transports without mutating the ordinary chat model. */
+/** Copies model options while sharing the configured API/transport; never changes ordinary chat. */
 @Component
 public final class RoutingModelFactory {
-    private final ObjectProvider<DeepSeekChatProperties> chatProperties;
-    private final ObjectProvider<DeepSeekConnectionProperties> connectionProperties;
-    private final ObjectProvider<RestClient.Builder> rest;
-    private final ObjectProvider<WebClient.Builder> web;
-    private final ObjectProvider<ResponseErrorHandler> errors;
-    public RoutingModelFactory(ObjectProvider<DeepSeekChatProperties> chatProperties,
-        ObjectProvider<DeepSeekConnectionProperties> connectionProperties, ObjectProvider<RestClient.Builder> rest,
-        ObjectProvider<WebClient.Builder> web,ObjectProvider<ResponseErrorHandler> errors) {
-        this.chatProperties=chatProperties;this.connectionProperties=connectionProperties;this.rest=rest;this.web=web;this.errors=errors;
-    }
+    private static final RetryTemplate ONCE = RetryTemplate.builder().maxAttempts(1).build();
+
     public ChatModel isolate(ChatModel original) {
-        var once=RetryTemplate.builder().maxAttempts(1).build();
-        if(original instanceof DashScopeChatModel dash) {
-            com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions options=(com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions)dash.getDashScopeChatOptions().copy();
-            options.setTemperature(0.0);options.setToolCallbacks(java.util.List.of());options.setToolNames(java.util.Set.of());options.setInternalToolExecutionEnabled(false);
-            return dash.mutate().defaultOptions(options).retryTemplate(once)
-                .toolExecutionEligibilityPredicate((optionsIgnored,response)->false)
-                .observationRegistry(io.micrometer.observation.ObservationRegistry.NOOP).build();
+        if (original instanceof DashScopeChatModel dash) {
+            requireStandardModel(original, DashScopeChatModel.class);
+            var configured = dash.getDashScopeChatOptions();
+            DashScopeChatOptions options = configured == null ? DashScopeChatOptions.builder().build()
+                : (DashScopeChatOptions) configured.copy();
+            options.setTemperature(0.0);
+            options.setToolCallbacks(java.util.List.of());
+            options.setToolNames(java.util.Set.of());
+            options.setInternalToolExecutionEnabled(false);
+            return dash.mutate().defaultOptions(options).retryTemplate(ONCE)
+                .toolExecutionEligibilityPredicate((ignored, response) -> false)
+                .observationRegistry(ObservationRegistry.NOOP).build();
         }
-        if(original instanceof DeepSeekChatModel) {
-            var chat=chatProperties.getObject();var connection=connectionProperties.getObject();
-            var api=DeepSeekApi.builder()
-                .baseUrl(StringUtils.hasText(chat.getBaseUrl())?chat.getBaseUrl():connection.getBaseUrl())
-                .apiKey(StringUtils.hasText(chat.getApiKey())?chat.getApiKey():connection.getApiKey())
-                .completionsPath(chat.getCompletionsPath()).betaPrefixPath(chat.getBetaPrefixPath())
-                .restClientBuilder(rest.getIfAvailable(RestClient::builder).clone())
-                .webClientBuilder(web.getIfAvailable(WebClient::builder).clone());
-            var handler=errors.getIfAvailable();if(handler!=null)api.responseErrorHandler(handler);
-            var options=((DeepSeekChatOptions)original.getDefaultOptions()).copy();
-            options.setTemperature(0.0);options.setToolCallbacks(java.util.List.of());options.setToolNames(java.util.Set.of());options.setInternalToolExecutionEnabled(false);
-            return DeepSeekChatModel.builder().deepSeekApi(api.build()).defaultOptions(options).retryTemplate(once)
-                .toolExecutionEligibilityPredicate((optionsIgnored,response)->false).build();
+        if (original instanceof DeepSeekChatModel deepSeek) {
+            requireStandardModel(original, DeepSeekChatModel.class);
+            var configured = deepSeek.getDefaultOptions();
+            if (configured != null && !(configured instanceof DeepSeekChatOptions))
+                throw new IllegalStateException("DeepSeek默认选项类型不兼容，未创建选路模型。");
+            var options = configured == null ? DeepSeekChatOptions.builder().build()
+                : ((DeepSeekChatOptions) configured).copy();
+            options.setTemperature(0.0);
+            options.setToolCallbacks(java.util.List.of());
+            options.setToolNames(java.util.Set.of());
+            options.setInternalToolExecutionEnabled(false);
+            return DeepSeekChatModel.builder().deepSeekApi(configuredApi(deepSeek))
+                .defaultOptions(options).retryTemplate(ONCE)
+                .toolExecutionEligibilityPredicate((ignored, response) -> false)
+                .observationRegistry(ObservationRegistry.NOOP).build();
         }
         throw new IllegalStateException("当前模型尚未配置独立的单次选路调用适配。");
+    }
+
+    private static void requireStandardModel(ChatModel model, Class<?> supported) {
+        if (model.getClass() != supported)
+            throw new IllegalStateException("自定义模型子类需要显式的选路适配，不能通过重建丢弃其定制行为。");
+    }
+
+    /**
+     * Spring AI 1.1.2 has no DeepSeek mutate() or public API accessor, and auto-configuration
+     * does not expose its API as a bean. Keep this read-only compatibility seam in one place.
+     * Reuse the exact API (including headers, transports and API customizations); never rebuild
+     * it from properties. Fail closed if the dependency changes or reflective access is denied.
+     * Replace with the public copy API when the project's dependency provides one.
+     */
+    private static DeepSeekApi configuredApi(DeepSeekChatModel model) {
+        try {
+            var field = ReflectionUtils.findField(DeepSeekChatModel.class, "deepSeekApi", DeepSeekApi.class);
+            if (field == null) throw new IllegalStateException("missing API field");
+            ReflectionUtils.makeAccessible(field);
+            Object api = ReflectionUtils.getField(field, model);
+            if (api instanceof DeepSeekApi configured) return configured;
+        } catch (RuntimeException ignored) {
+            // Do not log provider internals or fall back to a potentially different connection.
+        }
+        throw new IllegalStateException("当前DeepSeek依赖不支持复用已配置API，未创建选路模型；请检查版本适配。");
     }
 }

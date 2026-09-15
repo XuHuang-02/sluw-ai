@@ -5,7 +5,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -17,14 +16,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -41,7 +39,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -50,7 +49,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -62,14 +60,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": null,
@@ -81,7 +78,8 @@
       ],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -90,7 +88,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -102,14 +99,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -131,7 +127,8 @@
         }
       ],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -140,7 +137,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -152,14 +148,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -181,7 +176,8 @@
       ],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -190,7 +186,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -202,14 +197,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -235,7 +229,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -244,7 +239,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -256,14 +250,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -289,7 +282,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -298,7 +292,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -310,14 +303,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -343,7 +335,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -352,7 +345,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -364,21 +356,21 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [],
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -387,7 +379,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -399,14 +390,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -423,7 +413,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -432,7 +423,6 @@
     "expectedStatus": "INSUFFICIENT",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -444,21 +434,21 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": null,
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -467,7 +457,6 @@
     "expectedStatus": "INSUFFICIENT",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -479,14 +468,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -503,7 +491,8 @@
       "lwmission": null,
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -512,7 +501,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -524,14 +512,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -550,7 +537,8 @@
       "lwnotepad": [],
       "autoallotbyerr": [
         "R"
-      ]
+      ],
+      "uwno": 2
     }
   },
   {
@@ -559,7 +547,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -571,14 +558,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -597,7 +583,8 @@
       "lwnotepad": [],
       "autoallotbyerr": [
         null
-      ]
+      ],
+      "uwno": 2
     }
   },
   {
@@ -606,7 +593,6 @@
     "expectedStatus": "INSUFFICIENT",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -618,14 +604,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -642,7 +627,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": null
+      "autoallotbyerr": null,
+      "uwno": 2
     }
   },
   {
@@ -653,7 +639,6 @@
       "INTERNAL"
     ],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -665,14 +650,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "4",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -693,7 +677,8 @@
           "noteflag": "disagree"
         }
       ],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -702,7 +687,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -714,14 +698,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P2",
-          "uwerror": "合成规则",
           "lettertype": "4",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -738,7 +721,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -749,7 +733,6 @@
       "EXTERNAL1"
     ],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -761,24 +744,22 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "4",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         },
         {
-          "uwno": 2,
           "uwrulecode": "EXT",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "2",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -795,7 +776,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -806,7 +788,6 @@
       "INTERNAL"
     ],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -818,24 +799,22 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P2",
-          "uwerror": "合成规则",
           "lettertype": "4",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         },
         {
-          "uwno": 2,
           "uwrulecode": "EXT",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "2",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -852,7 +831,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -863,7 +843,6 @@
       "EXTERNAL1"
     ],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -875,14 +854,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 3,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "2",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -899,7 +877,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 3
     }
   },
   {
@@ -910,7 +889,6 @@
       "EXTERNAL1"
     ],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -922,14 +900,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 3,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "2",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -955,7 +932,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 3
     }
   },
   {
@@ -964,7 +942,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -976,14 +953,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 3,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "2",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -1009,7 +985,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 3
     }
   },
   {
@@ -1020,7 +997,6 @@
       "EXTERNAL1"
     ],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1032,14 +1008,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 3,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "2",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -1065,7 +1040,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 3
     }
   },
   {
@@ -1074,7 +1050,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1086,14 +1061,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 3,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "2",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -1119,7 +1093,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 3
     }
   },
   {
@@ -1128,7 +1103,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1140,14 +1114,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -1177,7 +1150,8 @@
           "noteflag": "other"
         }
       ],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -1186,7 +1160,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1198,14 +1171,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -1226,7 +1198,8 @@
           "noteflag": "kidamntrisk"
         }
       ],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -1235,7 +1208,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1247,14 +1219,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -1275,7 +1246,8 @@
           "noteflag": "other"
         }
       ],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -1286,7 +1258,6 @@
       "EXAM"
     ],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1298,14 +1269,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -1335,7 +1305,8 @@
           "noteflag": "autope"
         }
       ],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -1346,7 +1317,6 @@
       "EXAM"
     ],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1358,14 +1328,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -1395,7 +1364,8 @@
           "noteflag": "autope"
         }
       ],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -1404,7 +1374,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1416,14 +1385,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "2",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -1449,7 +1417,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -1458,7 +1427,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1470,14 +1438,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "2",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -1498,7 +1465,8 @@
           "noteflag": "disagree"
         }
       ],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -1507,7 +1475,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1519,14 +1486,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "6",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -1543,7 +1509,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -1556,7 +1523,6 @@
       "INVESTIGATION"
     ],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1568,34 +1534,31 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": null,
           "peitem": "PE1",
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         },
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "1",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         },
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "3",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -1612,7 +1575,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     },
     "expectedSubjects": [
       "PERSON:P1",
@@ -1628,7 +1592,6 @@
       "INVESTIGATION"
     ],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1640,14 +1603,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "5",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -1664,7 +1626,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     },
     "expectedSubjects": [
       "APPLICANT"
@@ -1676,7 +1639,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1688,14 +1650,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "1",
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -1721,7 +1682,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -1730,7 +1692,6 @@
     "expectedStatus": "SELECTED",
     "expectedKinds": [],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1742,14 +1703,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": "R",
           "insuredno": "P1",
-          "uwerror": "合成规则",
           "lettertype": "6",
           "peitem": "PE1",
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": false
         }
       ],
       "historyErrors": [
@@ -1766,7 +1726,8 @@
       "lwmission": [],
       "lbmission": [],
       "lwnotepad": [],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     }
   },
   {
@@ -1777,7 +1738,6 @@
       "EXAM"
     ],
     "input": {
-      "schemaVersion": "DEAL_ISSUE_V1",
       "contno": "SYNTHETIC-001",
       "completeness": {
         "currentErrors": true,
@@ -1789,14 +1749,13 @@
       },
       "currentErrors": [
         {
-          "uwno": 2,
           "uwrulecode": null,
           "insuredno": null,
-          "uwerror": "问题件修改完毕后，没有未通过的核保规则",
           "lettertype": null,
           "peitem": null,
           "positivesign": null,
-          "autoflag": null
+          "autoflag": null,
+          "noFailedRules": true
         }
       ],
       "historyErrors": [
@@ -1826,7 +1785,8 @@
           "noteflag": "autope"
         }
       ],
-      "autoallotbyerr": []
+      "autoallotbyerr": [],
+      "uwno": 2
     },
     "expectedSubjects": [
       "PERSON:P1"
