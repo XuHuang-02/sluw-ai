@@ -33,7 +33,7 @@
 | lwmission / lbmission | 本单两类任务查询结果，分开提交 |
 | lwnotepad | 本单记事本标记，不提交记事本文字 |
 | autoallotbyerr | ldcode中codetype=autoallotbyerr的code列表，不是全部核保知识库 |
-| completeness | 以上六组资料分别标记true/false/null；含义见下文 |
+| completeness | 必填对象，可用{}；六组资料标记true/false/null，缺省标志按未知；对象本身不可省略或为null |
 
 ### 核保记录
 
@@ -143,7 +143,7 @@
 
 之前需要模型复制完整报告，合成返回值曾因漏掉completeness.lwmission被拒绝。当前改为服务端生成完整引用，分支正确时无需模型复制该引用；旧版完整报告不再作为模型输出接受。
 
-logback-spring.xml关闭BeanOutputConverter自身的原文错误日志；不打印AES密钥或解密正文。成功日志分别记录模型结构/分支通过及服务端报告成功，规则核验或组装异常记录SERVER_ERROR，并区分COMPARISON与REPORT阶段；只记录异常类型，不记录异常正文或输入内容。
+logback-spring.xml关闭BeanOutputConverter自身的原文错误日志；不打印AES密钥或解密正文。成功日志分别记录模型结构/分支通过及服务端报告成功，规则核验或组装异常记录SERVER_ERROR，并区分PATH_EVALUATION、GUARD与REPORT阶段；只记录异常类型，不记录异常正文或输入内容。
 
 本轮6项页面交互检查通过：示例填入、普通问答切换、取消保留输入、请求失败保留输入、窄屏布局及CDN不可用时填入示例。
 
@@ -161,7 +161,7 @@ DashScope继续mutate并复制options，空options回退默认值。两者模型
 
 解析器ObjectMapper私有；对外只提供独立配置副本及序列化方法，修改副本不影响正式解析。数据组及必填字段保持固定遍历顺序。JSON解析错误保留cause供排障，页面仅显示固定安全说明。预计算中的规则集合提为常量，处理对象判定拆为resolveSubject，业务条件不变。
 
-expected与报告组装错误包装为InternalFailure，保留cause和阶段；不包装成模型Rejected，不产生兜底答案。当前69项Java测试通过，包括围栏拒绝、内部错误归类、解析器隔离、稳定报错顺序、元数据入口与超过50节点遍历。未调用真实模型。
+路径计算与报告组装错误包装为InternalFailure，保留cause和阶段；不包装成模型Rejected，不产生兜底答案。当前69项Java测试通过，包括围栏拒绝、内部错误归类、解析器隔离、稳定报错顺序、元数据入口与超过50节点遍历。未调用真实模型。
 
 ## SQL NULL及候选完整性核对（2026-09-15）
 
@@ -183,3 +183,61 @@ hasCombined是原查询是否有候选，hasCombinedServices是是否有可执�
 NULL规则编码且字典非空时引用具体uwrulecode字段与整个字典（证明非空），不把第0项误写为匹配值。firstBatch同时保留当前行及顶层uwno。Ready的负向引用仍保留，使用appendAuditEvidence明确表示完整列表审计；exists命中后停止，其否定证据仍保留。输入拒绝字典空字符串，SQL NULL继续接受。
 
 新增4项测试，修复前3项失败，修复后148项Java测试全部通过。此前5413549已通过GitHub API验证同步，仓库为私有。本节为后续补充修复；未修改用户新出现的test.py。
+
+
+## 输入契约澄清（2026-09-15）
+
+资料组缺失与completeness对象缺失不同：保留必填完整性对象，{}允许表示所有组完整性未知；对象缺失/null返回明确提示。组缺省或null标志按未知，组声明完整但缺少数组则拒绝。
+
+树解析的未知字段、必填字段、标量类型由fields及显式检查负责；ObjectMapper的POJO严格配置仍供Selection/Table绑定使用，不能代替树校验。空输入与超过60000字符分开提示。autoallotbyerr已拒绝空字符串，保留明确SQL NULL。
+
+contno当前仅是试验标识，接受非空文本，不传给模型；整个JSON受60000字符上限约束。公司保单号长度及字符集尚未确认，不虚构正则或长度作为业务限制；接入实际接口时按业务契约补充。
+
+
+## RoutingPolicy单次遍历与拒绝审计（2026-09-15）
+
+所有构造器共用完整初始化流程，包括converter、提示词和指纹；注入表实例可直接validate。提示词由同一Table序列化构建，最终拼接结果仍计算并缓存SHA-256。
+
+expected返回ExpectedPath，仅含状态、节点、路径、引用及缺失信息，不包含也不检查items。validate只遍历一次：得到路径，与模型选择比较，匹配后将同一路径交给assemble组装。assemble不再遍历决策表。处理项缺失/非法归REPORT；路径事实异常归PATH_EVALUATION，错误选择仍Rejected且不兜底。
+
+INVALID显式保留为内部不变量哨兵，不是可选业务去向：不能作为入口，只允许Ready条件的FALSE出口引用，必须是无处理项NO_ACTION形状的叶子。到达它产生GUARD内部错误；模型选择它记GUARD_SELECTED，不返回NO_ACTION报告。
+
+Selection必填和互斥关系由显式校验负责，不依赖required注解。格式审计增加固定reason枚举，区分空/超长/非法JSON、缺失状态、错误类型或枚举、额外字段、缺失节点、冲突字段；节点未知、节点类型错误、保护节点及路径不匹配分别记录。公开提示保持固定，不保存解析器可能包含原始正文的异常信息。display对外部构造的不完整或未知节点报告给出REPORT错误，避免NPE。
+
+158项Java测试通过，含单次遍历计数、注入构造器验证、纯路径与缺失items阶段、保护节点及原因枚举。真实模型未重新评测，本轮尚未提交推送。
+
+
+## 实验服务分阶段诊断与响应等待（2026-09-15）
+
+IssueSubmissionTrialService仍返回Mono<String>并复用原同步/SSE入口，内部使用Result统一记录结果。每次订阅有独立requestId，记录阶段、结果、固定原因/审计枚举、异常类型、耗时和可用Token，不记录请求正文、模型正文或异常message。
+
+阶段包括INPUT、POLICY_INIT、PRECALCULATION、MODEL_ISOLATION、PROMPT、MODEL_CALL、METADATA、BODY、VALIDATION、REPORT。失败按阶段生成*_FAILED；输入不合法为INPUT_REJECTED，空文本为EMPTY_MODEL_OUTPUT，模型拒绝为MODEL_OUTPUT_REJECTED，规则内部异常为SERVER_ERROR并附PATH_EVALUATION/GUARD/REPORT。调度等外围异常为ASYNC_FAILURE，不再全部记FAILED。
+
+规则表与隔离客户端均在首次有效实验请求时加载并缓存；表格错误不会在本服务构造时拖垮普通问答启动。初始化失败留空，下一次独立请求可再尝试，但同次请求不自动重试。应用仍需普通问答自身的ChatModel及其他依赖可用。
+
+metadata或usage缺失时不影响有效选路；token为null显示服务未提供，服务报告0则保留0。元数据访问器本身抛异常记METADATA_FAILED。空response、generation、output或text统一识别为空响应。causeType对null原因安全处理。费用文案集中为常量，当前实验未启用计价；将来应由真实计价服务提供，不能仅添加价格配置却仍显示旧说明。
+
+响应等待上限配置（单位毫秒）：
+
+```properties
+issue-submission-trial.response-timeout-ms=50000
+```
+
+默认50秒沿用实验等待预算，并非已测出的服务SLA；从订阅时起包含排队及初始化。Reactor超时会取消订阅，可能中断工作线程，但不保证模型HTTP调用终止，底层连接/读取超时仍由原客户端配置决定。请根据批准服务的时延和客户端超时调整，不把页面超时当作停止计费。
+
+超时返回RESPONSE_TIMEOUT并说明后台可能继续运行；外部取消记录CLIENT_CANCELLED。模型返回日志始终关联requestId及用量，超时/取消后的后台结束另有日志，迟到结果不生成有效报告或正常成功日志。调用返回前若用户已停止等待，则不再启动新的模型请求。若提供方永不返回，也无法凭空获得实际用量。
+
+164项Java测试通过，包含缺失metadata/usage、0 token、规则惰性失败、模型隔离/预计算/元数据异常分类、空响应、输入拒绝日志和忽略中断的迟到响应。迟到测试确认一次调用、一次页面超时、7 token后台记录且无正常成功日志。真实服务未重新调用，本轮尚未提交推送。
+
+
+## 模型代理与不可变数据契约（2026-09-15）
+
+RoutingModelFactory识别Spring AOP且可通过Advised检查的代理，不再把JDK/CGLIB代理当作自定义模型子类拒绝。新代理保留原advisors、接口、代理模式及exposeProxy/preFiltered/frozen配置，并在每次同步调用获取目标后隔离；目标按原TargetSource约定释放，失败路径也释放。支持惰性和动态目标，避免固定在旧目标。opaque代理、非Spring包装器和真正自定义模型子类仍需显式适配，不静默剥离定制行为。当前试验使用同步call；其他代理/流式资源生命周期需单独适配验收。
+
+DeepSeek反射兼容错误保留cause及固定reason，服务层按MODEL_ISOLATION_FAILED记录原因和异常类型，不打印provider异常正文。仍只承诺复用当前依赖已核对的原API和默认选项；重试、模型观测和工具执行策略有意覆盖，未来依赖字段变化需要重新验证。原API内部及外层advisors自身的重试/观测行为不被模型级设置消除。
+
+工具选项清理由共享disableTools完成，执行资格谓词共享NEVER_EXECUTE：清空回调/名称用于移除可用定义，内部开关禁止内部执行，谓词最后阻断返回工具调用的执行资格，三者有不同职责。
+
+Fact、Item、Facts、ExpectedPath、Decision均防御性复制集合；Facts嵌套items列表也复制，返回集合不可修改并保持映射顺序。Table改用不可变List<Node>。Decision/ExpectedPath强制基本状态不变式：SELECTED有route且无缺失字段，INSUFFICIENT无route且有缺失信息；INSUFFICIENT报告无处理项。节点存在性与路线匹配仍由RoutingPolicy负责。完整Decision JSON继续显式保留route:null，Selection仍是小型互斥输出，不依赖required注解。
+
+170项Java测试通过，新增代理/advice、动态目标释放、反射cause与集合不可变性测试。代码尚未提交推送。

@@ -4,9 +4,17 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.core.JsonParser;
 import java.util.*;
 
-/** Missing groups are unknown; explicit null row fields represent SQL NULL. */
+/**
+ * completeness must be an object ({} is allowed); absent/null flags mean unknown.
+ * Missing data groups are unknown unless declared complete, which requires an array.
+ * Explicit null string fields represent SQL NULL; noFailedRules requires a boolean.
+ */
 public final class RoutingInput {
     public static final String VERSION = "DEAL_ISSUE_V1";
+    private static final int MAX_INPUT_CHARACTERS = 60000;
+    // readTree enforces duplicate keys and trailing tokens. Field names, required fields and
+    // scalar types are checked explicitly below. The POJO options also protect copies used
+    // by RoutingPolicy to bind Selection/Table; they do not replace tree validation.
     private static final ObjectMapper JSON = new ObjectMapper()
         .enable(JsonParser.Feature.STRICT_DUPLICATE_DETECTION)
         .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS)
@@ -29,16 +37,20 @@ public final class RoutingInput {
     private final JsonNode root;
     private RoutingInput(JsonNode root) { this.root = root; }
     public static RoutingInput parse(String text) {
-        if (text == null || text.isBlank() || text.length() > 60000) throw new IllegalArgumentException("请输入不超过60000字符的完整JSON。");
+        if (text == null || text.isBlank()) throw new IllegalArgumentException("请输入完整JSON。");
+        if (text.length() > MAX_INPUT_CHARACTERS) throw new IllegalArgumentException("请输入不超过60000字符的JSON。");
         try {
             JsonNode root = JSON.readTree(text);
             var allowed = new LinkedHashSet<>(GROUPS); allowed.addAll(List.of("uwno", "contno", "completeness"));
             fields(root, allowed, false);
+            // Trial identifier only; production policy-number length/format is not yet confirmed.
             if (!root.path("contno").isTextual() || root.path("contno").asText().isBlank())
                 throw new IllegalArgumentException("请填写contno。");
             JsonNode batchNode=root.path("uwno");
             if (!batchNode.isIntegralNumber() || !batchNode.canConvertToInt() || batchNode.asInt()<1)
                 throw new IllegalArgumentException("顶层uwno必须为当前批次的正整数。");
+            if (!root.path("completeness").isObject())
+                throw new IllegalArgumentException("请提供completeness对象；不确定时可填写{}，其中缺省或null标志按未知处理。");
             fields(root.path("completeness"), GROUPS, false);
             for (String group : GROUPS) {
                 JsonNode flag = root.path("completeness").get(group), rows = root.get(group);

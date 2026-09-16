@@ -202,3 +202,25 @@ hasCombined是原查询是否有候选，hasCombinedServices是是否有可执�
 NULL规则编码且字典非空时引用具体uwrulecode字段与整个字典（证明非空），不把第0项误写为匹配值。firstBatch同时保留当前行及顶层uwno。Ready的负向引用仍保留，使用appendAuditEvidence明确表示完整列表审计；exists命中后停止，其否定证据仍保留。输入拒绝字典空字符串，SQL NULL继续接受。
 
 新增4项测试，修复前3项失败，修复后148项Java测试全部通过。此前5413549已通过GitHub API验证同步，仓库为私有。本节为后续补充修复；未修改用户新出现的test.py。
+
+
+## 2026-09-15：RoutingInput契约与错误提示
+
+保留completeness必填对象的现有行为，注释及文档明确{}和缺省/null标志可表示未知，对象缺失/null专用提示。标注ObjectMapper的树检查/POJO绑定职责，空输入与超长分开提示。contno业务格式尚未确认，仅保留试验标识非空文本与总输入上限。autoallotbyerr空字符串拒绝已在1acc274修复。本轮不修改用户test.py，尚未提交推送。
+
+
+## 2026-09-15：RoutingPolicy遍历合并
+
+修复测试构造器不完整初始化；expected改为纯ExpectedPath，validate比较后一次assemble，不再二次遍历。处理项异常REPORT、路径事实异常PATH_EVALUATION，INVALID是显式受约束的GUARD哨兵。增加安全原因枚举、显式Selection必填/互斥检查和display输入防御。提示词/指纹仍构造时缓存。158项Java测试通过，尚未提交推送。
+
+
+## 2026-09-15：IssueSubmissionTrialService可观测性与超时
+
+服务按阶段记录安全诊断，缺失metadata/usage不破坏选路，保留零token，空输出和输入拒绝分别审计。规则表改惰性加载，失败只影响实验请求；客户端隔离失败单独记录。响应等待时间通过issue-submission-trial.response-timeout-ms配置，默认50000，不承诺停止底层HTTP或计费。独立requestId关联超时、迟到模型用量和后台结束，无重试/兜底。费用提示集中常量、causeType判空。164项测试通过，包含迟到7token而无正常成功日志。尚未提交推送。
+
+
+## 2026-09-15：代理适配与契约不可变性
+
+实现可检查Spring AOP代理保留advisors及TargetSource生命周期，每次获取后隔离并释放，未透明剥离AOP；opaque/非标准目标明确拒绝。DeepSeek反射错误保留cause及reason，服务按隔离失败记录；共享工具设置解释职责。
+
+records防御性复制集合与嵌套列表，Table使用List，Decision/ExpectedPath校验基本状态；完整报告保留显式route:null。Selection注解已在上轮移除。170项Java测试通过，尚未提交推送，test.py未修改。

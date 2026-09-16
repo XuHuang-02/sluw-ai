@@ -14,44 +14,91 @@ import org.springframework.util.ReflectionUtils;
 /** Copies model options while sharing the configured API/transport; never changes ordinary chat. */
 @Component
 public final class RoutingModelFactory {
+    private static final org.springframework.ai.model.tool.ToolExecutionEligibilityPredicate NEVER_EXECUTE = (options,response)->false;
+    public static final class IsolationFailure extends IllegalStateException {
+        private final String reason;
+        IsolationFailure(String reason,Throwable cause) { super("选路模型适配失败："+reason,cause);this.reason=reason; }
+        public String reason() { return reason; }
+    }
     private static final RetryTemplate ONCE = RetryTemplate.builder().maxAttempts(1).build();
 
     public ChatModel isolate(ChatModel original) {
+        if(org.springframework.aop.support.AopUtils.isAopProxy(original)) {
+            if(!(original instanceof org.springframework.aop.framework.Advised advised))
+                throw new IsolationFailure("OPAQUE_PROXY",null);
+            return isolateProxy(original,advised);
+        }
         if (original instanceof DashScopeChatModel dash) {
             requireStandardModel(original, DashScopeChatModel.class);
             var configured = dash.getDashScopeChatOptions();
             DashScopeChatOptions options = configured == null ? DashScopeChatOptions.builder().build()
                 : (DashScopeChatOptions) configured.copy();
             options.setTemperature(0.0);
-            options.setToolCallbacks(java.util.List.of());
-            options.setToolNames(java.util.Set.of());
-            options.setInternalToolExecutionEnabled(false);
+            disableTools(options);
             return dash.mutate().defaultOptions(options).retryTemplate(ONCE)
-                .toolExecutionEligibilityPredicate((ignored, response) -> false)
+                .toolExecutionEligibilityPredicate(NEVER_EXECUTE)
                 .observationRegistry(ObservationRegistry.NOOP).build();
         }
         if (original instanceof DeepSeekChatModel deepSeek) {
             requireStandardModel(original, DeepSeekChatModel.class);
             var configured = deepSeek.getDefaultOptions();
             if (configured != null && !(configured instanceof DeepSeekChatOptions))
-                throw new IllegalStateException("DeepSeek默认选项类型不兼容，未创建选路模型。");
+                throw new IsolationFailure("OPTIONS_TYPE",null);
             var options = configured == null ? DeepSeekChatOptions.builder().build()
                 : ((DeepSeekChatOptions) configured).copy();
             options.setTemperature(0.0);
-            options.setToolCallbacks(java.util.List.of());
-            options.setToolNames(java.util.Set.of());
-            options.setInternalToolExecutionEnabled(false);
+            disableTools(options);
             return DeepSeekChatModel.builder().deepSeekApi(configuredApi(deepSeek))
                 .defaultOptions(options).retryTemplate(ONCE)
-                .toolExecutionEligibilityPredicate((ignored, response) -> false)
+                .toolExecutionEligibilityPredicate(NEVER_EXECUTE)
                 .observationRegistry(ObservationRegistry.NOOP).build();
         }
-        throw new IllegalStateException("当前模型尚未配置独立的单次选路调用适配。");
+        throw new IsolationFailure("UNSUPPORTED_MODEL",null);
+    }
+
+    private static void disableTools(org.springframework.ai.model.tool.ToolCallingChatOptions options) {
+        // Clearing local callbacks/names removes tool definitions. The switch prevents internal
+        // execution; NEVER_EXECUTE separately blocks execution eligibility for returned calls.
+        options.setToolCallbacks(java.util.List.of());options.setToolNames(java.util.Set.of());
+        options.setInternalToolExecutionEnabled(false);
+    }
+    private ChatModel isolateProxy(ChatModel original,org.springframework.aop.framework.Advised advised) {
+        Class<?> targetClass=org.springframework.aop.support.AopUtils.getTargetClass(original);
+        var source=advised.getTargetSource();
+        var proxy=new org.springframework.aop.framework.ProxyFactory();
+        proxy.setInterfaces(advised.getProxiedInterfaces());proxy.setProxyTargetClass(advised.isProxyTargetClass());
+        proxy.setExposeProxy(advised.isExposeProxy());proxy.setPreFiltered(advised.isPreFiltered());
+        // Keep advisors and the target-source lifecycle. Do not unwrap lazy/refresh/pooled
+        // targets once and retain a stale target, or silently discard AOP behavior.
+        proxy.setTargetSource(new org.springframework.aop.TargetSource() {
+            private final java.util.Map<Object,Object> leases=java.util.Collections.synchronizedMap(new java.util.IdentityHashMap<>());
+            public Class<?> getTargetClass() { return targetClass; }
+            public boolean isStatic() { return false; }
+            public Object getTarget() throws Exception {
+                Object target;
+                try { target=source.getTarget(); }
+                catch(Exception e) { throw new IsolationFailure("PROXY_TARGET_RESOLUTION",e); }
+                try {
+                    if(!(target instanceof ChatModel model))throw new IsolationFailure("PROXY_TARGET_TYPE",null);
+                    ChatModel isolated=isolate(model);leases.put(isolated,target);return isolated;
+                } catch(RuntimeException e) {
+                    if(target!=null)try { source.releaseTarget(target); }catch(Exception release) { e.addSuppressed(release); }
+                    throw e;
+                }
+            }
+            public void releaseTarget(Object target) throws Exception {
+                Object originalTarget=leases.remove(target);
+                if(originalTarget!=null)source.releaseTarget(originalTarget);
+            }
+        });
+        for(var advisor:advised.getAdvisors())proxy.addAdvisor(advisor);
+        proxy.setFrozen(advised.isFrozen());
+        return (ChatModel)proxy.getProxy(original.getClass().getClassLoader());
     }
 
     private static void requireStandardModel(ChatModel model, Class<?> supported) {
         if (model.getClass() != supported)
-            throw new IllegalStateException("自定义模型子类需要显式的选路适配，不能通过重建丢弃其定制行为。");
+            throw new IsolationFailure("CUSTOM_MODEL_SUBCLASS",null);
     }
 
     /**
@@ -68,9 +115,10 @@ public final class RoutingModelFactory {
             ReflectionUtils.makeAccessible(field);
             Object api = ReflectionUtils.getField(field, model);
             if (api instanceof DeepSeekApi configured) return configured;
-        } catch (RuntimeException ignored) {
-            // Do not log provider internals or fall back to a potentially different connection.
+            throw new IllegalStateException("configured API is missing");
+        } catch (RuntimeException cause) {
+            // Preserve the cause for diagnosis, but callers log only its type, never its message.
+            throw new IsolationFailure("DEEPSEEK_API_ACCESS",cause);
         }
-        throw new IllegalStateException("当前DeepSeek依赖不支持复用已配置API，未创建选路模型；请检查版本适配。");
     }
 }
