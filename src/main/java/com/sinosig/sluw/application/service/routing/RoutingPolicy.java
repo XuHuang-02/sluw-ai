@@ -47,8 +47,24 @@ public final class RoutingPolicy {
             路径、去向、引用、缺失字段及处理项由服务端生成，禁止输出这些字段。
             不可添加解释或接口执行结果。只返回一个JSON对象，不要Markdown代码围栏或任何前后文字。
             决策表：
-            """+table+"\n"+converter.getFormat();
+            """+table+"\n"+selectionFormat();
         fingerprint=hash(prompt);
+    }
+    /** A record schema marks both target fields required; explicitly describe the union instead. */
+    private String selectionFormat() {
+        var arms=new ArrayList<Map<String,Object>>();
+        for(Status status:Status.values()) {
+            boolean selected=status==Status.SELECTED;
+            String target=selected?"branchId":"blockedAt";
+            var ids=nodes.values().stream().filter(n->!GUARD_NODE.equals(n.id()))
+                .filter(n->selected==(n.condition()==null)).map(Node::id).toList();
+            arms.add(Map.of("type","object","properties",Map.of(
+                "status",Map.of("const",status.name()),target,Map.of("type","string","enum",ids)),
+                "required",List.of("status",target),"additionalProperties",false));
+        }
+        try { return "Return exactly one JSON object matching this schema (no Markdown):\n"
+            +RoutingInput.writeJson(Map.of("$schema","https://json-schema.org/draft/2020-12/schema","oneOf",arms)); }
+        catch(com.fasterxml.jackson.core.JsonProcessingException e) { throw new IllegalStateException("selection schema generation failed",e); }
     }
     public String prompt(){return prompt;}
     /** For validation/evaluation only. Never supplied as the model's answer or fallback. */
@@ -80,8 +96,10 @@ public final class RoutingPolicy {
     public record Audit(boolean formatCorrect, boolean branchCorrect, boolean pathCorrect, RejectionReason reason) {}
     public static final class Rejected extends IllegalArgumentException {
         private final Audit audit;
+        private String parseDiagnostic="none";
         private Rejected(Audit audit, String message){super(message);this.audit=audit;}
         public Audit audit(){return audit;}
+        public String parseDiagnostic(){return parseDiagnostic;}
     }
     private static Rejected reject(RejectionReason reason,boolean format,boolean branch) {
         String message=format?"所选节点不符合决策表或条件优先顺序。":"模型输出无法转换为规定的小结构：仅允许状态及分支或阻塞节点。";
@@ -112,7 +130,16 @@ public final class RoutingPolicy {
         if(raw.length()>4096)throw reject(RejectionReason.TOO_LONG,false,false);
         com.fasterxml.jackson.databind.JsonNode tree;
         try { tree=selectionTree.readTree(raw); }
-        catch(java.io.IOException e) { throw reject(RejectionReason.INVALID_JSON,false,false); }
+        catch(java.io.IOException e) {
+            var rejected=reject(RejectionReason.INVALID_JSON,false,false);
+            // Never log the parser message/source: either can contain model or business text.
+            rejected.parseDiagnostic=e.getClass().getSimpleName();
+            if(e instanceof com.fasterxml.jackson.core.JsonProcessingException parsing && parsing.getLocation()!=null) {
+                var location=parsing.getLocation();
+                rejected.parseDiagnostic+="@line="+location.getLineNr()+",column="+location.getColumnNr();
+            }
+            throw rejected;
+        }
         if(tree==null||!tree.isObject())throw reject(RejectionReason.NOT_OBJECT,false,false);
         var keys=tree.fieldNames();
         while(keys.hasNext())if(!Set.of("status","branchId","blockedAt").contains(keys.next()))throw reject(RejectionReason.EXTRA_FIELD,false,false);

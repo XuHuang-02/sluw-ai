@@ -241,3 +241,10 @@ DeepSeek反射兼容错误保留cause及固定reason，服务层按MODEL_ISOLATI
 Fact、Item、Facts、ExpectedPath、Decision均防御性复制集合；Facts嵌套items列表也复制，返回集合不可修改并保持映射顺序。Table改用不可变List<Node>。Decision/ExpectedPath强制基本状态不变式：SELECTED有route且无缺失字段，INSUFFICIENT无route且有缺失信息；INSUFFICIENT报告无处理项。节点存在性与路线匹配仍由RoutingPolicy负责。完整Decision JSON继续显式保留route:null，Selection仍是小型互斥输出，不依赖required注解。
 
 170项Java测试通过，新增代理/advice、动态目标释放、反射cause与集合不可变性测试。代码尚未提交推送。
+
+
+## 2026-09-16 Output union schema correction
+
+The generated BeanOutputConverter<Selection> format marked status, branchId and blockedAt all required, contradicting the mutually exclusive prompt. Keep the converter for typed binding, but generate an explicit oneOf schema with separate SELECTED/branchId and INSUFFICIENT/blockedAt arms, allowed node enums and additionalProperties=false. Do not accept blank inactive targets or silently repair model output.
+
+Replaying the reported SELECTED/PASS/blockedAt-empty text locally produces CONFLICTING_NODES, not the reported INVALID_JSON. That environment-specific discrepancy remains unresolved. INVALID_JSON audit now includes only exception class and line/column, never parser message or raw source. No real provider call was made. Regression: 172 tests passed, including the reported text and a schema test that failed before the correction. Tests remain locally ignored under the existing repository policy.

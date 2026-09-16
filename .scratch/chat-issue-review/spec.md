@@ -224,3 +224,10 @@ NULL规则编码且字典非空时引用具体uwrulecode字段与整个字典（
 实现可检查Spring AOP代理保留advisors及TargetSource生命周期，每次获取后隔离并释放，未透明剥离AOP；opaque/非标准目标明确拒绝。DeepSeek反射错误保留cause及reason，服务按隔离失败记录；共享工具设置解释职责。
 
 records防御性复制集合与嵌套列表，Table使用List，Decision/ExpectedPath校验基本状态；完整报告保留显式route:null。Selection注解已在上轮移除。170项Java测试通过，尚未提交推送，test.py未修改。
+
+
+## 2026-09-16 Output union schema correction
+
+The generated BeanOutputConverter<Selection> format marked status, branchId and blockedAt all required, contradicting the mutually exclusive prompt. Keep the converter for typed binding, but generate an explicit oneOf schema with separate SELECTED/branchId and INSUFFICIENT/blockedAt arms, allowed node enums and additionalProperties=false. Do not accept blank inactive targets or silently repair model output.
+
+Replaying the reported SELECTED/PASS/blockedAt-empty text locally produces CONFLICTING_NODES, not the reported INVALID_JSON. That environment-specific discrepancy remains unresolved. INVALID_JSON audit now includes only exception class and line/column, never parser message or raw source. No real provider call was made. Regression: 172 tests passed, including the reported text and a schema test that failed before the correction. Tests remain locally ignored under the existing repository policy.

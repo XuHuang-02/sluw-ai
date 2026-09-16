@@ -121,7 +121,7 @@ public class IssueSubmissionTrialService {
         } catch(RoutingModelFactory.IsolationFailure e) {
             return outcome=failure("MODEL_ISOLATION_FAILED",stageMessage(Stage.MODEL_ISOLATION),e.reason(),e.getCause()==null?e:e.getCause());
         } catch(RoutingPolicy.Rejected e) {
-            return outcome=failure("MODEL_OUTPUT_REJECTED",e.getMessage(),e.audit().toString(),e);
+            return outcome=failure("MODEL_OUTPUT_REJECTED",e.getMessage(),e.audit().toString()+" parseDiagnostic="+e.parseDiagnostic(),e);
         } catch(RoutingPolicy.InternalFailure e) {
             return outcome=failure("SERVER_ERROR",stageMessage(Stage.REPORT),e.phase().name(),e.getCause());
         } catch(Exception e) {
