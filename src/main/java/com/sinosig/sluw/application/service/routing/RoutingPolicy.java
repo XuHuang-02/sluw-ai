@@ -12,6 +12,7 @@ public final class RoutingPolicy {
     private final Map<String, Node> nodes = new LinkedHashMap<>();
     private final String prompt;
     private final String fingerprint;
+    private volatile String recordsPrompt;
     private final String entry;
     private static final String GUARD_NODE = "INVALID";
     private final BeanOutputConverter<Selection> converter;
@@ -67,6 +68,18 @@ public final class RoutingPolicy {
         catch(com.fasterxml.jackson.core.JsonProcessingException e) { throw new IllegalStateException("selection schema generation failed",e); }
     }
     public String prompt(){return prompt;}
+    public synchronized String recordsPrompt() throws java.io.IOException {
+        if(recordsPrompt!=null)return recordsPrompt;
+        String semantics=new ClassPathResource("prompts/deal-issue-records.txt").getContentAsString(java.nio.charset.StandardCharsets.UTF_8);
+        // Reuse the exact graph, schema and output restrictions, replace only the facts instruction.
+        recordsPrompt=prompt.replace("输入仅为服务端计算的conditions，各值为TRUE/FALSE/UNKNOWN。不得自行改写条件值。",
+            "输入为业务记录快照。按以下定义自行判断条件TRUE/FALSE/UNKNOWN；不得猜测缺失记录。")+"\n"+semantics;
+        return recordsPrompt;
+    }
+    public String recordsFingerprint() throws java.io.IOException {return hash(recordsPrompt());}
+    /** Safe small selection for evaluation; invalid syntax never becomes a report. */
+    public Selection selection(String raw) {return parseSelection(raw);}
+
     /** For validation/evaluation only. Never supplied as the model's answer or fallback. */
     public ExpectedPath expected(Facts facts) {
         try { return calculateExpected(facts); }

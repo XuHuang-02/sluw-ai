@@ -248,3 +248,8 @@ Fact、Item、Facts、ExpectedPath、Decision均防御性复制集合；Facts嵌
 The generated BeanOutputConverter<Selection> format marked status, branchId and blockedAt all required, contradicting the mutually exclusive prompt. Keep the converter for typed binding, but generate an explicit oneOf schema with separate SELECTED/branchId and INSUFFICIENT/blockedAt arms, allowed node enums and additionalProperties=false. Do not accept blank inactive targets or silently repair model output.
 
 Replaying the reported SELECTED/PASS/blockedAt-empty text locally produces CONFLICTING_NODES, not the reported INVALID_JSON. That environment-specific discrepancy remains unresolved. INVALID_JSON audit now includes only exception class and line/column, never parser message or raw source. No real provider call was made. Regression: 172 tests passed, including the reported text and a schema test that failed before the correction. Tests remain locally ignored under the existing repository policy.
+
+
+## 双模式实验与跨机器评测
+
+新增条件模式、直接记录模式及页面双模式对比。运行方式、结构化接口、360次计划、断点续跑及统计限制见 [双模式评测指南](dual-mode-evaluation.md)。

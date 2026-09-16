@@ -751,6 +751,8 @@
         }
 
     </style>
+    <link rel="stylesheet" href="/trial/routing-trial.css">
+    <script src="/trial/routing-trial.js" defer></script>
 </head>
 <body>
 <div class="app">
@@ -816,6 +818,11 @@
                                     </label>
                                     <a class="trial-action" href="/trial/deal-issue-template.json" download>下载模板</a>
                                     <a class="trial-action" href="/trial/deal-issue-example.json" download>下载示例</a>
+                                    <select id="routingMode" class="trial-action" aria-label="选路实验模式" disabled>
+                                        <option value="CONDITIONS">条件模式（默认）</option>
+                                        <option value="RECORDS">记录模式</option>
+                                        <option value="COMPARE">双模式对比（两次调用）</option>
+                                    </select>
                                     <button type="button" class="trial-action trial-example" id="loadTrialExample">填入合成示例</button>
                                     <label class="option-item">
                                         <input type="checkbox" id="useRefiner">
@@ -1221,6 +1228,21 @@
         }
 
         async function performStreamRequest(questionText, aiMessageDiv, aiContentDiv) {
+            if (document.getElementById('issueSubmissionTrial').checked) {
+                if (abortController) abortController.abort();
+                const controller = new AbortController();
+                abortController = controller;
+                aiContentDiv.dataset.issueTrial = 'true';
+                try {
+                    await window.runRoutingTrial(questionText, document.getElementById('routingMode').value,
+                        aiContentDiv, controller.signal);
+                    attachRatingBar(aiMessageDiv);
+                    conditionalScrollToBottom();
+                    return true;
+                } finally {
+                    if (abortController === controller) abortController = null;
+                }
+            }
             let streamStarted = false;
             if (abortController) {
                 abortController.abort();
@@ -1504,7 +1526,7 @@
         };
 
         window.sendMessage = async function() {
-            await ensureAesKeyLoaded();
+            if (!document.getElementById('issueSubmissionTrial').checked) await ensureAesKeyLoaded();
 
             const message = messageInput.value.trim();
             if (!message || isProcessing) return;

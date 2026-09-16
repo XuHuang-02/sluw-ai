@@ -99,6 +99,12 @@ public final class RoutingInput {
         node.fieldNames().forEachRemaining(k -> { if (!allowed.contains(k)) throw new IllegalArgumentException("包含不支持的字段：" + k); });
         if (required) for (String k : allowed) if (!node.has(k)) throw new IllegalArgumentException("记录缺少字段：" + k + "；明确数据库空值才可填写null。");
     }
+    /** Fresh copy: validated business facts only; exclude the policy identifier. */
+    public JsonNode modelRecords() {
+        var copy=(com.fasterxml.jackson.databind.node.ObjectNode)root.deepCopy();
+        copy.remove("contno");
+        return copy;
+    }
     public int currentBatch() { return root.path("uwno").asInt(); }
     public boolean complete(String group) { return root.path("completeness").path(group).asBoolean(false); }
     public List<JsonNode> rows(String group) {

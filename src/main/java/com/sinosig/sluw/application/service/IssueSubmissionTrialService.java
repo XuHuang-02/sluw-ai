@@ -1,6 +1,8 @@
 package com.sinosig.sluw.application.service;
 
 import com.sinosig.sluw.application.service.routing.*;
+import com.sinosig.sluw.application.dto.routing.RoutingEvaluation;
+import com.sinosig.sluw.application.dto.routing.RoutingEvaluation.Mode;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -41,6 +43,13 @@ public class IssueSubmissionTrialService {
         volatile Stage stage=Stage.INPUT;
         volatile String promptHash;
         volatile String modelId;
+        final Mode mode;
+        Invocation(Mode mode) {this.mode=mode;}
+        volatile boolean modelCallStarted;
+        volatile RoutingTypes.Selection selection;
+        volatile RoutingTypes.Decision decision;
+        volatile Integer inputTokens;
+        volatile Integer outputTokens;
         volatile Integer tokens;
         volatile Long callMs;
     }
@@ -89,20 +98,22 @@ public class IssueSubmissionTrialService {
         Result outcome=null;
         try {
             RoutingInput snapshot=RoutingInput.parse(input);
-            call.stage=Stage.POLICY_INIT;RoutingPolicy activePolicy=policy();call.promptHash=activePolicy.fingerprint();
+            call.stage=Stage.POLICY_INIT;RoutingPolicy activePolicy=policy();call.promptHash=call.mode==Mode.CONDITIONS?activePolicy.fingerprint():activePolicy.recordsFingerprint();
             call.stage=Stage.PRECALCULATION;var facts=precalculator.apply(snapshot);
             call.stage=Stage.MODEL_ISOLATION;ChatClient activeClient=client();
             call.stage=Stage.PROMPT;
-            var prompt=new Prompt(List.of(new SystemMessage(activePolicy.prompt()),new UserMessage(RoutingInput.writeJson(activePolicy.modelInput(facts)))));
+            var prompt=new Prompt(List.of(new SystemMessage(call.mode==Mode.CONDITIONS?activePolicy.prompt():activePolicy.recordsPrompt()),new UserMessage(RoutingInput.writeJson(call.mode==Mode.CONDITIONS?activePolicy.modelInput(facts):snapshot.modelRecords()))));
             // A timeout during queueing/initialization must not start a new provider request.
             if(call.delivery.get()!=Delivery.WAITING)return outcome=failure("ABANDONED","页面已停止等待。","BEFORE_MODEL_CALL",null);
             call.stage=Stage.MODEL_CALL;long start=System.nanoTime();
             org.springframework.ai.chat.model.ChatResponse response;
-            try { response=activeClient.prompt(prompt).call().chatResponse(); }
+            try { call.modelCallStarted=true; response=activeClient.prompt(prompt).call().chatResponse(); }
             finally { call.callMs=elapsed(start); }
             call.stage=Stage.METADATA;
             if(response!=null) {
                 var metadata=response.getMetadata();var usage=metadata==null?null:metadata.getUsage();
+                call.inputTokens=usage==null?null:usage.getPromptTokens();
+                call.outputTokens=usage==null?null:usage.getCompletionTokens();
                 call.tokens=usage==null?null:usage.getTotalTokens(); // Preserve a reported zero.
                 call.modelId=metadata==null?null:metadata.getModel();
             }
@@ -114,7 +125,8 @@ public class IssueSubmissionTrialService {
             var generation=response==null?null:response.getResult();
             var output=generation==null?null:generation.getOutput();String text=output==null?null:output.getText();
             if(text==null||text.isBlank())return outcome=failure("EMPTY_MODEL_OUTPUT","模型未返回可用文本。","EMPTY_OUTPUT",null);
-            call.stage=Stage.VALIDATION;var decision=activePolicy.validate(text,facts);
+            call.stage=Stage.VALIDATION;call.selection=activePolicy.selection(text);
+            var decision=activePolicy.validate(text,facts);call.decision=decision;
             call.stage=Stage.REPORT;
             String report=activePolicy.display(decision,facts)+"\n模型调用耗时："+call.callMs+"ms；Token："+(call.tokens==null?"服务未提供":call.tokens)+"；"+COST_NOTICE;
             return outcome=new Result(report,decision.status().name(),"VALIDATED_REPORT","none");
@@ -136,12 +148,14 @@ public class IssueSubmissionTrialService {
         }
     }
     private void audit(Invocation call,Result result) {
-        LOG.info("选路实验 requestId={} version={} promptHash={} model={} outcome={} stage={} reason={} causeType={} elapsedMs={} callMs={} totalTokens={}",
-            call.id,RoutingInput.VERSION,call.promptHash,call.modelId,result.outcome(),call.stage,result.reason(),result.causeType(),elapsed(call.start),call.callMs,call.tokens);
+        LOG.info("选路实验 requestId={} mode={} version={} promptHash={} model={} outcome={} stage={} reason={} causeType={} elapsedMs={} callMs={} totalTokens={}",
+            call.id,call.mode,RoutingInput.VERSION,call.promptHash,call.modelId,result.outcome(),call.stage,result.reason(),result.causeType(),elapsed(call.start),call.callMs,call.tokens);
     }
-    public Mono<String> answer(String input) {
+    public Mono<String> answer(String input) { return evaluate(input,Mode.CONDITIONS).map(RoutingEvaluation::text); }
+    public Mono<RoutingEvaluation> evaluate(String input,Mode mode) {
+        if(mode==null)return Mono.error(new IllegalArgumentException("mode required"));
         return Mono.defer(()->{
-            Invocation call=new Invocation();
+            Invocation call=new Invocation(mode);
             // Reactor cancels the subscription on timeout. It may interrupt the worker, but the
             // provider/HTTP client may ignore interruption and still consume tokens. Their own
             // connection/read timeout settings remain authoritative for transport termination.
@@ -151,7 +165,10 @@ public class IssueSubmissionTrialService {
                 }))
                 .onErrorResume(e->Mono.just(failure("ASYNC_FAILURE","异步选路任务异常。",call.stage.name(),e)))
                 .doOnNext(result->{call.delivery.compareAndSet(Delivery.WAITING,Delivery.DELIVERED);audit(call,result);})
-                .map(Result::text)
+                .map(result->new RoutingEvaluation(call.id,call.mode,RoutingInput.VERSION,call.promptHash,
+                    call.modelId,call.modelCallStarted,result.outcome(),result.reason(),call.stage.name(),
+                    call.selection,result.outcome().equals("SELECTED")||result.outcome().equals("INSUFFICIENT")?call.decision:null,
+                    elapsed(call.start),call.callMs,call.inputTokens,call.outputTokens,call.tokens,result.text()))
                 .doOnCancel(()->{
                     if(call.delivery.compareAndSet(Delivery.WAITING,Delivery.CANCELLED))
                         LOG.info("选路实验 requestId={} outcome=CLIENT_CANCELLED stage={} elapsedMs={}",call.id,call.stage,elapsed(call.start));

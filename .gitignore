@@ -66,3 +66,6 @@ local-settings.properties
 node_modules/
 .pytest_cache/
 .venv/
+
+# Local routing evaluation journals (may contain business report references)
+/routing-eval-runs/

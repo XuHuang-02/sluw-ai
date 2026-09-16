@@ -231,3 +231,29 @@ records防御性复制集合与嵌套列表，Table使用List，Decision/Expecte
 The generated BeanOutputConverter<Selection> format marked status, branchId and blockedAt all required, contradicting the mutually exclusive prompt. Keep the converter for typed binding, but generate an explicit oneOf schema with separate SELECTED/branchId and INSUFFICIENT/blockedAt arms, allowed node enums and additionalProperties=false. Do not accept blank inactive targets or silently repair model output.
 
 Replaying the reported SELECTED/PASS/blockedAt-empty text locally produces CONFLICTING_NODES, not the reported INVALID_JSON. That environment-specific discrepancy remains unresolved. INVALID_JSON audit now includes only exception class and line/column, never parser message or raw source. No real provider call was made. Regression: 172 tests passed, including the reported text and a schema test that failed before the correction. Tests remain locally ignored under the existing repository policy.
+
+
+## 2026-09-16：双模式对照实验（需求对齐中）
+
+已确认：保留条件输入模式，增加直接阅读核保记录的实验方向；两种模式使用同一批案例、相同预期结果，比较正确率、失败率、耗时及费用。先验证直接读记录的收益，再决定是否接入保单原文、影像和RAGFlow。沿用dealIssue范围、小结构输出、服务端报告、拒绝错误且不兜底、不自动重试、不执行业务操作。
+
+待确认：记录模式是否接收预计算次数等提示；页面默认单模式还是显式双模式对比；首轮重复运行规模。对照结果仅在服务端使用，不进入模型输入。须区分模型原始选择正确率、校验拒绝和服务端失败，不能只统计通过校验后的结果。费用缺少用量或单价时记为未知，不按零计。此阶段不实施业务代码。
+
+
+### 双模式实验最终确认
+
+用户已确认以下方案，取代上节待确认事项：
+
+1. 条件模式保持现状并默认选中。记录模式只接收校验后的业务快照、完整性声明及规则说明，不接收Facts、预计算次数、候选处理项或expected答案。沿用现有noFailedRules映射，范围仍为dealIssue，不接影像、保单原文、RAGFlow或聊天历史。
+2. 页面提供条件模式、记录模式及显式双模式对比。单模式调用一次；对比使用同一快照独立调用两次，不共享答案，单侧失败不隐藏另一侧结果。
+3. 两种模式共用小结构输出、严格校验、服务端对照和报告组装。错误拒绝、不兜底、不自动重试、不执行实际业务。
+4. 首轮准备36个案例、每模式每例5次，共360次调用；固定模型参数、分别冻结提示词并记录指纹，交替安排模式。预期结果须人工复核，不能仅凭程序对照宣称业务真值。
+5. 有效正确率分母为已发起模型调用次数，分子为格式合规且状态及目标节点正确的次数。格式失败、选路错误、调用异常、超时分别统计；服务端失败及调用前失败另列，同时记录计划数和实际调用数。
+6. 比较模型耗时、整体耗时、输入及输出Token、费用；缺少用量或确认价格时记未知，不按零计。不从总Token猜测输入输出拆分，估算不等于账单。
+7. 实施顺序：先增加模式与记录提示词并验证输入隔离，再增加页面对比，最后准备评测运行与汇总。记录提示词必须包含准确的历史匹配、批次、计数、SQL NULL与缺失数据语义，不能仅使用节点简述。
+8. 当前阶段完成方案记录；不自动启动真实模型评测。工程先用合成数据与模拟服务验证，真实评测未运行，不宣称记录模式优于条件模式。
+
+
+### 双模式实施进展
+
+已实现模式隔离、同表小结构校验、登录保护的结构化评测接口、并列页面与可在Windows/UOS运行的标准库Python工具。真实评测默认不执行，人工复核清单与显式execute后才调用；续跑跳过已发起或送达未知的任务。原条件路径回归通过，新增验证及跨机说明见docs/trial/dual-mode-evaluation.md。
