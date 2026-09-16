@@ -74,6 +74,7 @@ def summarize(folder, prices=None):
             "planned": sum(t["mode"] == mode for t in plan["tasks"]), "attemptedHttp": len(rows),
             "modelCallsConfirmed": len(invoked), "deliveryUnknown": len(unknown),
             "beforeCallFailures": sum(not r["result"].get("modelCallStarted") for r in received),
+            "missingModelMetadata": sum(not isinstance(r["result"].get("model"),str) or not r["result"]["model"].strip() for r in invoked),
             "validCorrect": correct, "validCorrectRateAmongConfirmedCalls": correct / len(invoked) if invoked else None,
             "formatFailures": count_rate(lambda v: v.get("outcome") in ("MODEL_OUTPUT_REJECTED", "EMPTY_MODEL_OUTPUT") and v.get("selection") is None),
             "routingRejections": count_rate(lambda v: v.get("outcome") == "MODEL_OUTPUT_REJECTED" and v.get("selection") is not None),
@@ -123,17 +124,22 @@ def run(args):
         try:
             with opener.open(req, timeout=args.timeout) as response: result = json.load(response)
             if not isinstance(result, dict) or result.get("mode") != task["mode"] or "modelCallStarted" not in result: raise ValueError("unexpected response contract")
-            record.update(delivery="RECEIVED", result=result, httpMs=round((time.monotonic()-start)*1000)); append(folder, record)
-            mismatch = result.get("model") not in (None, args.model)
-            prompt = result.get("promptHash"); mode = task["mode"]
-            if prompt:
-                if mode in binding["prompts"] and binding["prompts"][mode] != prompt: mismatch = True
-                else: binding["prompts"][mode] = prompt
-            version = result.get("version")
-            if binding["version"] not in (None, version): mismatch = True
-            binding["version"] = version; write(binding_path, binding)
+            # Missing provider metadata is not evidence of a different model. Keep it unknown.
+            observed = {key: result.get(key) for key in ("model", "promptHash", "version")}
+            missing = [key for key, value in observed.items() if value is None or isinstance(value,str) and not value.strip()]
+            changed = []
+            for key, value in observed.items():
+                if key not in missing and not isinstance(value,str): changed.append(key + "_invalid_type")
+            if "model" not in missing and observed["model"] != args.model: changed.append("model")
+            prompt = observed["promptHash"]; mode = task["mode"]; version = observed["version"]
+            if "promptHash" not in missing and mode in binding["prompts"] and binding["prompts"][mode] != prompt: changed.append("promptHash:" + mode)
+            if "version" not in missing and binding["version"] not in (None, version): changed.append("version")
+            record.update(delivery="RECEIVED", result=result, environmentCheck={"missing":missing,"changed":changed}, httpMs=round((time.monotonic()-start)*1000)); append(folder, record)
             print(task["key"], result.get("outcome"), flush=True)
-            if mismatch: raise RuntimeError("model/prompt/version changed; result saved, stopped for review")
+            if changed: raise RuntimeError("environment changed: " + ", ".join(changed) + "; result saved, baseline unchanged, stopped for review")
+            if "promptHash" not in missing: binding["prompts"][mode] = prompt
+            if "version" not in missing: binding["version"] = version
+            write(binding_path, binding)
             if not result.get("modelCallStarted") or result.get("outcome") in ("RESPONSE_TIMEOUT", "MODEL_CALL_FAILED", "SERVER_ERROR"):
                 raise RuntimeError("call failed or timed out; result saved, stopped without retry")
         except RuntimeError: raise
@@ -143,9 +149,36 @@ def run(args):
             raise RuntimeError("transport/auth/response failure; stopped without retry: " + type(error).__name__) from None
     summarize(folder)
 
+def upgrade_runner(args):
+    """Only migrate the known original runner; preserve all calls and frozen environment."""
+    folder = pathlib.Path(args.out)
+    lock = folder / "run.lock"
+    with lock.open("x", encoding="utf-8") as handle: handle.write(str(os.getpid()))
+    try:
+        plan = read(folder / "plan.json")
+        sha, _ = cases_at(args.cases)
+        if sha != plan["casesSha256"]: raise ValueError("case file changed; runner upgrade refused")
+        current = digest(pathlib.Path(__file__).read_bytes())
+        previous = plan["runnerSha256"]
+        if previous == current:
+            print("Runner already current; no changes."); return
+        supported = ('57b6a7ea72519736113375d16adc2b839c047165093d489cda3e3ad0ac7ba64c', '6511519b14fd9854dd1cb89d760dd53e039bd5d13fa0e6e09012189681e75ccb')
+        if previous not in supported: raise ValueError("unknown runner version; migration refused")
+        # Read the journal before changing the plan; corrupted results must not be bypassed.
+        count = len(journal(folder))
+        with (folder / "runner-upgrades.jsonl").open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps({"at":stamp(),"from":previous,"to":current,"preservedTasks":count,
+                "reason":"empty model metadata is unknown, not drift; explicit diagnostics"}) + "\n")
+            handle.flush(); os.fsync(handle.fileno())
+        plan["runnerSha256"] = current
+        temporary = folder / "plan.upgrade.tmp"
+        write(temporary, plan); temporary.replace(folder / "plan.json")
+        print(f"Runner upgraded; preserved {count} attempted tasks. No model calls made.")
+    finally: lock.unlink()
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__); sub = parser.add_subparsers(dest="command", required=True)
-    for name in ("prepare", "run", "summarize"):
+    for name in ("prepare", "run", "summarize", "upgrade-runner"):
         p = sub.add_parser(name); p.add_argument("--out", required=True)
         if name != "summarize": p.add_argument("--cases", default=str(DEFAULT_CASES))
         if name == "prepare": p.add_argument("--repeats", type=int, default=5)
@@ -157,6 +190,7 @@ def main():
     if args.command == "prepare":
         if args.repeats < 1: parser.error("repeats must be positive")
         prepare(args)
+    elif args.command == "upgrade-runner": upgrade_runner(args)
     elif args.command == "run":
         lock = pathlib.Path(args.out) / "run.lock"
         with lock.open("x", encoding="utf-8") as handle: handle.write(str(os.getpid()))

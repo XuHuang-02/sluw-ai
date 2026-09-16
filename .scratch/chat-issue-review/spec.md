@@ -257,3 +257,8 @@ Replaying the reported SELECTED/PASS/blockedAt-empty text locally produces CONFL
 ### 双模式实施进展
 
 已实现模式隔离、同表小结构校验、登录保护的结构化评测接口、并列页面与可在Windows/UOS运行的标准库Python工具。真实评测默认不执行，人工复核清单与显式execute后才调用；续跑跳过已发起或送达未知的任务。原条件路径回归通过，新增验证及跨机说明见docs/trial/dual-mode-evaluation.md。
+
+
+### 2026-09-16：真实评测停止诊断
+
+用户提供的第4次结果model为空字符串、promptHash与version均匹配，确认原脚本误报模型变化。本地模拟已复现。修复缺失元数据分类、增加具体漂移字段，真实漂移不覆盖旧基线。增加受限显式upgrade-runner迁移，保留已有失败记录并避免重跑。空输出和记录模式PATH_MISMATCH仍是独立失败，不修饰成成功。当前只修脚本及说明，不改变模型输入或业务规则。

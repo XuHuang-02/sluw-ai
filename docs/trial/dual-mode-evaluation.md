@@ -86,3 +86,17 @@ python tools/routing_eval.py summarize --out routing-eval-runs/first --prices �
 ## 工程验证与业务结论
 
 工程验证使用合成样本和模拟模型，覆盖同一快照双输入隔离、错误不兜底、候选报告一致、登录校验、页面单侧失败、评测续跑及未知费用。真实模型360次评测需在批准环境执行；尚未执行前，不能宣称记录模式比条件模式更准确或更划算。
+
+
+## 已知修复：空模型标识误报环境变化
+
+原979d714版将provider返回的model空字符串误判为模型变化。修复后null、空字符串和纯空白标识按“元数据缺失”统计，不伪装成已确认模型，也不把空输出当成功。非空模型名、同模式promptHash、规则version确实变化时仍停止，明确变化字段且不覆盖原基线。summary新增missingModelMetadata，逐次结果environmentCheck记录缺失项和变化项。
+
+更新工具后，旧计划仍保留四次等已经执行的记录。因为脚本有版本锁，先显式迁移，再使用原run命令续跑：
+
+```bash
+python3 tools/routing_eval.py upgrade-runner --out routing-eval-runs/first
+python3 tools/routing_eval.py run --out routing-eval-runs/first --base-url http://localhost:8089 --model deepseek-v3-2-com --execute
+```
+
+迁移仅接受已知原版工具的LF/CRLF哈希，验证案例哈希，记录runner-upgrades.jsonl；不会调用模型，不修改环境基线、人工复核状态或结果记录。未知工具版本拒绝迁移。不要手动改runnerSha256，不要删旧结果。原空输出与选路错误仍计入实验结果。
