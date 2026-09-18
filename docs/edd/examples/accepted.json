@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "analysis_id": "SYN-ANALYSIS-1",
+  "status": "queued",
+  "status_url": "/api/edd/analyses/SYN-ANALYSIS-1",
+  "result_url": "/api/edd/analyses/SYN-ANALYSIS-1/result"
+}

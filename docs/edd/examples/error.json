@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "error": {
+    "code": "INVALID_REFERENCE",
+    "message": "请求引用不存在",
+    "details": [
+      {
+        "code": "INVALID_REFERENCE",
+        "path": "/conflicts/0/adopted_fact_id",
+        "message": "采用事实必须存在于候选事实中"
+      }
+    ]
+  }
+}

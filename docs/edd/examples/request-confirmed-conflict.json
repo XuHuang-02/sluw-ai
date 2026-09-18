@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "synthetic": true,
+  "snapshot_id": "SYN-SNAPSHOT-1",
+  "analysis_as_of": "2026-09-18T09:00:00+08:00",
+  "parent_analysis_id": null,
+  "subject": {
+    "customer_id": "SYN-CUSTOMER",
+    "display_name": null
+  },
+  "context": {
+    "policy_id": null,
+    "role": "policyholder",
+    "trigger": "risk_review"
+  },
+  "coverage": {
+    "actual_payments": {
+      "query_status": "not_provided",
+      "coverage_kind": "history_events",
+      "from": null,
+      "to": null,
+      "as_of": null,
+      "complete": false,
+      "note": "尚未取得实际支付资料"
+    }
+  },
+  "core_snapshots": [],
+  "events": [],
+  "risk_records": [],
+  "manual_excerpts": [
+    {
+      "fact_id": "F1",
+      "text": "家庭年收入20万元",
+      "confirmed": true,
+      "confirmed_at": "2026-09-18T08:00:00+08:00",
+      "attachment_id": null,
+      "source": {
+        "source_id": "SYN-INPUT",
+        "source_kind": "synthetic",
+        "table": null,
+        "key": {},
+        "fields": [],
+        "extracted_at": null,
+        "dictionary_version": null,
+        "query_version": null
+      }
+    },
+    {
+      "fact_id": "F2",
+      "text": "家庭年收入40万元",
+      "confirmed": false,
+      "confirmed_at": null,
+      "attachment_id": null,
+      "source": {
+        "source_id": "SYN-INPUT",
+        "source_kind": "synthetic",
+        "table": null,
+        "key": {},
+        "fields": [],
+        "extracted_at": null,
+        "dictionary_version": null,
+        "query_version": null
+      }
+    }
+  ],
+  "attachments": [],
+  "conflicts": [
+    {
+      "conflict_id": "C1",
+      "field": "family_income",
+      "candidate_fact_ids": [
+        "F1",
+        "F2"
+      ],
+      "resolved": true,
+      "adopted_fact_id": "F1"
+    }
+  ],
+  "rule_context": {
+    "rule_package_id": null,
+    "expected_version": null
+  }
+}

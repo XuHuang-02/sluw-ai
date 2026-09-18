@@ -1,0 +1,1972 @@
+{
+  "dictionary_version": "core-structure-v1",
+  "source_file": "核心表结构整理v1.xlsx",
+  "source_sheet": "保单相关",
+  "source_sha256": "d7c08adc8ac1e7557441ee17fb2889e01cba9bccf026a434b14bb50239229338",
+  "tables": {
+    "LCCONT": {
+      "snapshot_type": "policy",
+      "key_fields": [
+        "CONTNO"
+      ],
+      "fields": {
+        "GRPCONTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "团体保单号码",
+          "source_row": 2
+        },
+        "CONTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "保单号码",
+          "source_row": 3
+        },
+        "PROPOSALCONTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "投保单号码",
+          "source_row": 4
+        },
+        "PRTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "印刷号码",
+          "source_row": 5
+        },
+        "CONTTYPE": {
+          "type": "VARCHAR2(1)",
+          "label": "保单类型",
+          "source_row": 6
+        },
+        "FAMILYTYPE": {
+          "type": "VARCHAR2(1)",
+          "label": "家庭单类型",
+          "source_row": 7
+        },
+        "FAMILYID": {
+          "type": "VARCHAR2(10)",
+          "label": "家庭保障号",
+          "source_row": 8
+        },
+        "POLTYPE": {
+          "type": "VARCHAR2(1)",
+          "label": "保单类型标记",
+          "source_row": 9
+        },
+        "CARDFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "卡单标志",
+          "source_row": 10
+        },
+        "MANAGECOM": {
+          "type": "VARCHAR2(10)",
+          "label": "管理机构",
+          "source_row": 11
+        },
+        "EXECUTECOM": {
+          "type": "VARCHAR2(10)",
+          "label": "处理机构",
+          "source_row": 12
+        },
+        "AGENTCOM": {
+          "type": "VARCHAR2(20)",
+          "label": "代理机构",
+          "source_row": 13
+        },
+        "AGENTCODE": {
+          "type": "VARCHAR2(10)",
+          "label": "代理人编码",
+          "source_row": 14
+        },
+        "AGENTGROUP": {
+          "type": "VARCHAR2(12)",
+          "label": "代理人组别",
+          "source_row": 15
+        },
+        "AGENTCODE1": {
+          "type": "VARCHAR2(10)",
+          "label": "联合代理人代码",
+          "source_row": 16
+        },
+        "AGENTTYPE": {
+          "type": "VARCHAR2(20)",
+          "label": "代理机构内部分类",
+          "source_row": 17
+        },
+        "SALECHNL": {
+          "type": "VARCHAR2(2)",
+          "label": "销售渠道",
+          "source_row": 18
+        },
+        "HANDLER": {
+          "type": "VARCHAR2(80)",
+          "label": "经办人",
+          "source_row": 19
+        },
+        "PASSWORD": {
+          "type": "VARCHAR2(16)",
+          "label": "保单口令",
+          "source_row": 20
+        },
+        "APPNTNO": {
+          "type": "VARCHAR2(24)",
+          "label": "投保人客户号码",
+          "source_row": 21
+        },
+        "APPNTNAME": {
+          "type": "VARCHAR2(120)",
+          "label": "投保人姓名",
+          "source_row": 22
+        },
+        "APPNTSEX": {
+          "type": "VARCHAR2(1)",
+          "label": "投保人性别",
+          "source_row": 23
+        },
+        "APPNTBIRTHDAY": {
+          "type": "DATE",
+          "label": "投保人出生日期",
+          "source_row": 24
+        },
+        "APPNTIDTYPE": {
+          "type": "VARCHAR2(1)",
+          "label": "投保人证件类型",
+          "source_row": 25
+        },
+        "APPNTIDNO": {
+          "type": "VARCHAR2(20)",
+          "label": "投保人证件号码",
+          "source_row": 26
+        },
+        "INSUREDNO": {
+          "type": "VARCHAR2(24)",
+          "label": "被保人客户号",
+          "source_row": 27
+        },
+        "INSUREDNAME": {
+          "type": "VARCHAR2(120)",
+          "label": "被保人姓名",
+          "source_row": 28
+        },
+        "INSUREDSEX": {
+          "type": "VARCHAR2(1)",
+          "label": "被保人性别",
+          "source_row": 29
+        },
+        "INSUREDBIRTHDAY": {
+          "type": "DATE",
+          "label": "被保人出生日期",
+          "source_row": 30
+        },
+        "INSUREDIDTYPE": {
+          "type": "VARCHAR2(1)",
+          "label": "证件类型",
+          "source_row": 31
+        },
+        "INSUREDIDNO": {
+          "type": "VARCHAR2(20)",
+          "label": "证件号码",
+          "source_row": 32
+        },
+        "PAYINTV": {
+          "type": "INTEGER",
+          "label": "交费间隔",
+          "source_row": 33
+        },
+        "PAYMODE": {
+          "type": "VARCHAR2(1)",
+          "label": "交费方式",
+          "source_row": 34
+        },
+        "PAYLOCATION": {
+          "type": "VARCHAR2(1)",
+          "label": "交费位置",
+          "source_row": 35
+        },
+        "DISPUTEDFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "合同争议处理方式",
+          "source_row": 36
+        },
+        "OUTPAYFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "溢交处理方式",
+          "source_row": 37
+        },
+        "GETPOLMODE": {
+          "type": "VARCHAR2(1)",
+          "label": "保单送达方式",
+          "source_row": 38
+        },
+        "SIGNCOM": {
+          "type": "VARCHAR2(10)",
+          "label": "签单机构",
+          "source_row": 39
+        },
+        "SIGNDATE": {
+          "type": "DATE",
+          "label": "签单日期",
+          "source_row": 40
+        },
+        "SIGNTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "签单时间",
+          "source_row": 41
+        },
+        "CONSIGNNO": {
+          "type": "VARCHAR2(20)",
+          "label": "银行委托书号码",
+          "source_row": 42
+        },
+        "BANKCODE": {
+          "type": "VARCHAR2(20)",
+          "label": "银行编码",
+          "source_row": 43
+        },
+        "BANKACCNO": {
+          "type": "VARCHAR2(40)",
+          "label": "银行帐号",
+          "source_row": 44
+        },
+        "ACCNAME": {
+          "type": "VARCHAR2(20)",
+          "label": "银行帐户名",
+          "source_row": 45
+        },
+        "PRINTCOUNT": {
+          "type": "INTEGER",
+          "label": "保单打印次数",
+          "source_row": 46
+        },
+        "LOSTTIMES": {
+          "type": "INTEGER",
+          "label": "遗失补发次数",
+          "source_row": 47
+        },
+        "LANG": {
+          "type": "VARCHAR2(1)",
+          "label": "语种标记",
+          "source_row": 48
+        },
+        "CURRENCY": {
+          "type": "VARCHAR2(2)",
+          "label": "币别",
+          "source_row": 49
+        },
+        "REMARK": {
+          "type": "VARCHAR2(1600)",
+          "label": "备注",
+          "source_row": 50
+        },
+        "PEOPLES": {
+          "type": "INTEGER",
+          "label": "人数",
+          "source_row": 51
+        },
+        "MULT": {
+          "type": "NUMBER(20,5)",
+          "label": "份数",
+          "source_row": 52
+        },
+        "PREM": {
+          "type": "NUMBER(16,2)",
+          "label": "保费",
+          "source_row": 53
+        },
+        "AMNT": {
+          "type": "NUMBER(16,2)",
+          "label": "保额",
+          "source_row": 54
+        },
+        "SUMPREM": {
+          "type": "NUMBER(16,2)",
+          "label": "累计保费",
+          "source_row": 55
+        },
+        "DIF": {
+          "type": "NUMBER(12,2)",
+          "label": "余额",
+          "source_row": 56
+        },
+        "PAYTODATE": {
+          "type": "DATE",
+          "label": "交至日期",
+          "source_row": 57
+        },
+        "FIRSTPAYDATE": {
+          "type": "DATE",
+          "label": "首期交费日期",
+          "source_row": 58
+        },
+        "CVALIDATE": {
+          "type": "DATE",
+          "label": "保单生效日期",
+          "source_row": 59
+        },
+        "INPUTOPERATOR": {
+          "type": "VARCHAR2(80)",
+          "label": "录单人",
+          "source_row": 60
+        },
+        "INPUTDATE": {
+          "type": "DATE",
+          "label": "录单完成日期",
+          "source_row": 61
+        },
+        "INPUTTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "录单完成时间",
+          "source_row": 62
+        },
+        "APPROVEFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "复核状态",
+          "source_row": 63
+        },
+        "APPROVECODE": {
+          "type": "VARCHAR2(80)",
+          "label": "复核人编码",
+          "source_row": 64
+        },
+        "APPROVEDATE": {
+          "type": "DATE",
+          "label": "复核日期",
+          "source_row": 65
+        },
+        "APPROVETIME": {
+          "type": "VARCHAR2(8)",
+          "label": "复核时间",
+          "source_row": 66
+        },
+        "UWFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "核保状态",
+          "source_row": 67
+        },
+        "UWOPERATOR": {
+          "type": "VARCHAR2(80)",
+          "label": "核保人",
+          "source_row": 68
+        },
+        "UWDATE": {
+          "type": "DATE",
+          "label": "核保完成日期",
+          "source_row": 69
+        },
+        "UWTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "核保完成时间",
+          "source_row": 70
+        },
+        "APPFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "投保单/保单标志",
+          "source_row": 71
+        },
+        "POLAPPLYDATE": {
+          "type": "DATE",
+          "label": "投保单申请日期",
+          "source_row": 72
+        },
+        "GETPOLDATE": {
+          "type": "DATE",
+          "label": "保单送达日期",
+          "source_row": 73
+        },
+        "GETPOLTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "保单送达时间",
+          "source_row": 74
+        },
+        "CUSTOMGETPOLDATE": {
+          "type": "DATE",
+          "label": "保单回执客户签收日期",
+          "source_row": 75
+        },
+        "STATE": {
+          "type": "VARCHAR2(10)",
+          "label": "状态",
+          "source_row": 76
+        },
+        "OPERATOR": {
+          "type": "VARCHAR2(80)",
+          "label": "操作员",
+          "source_row": 77
+        },
+        "MAKEDATE": {
+          "type": "DATE",
+          "label": "创建日期",
+          "source_row": 78
+        },
+        "MAKETIME": {
+          "type": "VARCHAR2(8)",
+          "label": "创建时间",
+          "source_row": 79
+        },
+        "MODIFYDATE": {
+          "type": "DATE",
+          "label": "最后一次修改日期",
+          "source_row": 80
+        },
+        "MODIFYTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "最后一次修改时间",
+          "source_row": 81
+        },
+        "FIRSTTRIALOPERATOR": {
+          "type": "VARCHAR2(80)",
+          "label": "初审人",
+          "source_row": 82
+        },
+        "FIRSTTRIALDATE": {
+          "type": "DATE",
+          "label": "初审日期",
+          "source_row": 83
+        },
+        "FIRSTTRIALTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "初审时间",
+          "source_row": 84
+        },
+        "RECEIVEOPERATOR": {
+          "type": "VARCHAR2(80)",
+          "label": "收单人",
+          "source_row": 85
+        },
+        "RECEIVEDATE": {
+          "type": "DATE",
+          "label": "收单日期",
+          "source_row": 86
+        },
+        "RECEIVETIME": {
+          "type": "VARCHAR2(8)",
+          "label": "收单时间",
+          "source_row": 87
+        },
+        "TEMPFEENO": {
+          "type": "VARCHAR2(20)",
+          "label": "暂收据号",
+          "source_row": 88
+        },
+        "SELLTYPE": {
+          "type": "VARCHAR2(2)",
+          "label": "销售方式",
+          "source_row": 89
+        },
+        "FORCEUWFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "强制人工核保标志",
+          "source_row": 90
+        },
+        "FORCEUWREASON": {
+          "type": "VARCHAR2(500)",
+          "label": "强制人工核保原因",
+          "source_row": 91
+        },
+        "NEWBANKCODE": {
+          "type": "VARCHAR2(20)",
+          "label": "首期银行编码",
+          "source_row": 92
+        },
+        "NEWBANKACCNO": {
+          "type": "VARCHAR2(40)",
+          "label": "首期银行帐号",
+          "source_row": 93
+        },
+        "NEWACCNAME": {
+          "type": "VARCHAR2(120)",
+          "label": "首期银行帐户名",
+          "source_row": 94
+        },
+        "NEWPAYMODE": {
+          "type": "VARCHAR2(1)",
+          "label": "首期交费方式",
+          "source_row": 95
+        },
+        "AGENTBANKCODE": {
+          "type": "VARCHAR2(20)",
+          "label": "银代银行代码",
+          "source_row": 96
+        },
+        "BANKAGENT": {
+          "type": "VARCHAR2(20)",
+          "label": "银代柜员",
+          "source_row": 97
+        },
+        "AUTHSTATEMENT": {
+          "type": "VARCHAR2(1000)",
+          "label": "授权声明",
+          "source_row": 98
+        },
+        "ORIMANAGECOM": {
+          "type": "VARCHAR2(10)",
+          "label": "原始机构",
+          "source_row": 99
+        },
+        "ITEMNO": {
+          "type": "VARCHAR2(10)",
+          "label": "职团代码",
+          "source_row": 100
+        },
+        "GRANTFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "抵交保费授权标志",
+          "source_row": 101
+        },
+        "SELFPROTFLAG": {
+          "type": "VARCHAR2(2)",
+          "label": "自保件标志",
+          "source_row": 102
+        },
+        "NBACCTTYPE": {
+          "type": "VARCHAR2(4)",
+          "label": "首期银行卡类型",
+          "source_row": 103
+        },
+        "RNACCTTYPE": {
+          "type": "VARCHAR2(4)",
+          "label": "续期银行卡类型",
+          "source_row": 104
+        }
+      }
+    },
+    "LCPOL": {
+      "snapshot_type": "product",
+      "key_fields": [
+        "POLNO"
+      ],
+      "fields": {
+        "GRPCONTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "集体合同号码",
+          "source_row": 204
+        },
+        "GRPPOLNO": {
+          "type": "VARCHAR2(20)",
+          "label": "集体保单险种号码",
+          "source_row": 205
+        },
+        "CONTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "合同号码",
+          "source_row": 206
+        },
+        "POLNO": {
+          "type": "VARCHAR2(20)",
+          "label": "保单险种号码",
+          "source_row": 207
+        },
+        "PROPOSALNO": {
+          "type": "VARCHAR2(20)",
+          "label": "投保单险种号码",
+          "source_row": 208
+        },
+        "PRTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "投保单号",
+          "source_row": 209
+        },
+        "CONTTYPE": {
+          "type": "VARCHAR2(1)",
+          "label": "总单类型",
+          "source_row": 210
+        },
+        "POLTYPEFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "保单类型标记",
+          "source_row": 211
+        },
+        "MAINPOLNO": {
+          "type": "VARCHAR2(20)",
+          "label": "主险险种号码",
+          "source_row": 212
+        },
+        "MASTERPOLNO": {
+          "type": "VARCHAR2(20)",
+          "label": "主被保人保单号码",
+          "source_row": 213
+        },
+        "KINDCODE": {
+          "type": "VARCHAR2(3)",
+          "label": "险类编码",
+          "source_row": 214
+        },
+        "RISKCODE": {
+          "type": "VARCHAR2(10)",
+          "label": "险种编码",
+          "source_row": 215
+        },
+        "RISKVERSION": {
+          "type": "VARCHAR2(8)",
+          "label": "险种版本",
+          "source_row": 216
+        },
+        "MANAGECOM": {
+          "type": "VARCHAR2(10)",
+          "label": "管理机构",
+          "source_row": 217
+        },
+        "AGENTCOM": {
+          "type": "VARCHAR2(20)",
+          "label": "代理机构",
+          "source_row": 218
+        },
+        "AGENTTYPE": {
+          "type": "VARCHAR2(20)",
+          "label": "代理机构内部分类",
+          "source_row": 219
+        },
+        "AGENTCODE": {
+          "type": "VARCHAR2(10)",
+          "label": "代理人编码",
+          "source_row": 220
+        },
+        "AGENTGROUP": {
+          "type": "VARCHAR2(12)",
+          "label": "代理人组别",
+          "source_row": 221
+        },
+        "AGENTCODE1": {
+          "type": "VARCHAR2(10)",
+          "label": "联合代理人代码",
+          "source_row": 222
+        },
+        "SALECHNL": {
+          "type": "VARCHAR2(2)",
+          "label": "销售渠道",
+          "source_row": 223
+        },
+        "HANDLER": {
+          "type": "VARCHAR2(80)",
+          "label": "经办人",
+          "source_row": 224
+        },
+        "INSUREDNO": {
+          "type": "VARCHAR2(24)",
+          "label": "被保人客户号码",
+          "source_row": 225
+        },
+        "INSUREDNAME": {
+          "type": "VARCHAR2(120)",
+          "label": "被保人名称",
+          "source_row": 226
+        },
+        "INSUREDSEX": {
+          "type": "VARCHAR2(1)",
+          "label": "被保人性别",
+          "source_row": 227
+        },
+        "INSUREDBIRTHDAY": {
+          "type": "DATE",
+          "label": "被保人生日",
+          "source_row": 228
+        },
+        "INSUREDAPPAGE": {
+          "type": "INTEGER",
+          "label": "被保人投保年龄",
+          "source_row": 229
+        },
+        "INSUREDPEOPLES": {
+          "type": "INTEGER",
+          "label": "被保人数目",
+          "source_row": 230
+        },
+        "OCCUPATIONTYPE": {
+          "type": "VARCHAR2(10)",
+          "label": "被保人职业类别/工种编码",
+          "source_row": 231
+        },
+        "APPNTNO": {
+          "type": "VARCHAR2(24)",
+          "label": "投保人客户号码",
+          "source_row": 232
+        },
+        "APPNTNAME": {
+          "type": "VARCHAR2(120)",
+          "label": "投保人名称",
+          "source_row": 233
+        },
+        "CVALIDATE": {
+          "type": "DATE",
+          "label": "险种生效日期",
+          "source_row": 234
+        },
+        "SIGNCOM": {
+          "type": "VARCHAR2(10)",
+          "label": "签单机构",
+          "source_row": 235
+        },
+        "SIGNDATE": {
+          "type": "DATE",
+          "label": "签单日期",
+          "source_row": 236
+        },
+        "SIGNTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "签单时间",
+          "source_row": 237
+        },
+        "FIRSTPAYDATE": {
+          "type": "DATE",
+          "label": "首期交费日期",
+          "source_row": 238
+        },
+        "PAYENDDATE": {
+          "type": "DATE",
+          "label": "终交日期",
+          "source_row": 239
+        },
+        "PAYTODATE": {
+          "type": "DATE",
+          "label": "交至日期",
+          "source_row": 240
+        },
+        "GETSTARTDATE": {
+          "type": "DATE",
+          "label": "起领日期",
+          "source_row": 241
+        },
+        "ENDDATE": {
+          "type": "DATE",
+          "label": "保险责任终止日期",
+          "source_row": 242
+        },
+        "ACCIENDDATE": {
+          "type": "DATE",
+          "label": "意外责任终止日期",
+          "source_row": 243
+        },
+        "GETYEARFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "领取年龄年期标志",
+          "source_row": 244
+        },
+        "GETYEAR": {
+          "type": "INTEGER",
+          "label": "领取年龄年期",
+          "source_row": 245
+        },
+        "PAYENDYEARFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "终交年龄年期标志",
+          "source_row": 246
+        },
+        "PAYENDYEAR": {
+          "type": "INTEGER",
+          "label": "终交年龄年期",
+          "source_row": 247
+        },
+        "INSUYEARFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "保险年龄年期标志",
+          "source_row": 248
+        },
+        "INSUYEAR": {
+          "type": "INTEGER",
+          "label": "保险年龄年期",
+          "source_row": 249
+        },
+        "ACCIYEARFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "意外年龄年期标志",
+          "source_row": 250
+        },
+        "ACCIYEAR": {
+          "type": "INTEGER",
+          "label": "意外年龄年期",
+          "source_row": 251
+        },
+        "GETSTARTTYPE": {
+          "type": "VARCHAR2(1)",
+          "label": "起领日期计算类型",
+          "source_row": 252
+        },
+        "SPECIFYVALIDATE": {
+          "type": "VARCHAR2(1)",
+          "label": "是否指定生效日期",
+          "source_row": 253
+        },
+        "PAYMODE": {
+          "type": "VARCHAR2(1)",
+          "label": "交费方式",
+          "source_row": 254
+        },
+        "PAYLOCATION": {
+          "type": "VARCHAR2(1)",
+          "label": "交费位置",
+          "source_row": 255
+        },
+        "PAYINTV": {
+          "type": "INTEGER",
+          "label": "交费间隔",
+          "source_row": 256
+        },
+        "PAYYEARS": {
+          "type": "INTEGER",
+          "label": "交费年期",
+          "source_row": 257
+        },
+        "YEARS": {
+          "type": "INTEGER",
+          "label": "保险年期",
+          "source_row": 258
+        },
+        "MANAGEFEERATE": {
+          "type": "FLOAT",
+          "label": "管理费比例",
+          "source_row": 259
+        },
+        "FLOATRATE": {
+          "type": "NUMBER(16,10)",
+          "label": "浮动费率",
+          "source_row": 260
+        },
+        "PREMTOAMNT": {
+          "type": "VARCHAR2(1)",
+          "label": "保费算保额标志",
+          "source_row": 261
+        },
+        "MULT": {
+          "type": "NUMBER(20,5)",
+          "label": "总份数",
+          "source_row": 262
+        },
+        "STANDPREM": {
+          "type": "NUMBER(16,2)",
+          "label": "总标准保费",
+          "source_row": 263
+        },
+        "PREM": {
+          "type": "NUMBER(16,2)",
+          "label": "总保费",
+          "source_row": 264
+        },
+        "SUMPREM": {
+          "type": "NUMBER(16,2)",
+          "label": "总累计保费",
+          "source_row": 265
+        },
+        "AMNT": {
+          "type": "NUMBER(16,2)",
+          "label": "总基本保额",
+          "source_row": 266
+        },
+        "RISKAMNT": {
+          "type": "NUMBER(16,2)",
+          "label": "总风险保额",
+          "source_row": 267
+        },
+        "LEAVINGMONEY": {
+          "type": "NUMBER(16,2)",
+          "label": "余额",
+          "source_row": 268
+        },
+        "ENDORSETIMES": {
+          "type": "INTEGER",
+          "label": "批改次数",
+          "source_row": 269
+        },
+        "CLAIMTIMES": {
+          "type": "INTEGER",
+          "label": "理赔次数",
+          "source_row": 270
+        },
+        "LIVETIMES": {
+          "type": "INTEGER",
+          "label": "生存领取次数",
+          "source_row": 271
+        },
+        "RENEWCOUNT": {
+          "type": "INTEGER",
+          "label": "续保次数",
+          "source_row": 272
+        },
+        "LASTGETDATE": {
+          "type": "DATE",
+          "label": "最后一次给付日期",
+          "source_row": 273
+        },
+        "LASTLOANDATE": {
+          "type": "DATE",
+          "label": "最后一次借款日期",
+          "source_row": 274
+        },
+        "LASTREGETDATE": {
+          "type": "DATE",
+          "label": "最后一次催收日期",
+          "source_row": 275
+        },
+        "LASTEDORDATE": {
+          "type": "DATE",
+          "label": "最后一次保全日期",
+          "source_row": 276
+        },
+        "LASTREVDATE": {
+          "type": "DATE",
+          "label": "最近复效日期",
+          "source_row": 277
+        },
+        "RNEWFLAG": {
+          "type": "INTEGER",
+          "label": "续保标志",
+          "source_row": 278
+        },
+        "STOPFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "停交标志",
+          "source_row": 279
+        },
+        "EXPIRYFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "满期标志",
+          "source_row": 280
+        },
+        "AUTOPAYFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "自动垫交标志",
+          "source_row": 281
+        },
+        "INTERESTDIFFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "利差返还方式",
+          "source_row": 282
+        },
+        "SUBFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "减额交清标志",
+          "source_row": 283
+        },
+        "BNFFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "受益人标记",
+          "source_row": 284
+        },
+        "HEALTHCHECKFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "是否体检件标志",
+          "source_row": 285
+        },
+        "IMPARTFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "告知标志",
+          "source_row": 286
+        },
+        "REINSUREFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "商业分保标记",
+          "source_row": 287
+        },
+        "AGENTPAYFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "代收标志",
+          "source_row": 288
+        },
+        "AGENTGETFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "代付标志",
+          "source_row": 289
+        },
+        "LIVEGETMODE": {
+          "type": "VARCHAR2(1)",
+          "label": "生存金领取方式",
+          "source_row": 290
+        },
+        "DEADGETMODE": {
+          "type": "VARCHAR2(1)",
+          "label": "身故金领取方式",
+          "source_row": 291
+        },
+        "BONUSGETMODE": {
+          "type": "VARCHAR2(1)",
+          "label": "红利金领取方式",
+          "source_row": 292
+        },
+        "BONUSMAN": {
+          "type": "VARCHAR2(1)",
+          "label": "红利金领取人",
+          "source_row": 293
+        },
+        "DEADFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "被保人、投保人死亡标志",
+          "source_row": 294
+        },
+        "SMOKEFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "是否吸烟标志",
+          "source_row": 295
+        },
+        "REMARK": {
+          "type": "VARCHAR2(255)",
+          "label": "备注",
+          "source_row": 296
+        },
+        "APPROVEFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "复核状态",
+          "source_row": 297
+        },
+        "APPROVECODE": {
+          "type": "VARCHAR2(80)",
+          "label": "复核人编码",
+          "source_row": 298
+        },
+        "APPROVEDATE": {
+          "type": "DATE",
+          "label": "复核日期",
+          "source_row": 299
+        },
+        "APPROVETIME": {
+          "type": "VARCHAR2(8)",
+          "label": "复核时间",
+          "source_row": 300
+        },
+        "UWFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "核保状态",
+          "source_row": 301
+        },
+        "UWCODE": {
+          "type": "VARCHAR2(80)",
+          "label": "最终核保人编码",
+          "source_row": 302
+        },
+        "UWDATE": {
+          "type": "DATE",
+          "label": "核保完成日期",
+          "source_row": 303
+        },
+        "UWTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "核保完成时间",
+          "source_row": 304
+        },
+        "POLAPPLYDATE": {
+          "type": "DATE",
+          "label": "投保单申请日期",
+          "source_row": 305
+        },
+        "APPFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "投保单/保单标志",
+          "source_row": 306
+        },
+        "POLSTATE": {
+          "type": "VARCHAR2(10)",
+          "label": "其它保单状态",
+          "source_row": 307
+        },
+        "STANDBYFLAG1": {
+          "type": "VARCHAR2(10)",
+          "label": "备用属性字段1",
+          "source_row": 308
+        },
+        "STANDBYFLAG2": {
+          "type": "VARCHAR2(10)",
+          "label": "备用属性字段2",
+          "source_row": 309
+        },
+        "STANDBYFLAG3": {
+          "type": "VARCHAR2(10)",
+          "label": "备用属性字段3",
+          "source_row": 310
+        },
+        "OPERATOR": {
+          "type": "VARCHAR2(80)",
+          "label": "操作员",
+          "source_row": 311
+        },
+        "MAKEDATE": {
+          "type": "DATE",
+          "label": "入机日期",
+          "source_row": 312
+        },
+        "MAKETIME": {
+          "type": "VARCHAR2(8)",
+          "label": "入机时间",
+          "source_row": 313
+        },
+        "MODIFYDATE": {
+          "type": "DATE",
+          "label": "最后一次修改日期",
+          "source_row": 314
+        },
+        "MODIFYTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "最后一次修改时间",
+          "source_row": 315
+        },
+        "WAITPERIOD": {
+          "type": "INTEGER",
+          "label": "等待期",
+          "source_row": 316
+        },
+        "GETFORM": {
+          "type": "VARCHAR2(1)",
+          "label": "领取形式",
+          "source_row": 317
+        },
+        "GETBANKCODE": {
+          "type": "VARCHAR2(20)",
+          "label": "领取银行编码",
+          "source_row": 318
+        },
+        "GETBANKACCNO": {
+          "type": "VARCHAR2(40)",
+          "label": "领取银行账户",
+          "source_row": 319
+        },
+        "GETACCNAME": {
+          "type": "VARCHAR2(120)",
+          "label": "领取银行户名",
+          "source_row": 320
+        },
+        "KEEPVALUEOPT": {
+          "type": "VARCHAR2(1)",
+          "label": "不丧失价值选择",
+          "source_row": 321
+        },
+        "PAYRULECODE": {
+          "type": "VARCHAR2(2)",
+          "label": "缴费规则编码",
+          "source_row": 322
+        },
+        "ASCRIPTIONRULECODE": {
+          "type": "VARCHAR2(2)",
+          "label": "归属规则编码",
+          "source_row": 323
+        },
+        "AUTOPUBACCFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "自动应用团体帐户标记",
+          "source_row": 324
+        },
+        "SALENO": {
+          "type": "VARCHAR2(40)",
+          "label": "折扣因子",
+          "source_row": 325
+        }
+      }
+    },
+    "LCDUTY": {
+      "snapshot_type": "duty",
+      "key_fields": [
+        "POLNO",
+        "DUTYCODE"
+      ],
+      "fields": {
+        "POLNO": {
+          "type": "VARCHAR2(20)",
+          "label": "保单险种号码",
+          "source_row": 119
+        },
+        "DUTYCODE": {
+          "type": "VARCHAR2(10)",
+          "label": "责任编码",
+          "source_row": 120
+        },
+        "CONTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "保单号码",
+          "source_row": 121
+        },
+        "MULT": {
+          "type": "NUMBER(20,5)",
+          "label": "份数",
+          "source_row": 122
+        },
+        "STANDPREM": {
+          "type": "NUMBER(16,2)",
+          "label": "标准保费",
+          "source_row": 123
+        },
+        "PREM": {
+          "type": "NUMBER(16,2)",
+          "label": "实际保费",
+          "source_row": 124
+        },
+        "SUMPREM": {
+          "type": "NUMBER(16,2)",
+          "label": "累计保费",
+          "source_row": 125
+        },
+        "AMNT": {
+          "type": "NUMBER(16,2)",
+          "label": "基本保额",
+          "source_row": 126
+        },
+        "RISKAMNT": {
+          "type": "NUMBER(16,2)",
+          "label": "风险保额",
+          "source_row": 127
+        },
+        "PAYINTV": {
+          "type": "INTEGER",
+          "label": "交费间隔",
+          "source_row": 128
+        },
+        "PAYYEARS": {
+          "type": "INTEGER",
+          "label": "交费年期",
+          "source_row": 129
+        },
+        "YEARS": {
+          "type": "INTEGER",
+          "label": "保险年期",
+          "source_row": 130
+        },
+        "FLOATRATE": {
+          "type": "NUMBER(16,10)",
+          "label": "浮动费率",
+          "source_row": 131
+        },
+        "FIRSTPAYDATE": {
+          "type": "DATE",
+          "label": "首期交费日期",
+          "source_row": 132
+        },
+        "FIRSTMONTH": {
+          "type": "INTEGER",
+          "label": "首期交费月数",
+          "source_row": 133
+        },
+        "PAYTODATE": {
+          "type": "DATE",
+          "label": "交至日期",
+          "source_row": 134
+        },
+        "PAYENDDATE": {
+          "type": "DATE",
+          "label": "终交日期",
+          "source_row": 135
+        },
+        "PAYENDYEARFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "终交年龄年期标志",
+          "source_row": 136
+        },
+        "PAYENDYEAR": {
+          "type": "INTEGER",
+          "label": "终交年龄年期",
+          "source_row": 137
+        },
+        "GETYEARFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "领取年龄年期标志",
+          "source_row": 138
+        },
+        "GETYEAR": {
+          "type": "INTEGER",
+          "label": "领取年龄年期",
+          "source_row": 139
+        },
+        "INSUYEARFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "保险年龄年期标志",
+          "source_row": 140
+        },
+        "INSUYEAR": {
+          "type": "INTEGER",
+          "label": "保险年龄年期",
+          "source_row": 141
+        },
+        "ACCIYEARFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "意外年龄年期标志",
+          "source_row": 142
+        },
+        "ACCIYEAR": {
+          "type": "INTEGER",
+          "label": "意外年龄年期",
+          "source_row": 143
+        },
+        "ENDDATE": {
+          "type": "DATE",
+          "label": "保险责任终止日期",
+          "source_row": 144
+        },
+        "ACCIENDDATE": {
+          "type": "DATE",
+          "label": "意外责任终止日期",
+          "source_row": 145
+        },
+        "FREEFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "免交标志",
+          "source_row": 146
+        },
+        "FREERATE": {
+          "type": "FLOAT",
+          "label": "免交比率",
+          "source_row": 147
+        },
+        "FREESTARTDATE": {
+          "type": "DATE",
+          "label": "免交起期",
+          "source_row": 148
+        },
+        "FREEENDDATE": {
+          "type": "DATE",
+          "label": "免交止期",
+          "source_row": 149
+        },
+        "GETSTARTDATE": {
+          "type": "DATE",
+          "label": "起领日期",
+          "source_row": 150
+        },
+        "GETSTARTTYPE": {
+          "type": "VARCHAR2(1)",
+          "label": "起领日期计算类型",
+          "source_row": 151
+        },
+        "LIVEGETMODE": {
+          "type": "VARCHAR2(1)",
+          "label": "生存金领取方式",
+          "source_row": 152
+        },
+        "DEADGETMODE": {
+          "type": "VARCHAR2(1)",
+          "label": "身故金领取方式",
+          "source_row": 153
+        },
+        "BONUSGETMODE": {
+          "type": "VARCHAR2(1)",
+          "label": "红利金领取方式",
+          "source_row": 154
+        },
+        "SSFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "社保标记",
+          "source_row": 155
+        },
+        "PEAKLINE": {
+          "type": "NUMBER(12,2)",
+          "label": "封顶线",
+          "source_row": 156
+        },
+        "GETLIMIT": {
+          "type": "NUMBER(16,2)",
+          "label": "起付限",
+          "source_row": 157
+        },
+        "GETRATE": {
+          "type": "NUMBER(18,6)",
+          "label": "赔付比例",
+          "source_row": 158
+        },
+        "CALRULE": {
+          "type": "VARCHAR2(1)",
+          "label": "保费计算规则",
+          "source_row": 159
+        },
+        "PREMTOAMNT": {
+          "type": "VARCHAR2(1)",
+          "label": "保费算保额标志",
+          "source_row": 160
+        },
+        "STANDBYFLAG1": {
+          "type": "VARCHAR2(10)",
+          "label": "备用属性字段1",
+          "source_row": 161
+        },
+        "STANDBYFLAG2": {
+          "type": "VARCHAR2(10)",
+          "label": "备用属性字段2",
+          "source_row": 162
+        },
+        "STANDBYFLAG3": {
+          "type": "VARCHAR2(10)",
+          "label": "备用属性字段3",
+          "source_row": 163
+        },
+        "OPERATOR": {
+          "type": "VARCHAR2(80)",
+          "label": "操作员",
+          "source_row": 164
+        },
+        "MAKEDATE": {
+          "type": "DATE",
+          "label": "创建日期",
+          "source_row": 165
+        },
+        "MAKETIME": {
+          "type": "VARCHAR2(8)",
+          "label": "创建时间",
+          "source_row": 166
+        },
+        "MODIFYDATE": {
+          "type": "DATE",
+          "label": "最后一次修改日期",
+          "source_row": 167
+        },
+        "MODIFYTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "最后一次修改时间",
+          "source_row": 168
+        },
+        "CVALIDATE": {
+          "type": "DATE",
+          "label": "险种责任生效日期",
+          "source_row": 169
+        },
+        "GETINTV": {
+          "type": "INTEGER",
+          "label": "领取间隔",
+          "source_row": 170
+        },
+        "EXPIRATIONPREM": {
+          "type": "NUMBER(16,2)",
+          "label": "保期保费",
+          "source_row": 171
+        }
+      }
+    },
+    "LCPREM": {
+      "snapshot_type": "premium_plan",
+      "key_fields": [
+        "POLNO",
+        "DUTYCODE",
+        "PAYPLANCODE"
+      ],
+      "fields": {
+        "GRPCONTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "团体保单号码",
+          "source_row": 326
+        },
+        "CONTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "保单号码",
+          "source_row": 327
+        },
+        "POLNO": {
+          "type": "VARCHAR2(20)",
+          "label": "保单险种号码",
+          "source_row": 328
+        },
+        "DUTYCODE": {
+          "type": "VARCHAR2(10)",
+          "label": "责任编码",
+          "source_row": 329
+        },
+        "PAYPLANCODE": {
+          "type": "VARCHAR2(8)",
+          "label": "交费计划编码",
+          "source_row": 330
+        },
+        "PAYPLANTYPE": {
+          "type": "VARCHAR2(6)",
+          "label": "交费计划类型",
+          "source_row": 331
+        },
+        "APPNTTYPE": {
+          "type": "VARCHAR2(1)",
+          "label": "投保人类型",
+          "source_row": 332
+        },
+        "APPNTNO": {
+          "type": "VARCHAR2(24)",
+          "label": "投保人客户号码",
+          "source_row": 333
+        },
+        "URGEPAYFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "催缴标记",
+          "source_row": 334
+        },
+        "NEEDACC": {
+          "type": "VARCHAR2(1)",
+          "label": "是否和账户相关",
+          "source_row": 335
+        },
+        "PAYTIMES": {
+          "type": "INTEGER",
+          "label": "已交费次数",
+          "source_row": 336
+        },
+        "RATE": {
+          "type": "NUMBER(16,10)",
+          "label": "保费分配比率",
+          "source_row": 337
+        },
+        "PAYSTARTDATE": {
+          "type": "DATE",
+          "label": "起交日期",
+          "source_row": 338
+        },
+        "PAYENDDATE": {
+          "type": "DATE",
+          "label": "终交日期",
+          "source_row": 339
+        },
+        "PAYTODATE": {
+          "type": "DATE",
+          "label": "交至日期",
+          "source_row": 340
+        },
+        "PAYINTV": {
+          "type": "INTEGER",
+          "label": "交费间隔",
+          "source_row": 341
+        },
+        "STANDPREM": {
+          "type": "NUMBER(16,2)",
+          "label": "标准保费",
+          "source_row": 342
+        },
+        "PREM": {
+          "type": "NUMBER(16,2)",
+          "label": "实际保费",
+          "source_row": 343
+        },
+        "SUMPREM": {
+          "type": "NUMBER(16,2)",
+          "label": "累计保费",
+          "source_row": 344
+        },
+        "SUPPRISKSCORE": {
+          "type": "NUMBER(16,10)",
+          "label": "额外风险评分",
+          "source_row": 345
+        },
+        "FREEFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "免交标志",
+          "source_row": 346
+        },
+        "FREERATE": {
+          "type": "FLOAT",
+          "label": "免交比率",
+          "source_row": 347
+        },
+        "FREESTARTDATE": {
+          "type": "DATE",
+          "label": "免交起期",
+          "source_row": 348
+        },
+        "FREEENDDATE": {
+          "type": "DATE",
+          "label": "免交止期",
+          "source_row": 349
+        },
+        "STATE": {
+          "type": "VARCHAR2(10)",
+          "label": "状态",
+          "source_row": 350
+        },
+        "MANAGECOM": {
+          "type": "VARCHAR2(10)",
+          "label": "管理机构",
+          "source_row": 351
+        },
+        "OPERATOR": {
+          "type": "VARCHAR2(80)",
+          "label": "操作员",
+          "source_row": 352
+        },
+        "MAKEDATE": {
+          "type": "DATE",
+          "label": "创建日期",
+          "source_row": 353
+        },
+        "MAKETIME": {
+          "type": "VARCHAR2(8)",
+          "label": "创建时间",
+          "source_row": 354
+        },
+        "MODIFYDATE": {
+          "type": "DATE",
+          "label": "最后一次修改日期",
+          "source_row": 355
+        },
+        "MODIFYTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "最后一次修改时间",
+          "source_row": 356
+        },
+        "ADDFEEDIRECT": {
+          "type": "VARCHAR2(2)",
+          "label": "加费指向标记",
+          "source_row": 357
+        },
+        "SECINSUADDPOINT": {
+          "type": "NUMBER(12,2)",
+          "label": "第二被保人加费评点",
+          "source_row": 358
+        }
+      }
+    },
+    "LCGET": {
+      "snapshot_type": "benefit",
+      "key_fields": [
+        "POLNO",
+        "DUTYCODE",
+        "GETDUTYCODE"
+      ],
+      "fields": {
+        "GRPCONTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "集体合同号码",
+          "source_row": 172
+        },
+        "CONTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "保单号",
+          "source_row": 173
+        },
+        "POLNO": {
+          "type": "VARCHAR2(20)",
+          "label": "保单险种号码",
+          "source_row": 174
+        },
+        "DUTYCODE": {
+          "type": "VARCHAR2(10)",
+          "label": "责任编码",
+          "source_row": 175
+        },
+        "GETDUTYCODE": {
+          "type": "VARCHAR2(6)",
+          "label": "给付责任编码",
+          "source_row": 176
+        },
+        "GETDUTYKIND": {
+          "type": "VARCHAR2(6)",
+          "label": "给付责任类型",
+          "source_row": 177
+        },
+        "INSUREDNO": {
+          "type": "VARCHAR2(24)",
+          "label": "被保人客户号码",
+          "source_row": 178
+        },
+        "GETMODE": {
+          "type": "VARCHAR2(1)",
+          "label": "领取方式",
+          "source_row": 179
+        },
+        "GETLIMIT": {
+          "type": "NUMBER(16,2)",
+          "label": "起付限",
+          "source_row": 180
+        },
+        "GETRATE": {
+          "type": "NUMBER(18,6)",
+          "label": "赔付比例",
+          "source_row": 181
+        },
+        "URGEGETFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "催付标记",
+          "source_row": 182
+        },
+        "LIVEGETTYPE": {
+          "type": "VARCHAR2(1)",
+          "label": "生存意外给付标志",
+          "source_row": 183
+        },
+        "ADDRATE": {
+          "type": "FLOAT",
+          "label": "递增率",
+          "source_row": 184
+        },
+        "CANGET": {
+          "type": "VARCHAR2(1)",
+          "label": "默认申请标志",
+          "source_row": 185
+        },
+        "NEEDACC": {
+          "type": "VARCHAR2(1)",
+          "label": "是否和账户相关",
+          "source_row": 186
+        },
+        "NEEDCANCELAC": {
+          "type": "VARCHAR2(1)",
+          "label": "是否是账户结清后才能申请",
+          "source_row": 187
+        },
+        "STANDMONEY": {
+          "type": "NUMBER(16,2)",
+          "label": "标准给付金额",
+          "source_row": 188
+        },
+        "ACTUGET": {
+          "type": "NUMBER(16,2)",
+          "label": "实际给付金额",
+          "source_row": 189
+        },
+        "SUMMONEY": {
+          "type": "NUMBER(16,2)",
+          "label": "已领金额",
+          "source_row": 190
+        },
+        "GETINTV": {
+          "type": "INTEGER",
+          "label": "领取间隔",
+          "source_row": 191
+        },
+        "GETTODATE": {
+          "type": "DATE",
+          "label": "领至日期",
+          "source_row": 192
+        },
+        "GETSTARTDATE": {
+          "type": "DATE",
+          "label": "起领日期",
+          "source_row": 193
+        },
+        "GETENDDATE": {
+          "type": "DATE",
+          "label": "止领日期",
+          "source_row": 194
+        },
+        "BALADATE": {
+          "type": "DATE",
+          "label": "结算日期",
+          "source_row": 195
+        },
+        "STATE": {
+          "type": "VARCHAR2(10)",
+          "label": "状态",
+          "source_row": 196
+        },
+        "MANAGECOM": {
+          "type": "VARCHAR2(10)",
+          "label": "管理机构",
+          "source_row": 197
+        },
+        "OPERATOR": {
+          "type": "VARCHAR2(80)",
+          "label": "操作员",
+          "source_row": 198
+        },
+        "MAKEDATE": {
+          "type": "DATE",
+          "label": "入机日期",
+          "source_row": 199
+        },
+        "MAKETIME": {
+          "type": "VARCHAR2(8)",
+          "label": "入机时间",
+          "source_row": 200
+        },
+        "MODIFYTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "最后一次修改时间",
+          "source_row": 201
+        },
+        "MODIFYDATE": {
+          "type": "DATE",
+          "label": "最后一次修改日期",
+          "source_row": 202
+        },
+        "GETENDSTATE": {
+          "type": "VARCHAR2(6)",
+          "label": "止领标志",
+          "source_row": 203
+        }
+      }
+    },
+    "LCCONTSTATE": {
+      "snapshot_type": "policy_state",
+      "key_fields": [
+        "CONTNO",
+        "INSUREDNO",
+        "POLNO",
+        "STATETYPE",
+        "STARTDATE"
+      ],
+      "fields": {
+        "CONTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "合同号码",
+          "source_row": 105
+        },
+        "INSUREDNO": {
+          "type": "VARCHAR2(24)",
+          "label": "被保险人号码",
+          "source_row": 106
+        },
+        "POLNO": {
+          "type": "VARCHAR2(20)",
+          "label": "保单险种号",
+          "source_row": 107
+        },
+        "STATETYPE": {
+          "type": "VARCHAR2(10)",
+          "label": "状态类型",
+          "source_row": 108
+        },
+        "STATE": {
+          "type": "VARCHAR2(10)",
+          "label": "状态",
+          "source_row": 109
+        },
+        "STATEREASON": {
+          "type": "VARCHAR2(10)",
+          "label": "状态原因",
+          "source_row": 110
+        },
+        "STARTDATE": {
+          "type": "DATE",
+          "label": "状态生效时间",
+          "source_row": 111
+        },
+        "ENDDATE": {
+          "type": "DATE",
+          "label": "状态结束时间",
+          "source_row": 112
+        },
+        "REMARK": {
+          "type": "VARCHAR2(255)",
+          "label": "备注",
+          "source_row": 113
+        },
+        "OPERATOR": {
+          "type": "VARCHAR2(80)",
+          "label": "操作员",
+          "source_row": 114
+        },
+        "MAKEDATE": {
+          "type": "DATE",
+          "label": "入机日期",
+          "source_row": 115
+        },
+        "MAKETIME": {
+          "type": "VARCHAR2(8)",
+          "label": "入机时间",
+          "source_row": 116
+        },
+        "MODIFYDATE": {
+          "type": "DATE",
+          "label": "最后一次修改日期",
+          "source_row": 117
+        },
+        "MODIFYTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "最后一次修改时间",
+          "source_row": 118
+        }
+      }
+    },
+    "T_SLIS_LC_EXPANSION": {
+      "snapshot_type": "policy_extension",
+      "key_fields": [
+        "PRTNO"
+      ],
+      "fields": {
+        "PRTNO": {
+          "type": "VARCHAR2(20)",
+          "label": "印刷号码",
+          "source_row": 359
+        },
+        "STARTDATE": {
+          "type": "DATE",
+          "label": "等待期开始日期",
+          "source_row": 360
+        },
+        "MAKEDATE": {
+          "type": "DATE",
+          "label": "创建日期",
+          "source_row": 361
+        },
+        "MAKETIME": {
+          "type": "VARCHAR2(8)",
+          "label": "创建时间",
+          "source_row": 362
+        },
+        "MODIFYDATE": {
+          "type": "DATE",
+          "label": "最后一次修改日期",
+          "source_row": 363
+        },
+        "MODIFYTIME": {
+          "type": "VARCHAR2(8)",
+          "label": "最后一次修改时间",
+          "source_row": 364
+        },
+        "OPERATOR": {
+          "type": "VARCHAR2(80)",
+          "label": "操作者",
+          "source_row": 365
+        },
+        "EMERGENCYCONTACTPERSON": {
+          "type": "VARCHAR2(120)",
+          "label": "紧急联系人姓名",
+          "source_row": 366
+        },
+        "EMERGENCYCONTACTPHONE": {
+          "type": "VARCHAR2(20)",
+          "label": "紧急联系人电话",
+          "source_row": 367
+        },
+        "AGENTPHONE": {
+          "type": "VARCHAR2(30)",
+          "label": "代理人电话，用来存产销寿代理人工号",
+          "source_row": 368
+        },
+        "AGENTPHONEFLAG": {
+          "type": "VARCHAR2(1)",
+          "label": "标识是否提取数据",
+          "source_row": 369
+        },
+        "RESERVE1": {
+          "type": "VARCHAR2(120)",
+          "label": "备用1柜员名称",
+          "source_row": 370
+        },
+        "RESERVE2": {
+          "type": "VARCHAR2(100)",
+          "label": "备用2微信摇一摇赠送金额",
+          "source_row": 371
+        },
+        "RESERVE3": {
+          "type": "VARCHAR2(100)",
+          "label": "备用3-婚姻险被保人首期银行编码",
+          "source_row": 372
+        },
+        "RESERVE4": {
+          "type": "VARCHAR2(100)",
+          "label": "备用4婚姻险被保人首期银行账号",
+          "source_row": 373
+        },
+        "RESERVE5": {
+          "type": "VARCHAR2(100)",
+          "label": "备用5",
+          "source_row": 374
+        },
+        "ISINTERNALCUSTOMERS": {
+          "type": "VARCHAR2(1)",
+          "label": "是否内部客户标志标识",
+          "source_row": 375
+        },
+        "WXSOURCE": {
+          "type": "VARCHAR2(200)",
+          "label": "网销来源",
+          "source_row": 376
+        },
+        "APPOINTSIGNDATE": {
+          "type": "DATE",
+          "label": "预承保日",
+          "source_row": 377
+        }
+      }
+    }
+  },
+  "paymode_labels": {
+    "1": "现金",
+    "2": "现金送款薄",
+    "h": "银保汇缴结算",
+    "3": "支票",
+    "4": "银行转账（非制返盘）",
+    "6": "POS收款",
+    "8": "网上交费",
+    "5": "超级账户扣减",
+    "7": "银行转账(制返盘)",
+    "9": "银保通",
+    "a": "电销汇缴结算",
+    "b": "医保卡",
+    "c": "微保收费",
+    "e": "银行代收",
+    "d": "微信收费",
+    "f": "网销汇缴结算",
+    "g": "银行转账（个人养老金业务）"
+  }
+}

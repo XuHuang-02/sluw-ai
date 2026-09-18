@@ -69,3 +69,18 @@ node_modules/
 
 # Local routing evaluation journals (may contain business report references)
 /routing-eval-runs/
+
+# Version the EDD adapter regression tests without exposing other local test data.
+!/src/test/
+/src/test/*
+!/src/test/java/
+/src/test/java/*
+!/src/test/java/com/
+/src/test/java/com/*
+!/src/test/java/com/sinosig/
+/src/test/java/com/sinosig/*
+!/src/test/java/com/sinosig/sluw/
+/src/test/java/com/sinosig/sluw/*
+!/src/test/java/com/sinosig/sluw/application/
+/src/test/java/com/sinosig/sluw/application/*
+!/src/test/java/com/sinosig/sluw/application/edd/

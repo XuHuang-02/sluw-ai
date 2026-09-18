@@ -1,0 +1,900 @@
+{
+  "source_dictionary": {
+    "source_file": "核心表结构整理v1.xlsx",
+    "sha256": "d7c08adc8ac1e7557441ee17fb2889e01cba9bccf026a434b14bb50239229338"
+  },
+  "synthetic": true,
+  "database_queried": false,
+  "model_executed": false,
+  "case_count": 10,
+  "cases": [
+    {
+      "case_id": "DB-001",
+      "synthetic": true,
+      "split": "development",
+      "description": "核心快照现金方式不等于已支付",
+      "input": {
+        "subject_id": "SYN-CUSTOMER",
+        "context": {
+          "role": "policyholder",
+          "policy_id": "SYN-C001"
+        },
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "raw_tables": {
+          "LCCONT": [
+            {
+              "CONTNO": "SYN-C001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "CONTTYPE": "1",
+              "PAYMODE": "1",
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "CURRENCY": "01",
+              "SIGNDATE": "2024-05-01",
+              "SIGNTIME": "09:00:00",
+              "APPFLAG": "1"
+            }
+          ],
+          "LCPOL": [
+            {
+              "CONTNO": "SYN-C001",
+              "POLNO": "SYN-P001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "YEARS": 20,
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "PAYMODE": "1"
+            }
+          ]
+        },
+        "coverage": {
+          "supplied_tables": {
+            "query_status": "succeeded",
+            "coverage_kind": "snapshot",
+            "complete": true,
+            "note": "仅模拟本例给定表的读取；不代表真实数据库已查询"
+          },
+          "actual_payments": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "preservation_events": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "individual_claims": {
+            "query_status": "not_provided",
+            "complete": false
+          }
+        },
+        "approved_rating_rules_available": false,
+        "codebook_version": null
+      },
+      "expected": {
+        "cash_status": "unknown",
+        "proposed_grade": null,
+        "cash_indicator": true,
+        "confirmed_payment_count": null
+      },
+      "assertions": [
+        "保单交费方式1=现金，生成现金线索",
+        "不得把PREM=10000写为本次已实收10000",
+        "SUMPREM=30000按累计保费源义展示",
+        "币种01未映射，不默认人民币",
+        "当前反洗钱等级未知"
+      ]
+    },
+    {
+      "case_id": "DB-002",
+      "synthetic": true,
+      "split": "development",
+      "description": "多角色多层金额不重复",
+      "input": {
+        "subject_id": "SYN-CUSTOMER",
+        "context": {
+          "role": "policyholder",
+          "policy_id": "SYN-C001"
+        },
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "raw_tables": {
+          "LCCONT": [
+            {
+              "CONTNO": "SYN-C001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "CONTTYPE": "1",
+              "PAYMODE": "1",
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "CURRENCY": "01",
+              "SIGNDATE": "2024-05-01",
+              "SIGNTIME": "09:00:00",
+              "APPFLAG": "1"
+            }
+          ],
+          "LCPOL": [
+            {
+              "CONTNO": "SYN-C001",
+              "POLNO": "SYN-P001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "YEARS": 20,
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "PAYMODE": "1"
+            }
+          ],
+          "LCDUTY": [
+            {
+              "PolNo": "SYN-P001",
+              "DutyCode": "D1",
+              "ContNo": "SYN-C001",
+              "Prem": "6000.00"
+            },
+            {
+              "PolNo": "SYN-P001",
+              "DutyCode": "D2",
+              "ContNo": "SYN-C001",
+              "Prem": "4000.00"
+            }
+          ],
+          "LCPREM": [
+            {
+              "PolNo": "SYN-P001",
+              "DutyCode": "D1",
+              "PayPlanCode": "A",
+              "Prem": "6000.00"
+            },
+            {
+              "PolNo": "SYN-P001",
+              "DutyCode": "D2",
+              "PayPlanCode": "B",
+              "Prem": "4000.00"
+            }
+          ]
+        },
+        "coverage": {
+          "supplied_tables": {
+            "query_status": "succeeded",
+            "coverage_kind": "snapshot",
+            "complete": true,
+            "note": "仅模拟本例给定表的读取；不代表真实数据库已查询"
+          },
+          "actual_payments": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "preservation_events": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "individual_claims": {
+            "query_status": "not_provided",
+            "complete": false
+          }
+        },
+        "approved_rating_rules_available": false,
+        "codebook_version": null
+      },
+      "expected": {
+        "cash_status": "unknown",
+        "proposed_grade": null,
+        "policy_count": 1,
+        "policy_premium": "10000.00"
+      },
+      "assertions": [
+        "角色投保人+被保人保留，一张保单只计一次",
+        "保单保费10000、险种10000、责任合计10000、计划合计10000分层核对，不相加成40000"
+      ]
+    },
+    {
+      "case_id": "DB-003",
+      "synthetic": true,
+      "split": "development",
+      "description": "失效轨迹及当前生效",
+      "input": {
+        "subject_id": "SYN-CUSTOMER",
+        "context": {
+          "role": "policyholder",
+          "policy_id": "SYN-C001"
+        },
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "raw_tables": {
+          "LCCONT": [
+            {
+              "CONTNO": "SYN-C001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "CONTTYPE": "1",
+              "PAYMODE": "1",
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "CURRENCY": "01",
+              "SIGNDATE": "2024-05-01",
+              "SIGNTIME": "09:00:00",
+              "APPFLAG": "1"
+            }
+          ],
+          "LCPOL": [
+            {
+              "CONTNO": "SYN-C001",
+              "POLNO": "SYN-P001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "YEARS": 20,
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "PAYMODE": "1"
+            }
+          ],
+          "LCCONTSTATE": [
+            {
+              "CONTNO": "SYN-C001",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "POLNO": "SYN-P001",
+              "STATETYPE": "Available",
+              "STATE": "1",
+              "STARTDATE": "2024-01-01",
+              "ENDDATE": "2025-01-01"
+            },
+            {
+              "CONTNO": "SYN-C001",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "POLNO": "SYN-P001",
+              "STATETYPE": "Available",
+              "STATE": "0",
+              "STARTDATE": "2025-01-01",
+              "ENDDATE": null
+            }
+          ]
+        },
+        "coverage": {
+          "supplied_tables": {
+            "query_status": "succeeded",
+            "coverage_kind": "snapshot",
+            "complete": true,
+            "note": "仅模拟本例给定表的读取；不代表真实数据库已查询"
+          },
+          "actual_payments": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "preservation_events": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "individual_claims": {
+            "query_status": "not_provided",
+            "complete": false
+          }
+        },
+        "approved_rating_rules_available": false,
+        "codebook_version": null
+      },
+      "expected": {
+        "cash_status": "unknown",
+        "proposed_grade": null,
+        "current_available_state": "0"
+      },
+      "assertions": [
+        "保留历史失效和当前生效",
+        "状态生效区间解释，不使用修改时间覆盖",
+        "不把险种状态当客户风险等级"
+      ]
+    },
+    {
+      "case_id": "DB-004",
+      "synthetic": true,
+      "split": "development",
+      "description": "交费年期1及年交不等于一年期产品",
+      "input": {
+        "subject_id": "SYN-CUSTOMER",
+        "context": {
+          "role": "policyholder",
+          "policy_id": "SYN-C001"
+        },
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "raw_tables": {
+          "LCCONT": [
+            {
+              "CONTNO": "SYN-C001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "CONTTYPE": "1",
+              "PAYMODE": "1",
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "CURRENCY": "01",
+              "SIGNDATE": "2024-05-01",
+              "SIGNTIME": "09:00:00",
+              "APPFLAG": "1"
+            }
+          ],
+          "LCPOL": [
+            {
+              "CONTNO": "SYN-C001",
+              "POLNO": "SYN-P001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "YEARS": 20,
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "PAYMODE": "1",
+              "PAYYEARS": 1,
+              "PAYINTV": 12,
+              "INSUYEAR": 60,
+              "INSUYEARFLAG": "X"
+            }
+          ]
+        },
+        "coverage": {
+          "supplied_tables": {
+            "query_status": "succeeded",
+            "coverage_kind": "snapshot",
+            "complete": true,
+            "note": "仅模拟本例给定表的读取；不代表真实数据库已查询"
+          },
+          "actual_payments": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "preservation_events": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "individual_claims": {
+            "query_status": "not_provided",
+            "complete": false
+          }
+        },
+        "approved_rating_rules_available": false,
+        "codebook_version": null
+      },
+      "expected": {
+        "cash_status": "unknown",
+        "proposed_grade": null,
+        "exclude_due_to_payment_interval": false
+      },
+      "assertions": [
+        "PAYYEARS=1与PAYINTV=12不能判一年期",
+        "未知INSUYEARFLAG保留待核实，不把60解释为60年",
+        "YEARS=20是来源保险年期候选依据"
+      ]
+    },
+    {
+      "case_id": "DB-005",
+      "synthetic": true,
+      "split": "development",
+      "description": "受益人标志不能完成客户关联",
+      "input": {
+        "subject_id": "SYN-CUSTOMER",
+        "context": {
+          "role": "beneficiary",
+          "policy_id": "SYN-C001"
+        },
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "raw_tables": {
+          "LCCONT": [
+            {
+              "CONTNO": "SYN-C001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "CONTTYPE": "1",
+              "PAYMODE": "1",
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "CURRENCY": "01",
+              "SIGNDATE": "2024-05-01",
+              "SIGNTIME": "09:00:00",
+              "APPFLAG": "1"
+            }
+          ],
+          "LCPOL": [
+            {
+              "CONTNO": "SYN-C001",
+              "POLNO": "SYN-P001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "YEARS": 20,
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "PAYMODE": "1",
+              "BNFFLAG": "1"
+            }
+          ]
+        },
+        "coverage": {
+          "supplied_tables": {
+            "query_status": "succeeded",
+            "coverage_kind": "snapshot",
+            "complete": true,
+            "note": "仅模拟本例给定表的读取；不代表真实数据库已查询"
+          },
+          "actual_payments": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "preservation_events": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "individual_claims": {
+            "query_status": "not_provided",
+            "complete": false
+          }
+        },
+        "approved_rating_rules_available": false,
+        "codebook_version": null
+      },
+      "expected": {
+        "cash_status": "unknown",
+        "proposed_grade": null,
+        "beneficiary_relationship_status": "unknown"
+      },
+      "assertions": [
+        "BNFFLAG没有受益人客户ID",
+        "受益人关联待补充，不能回答客户没有保单",
+        "不把APPNTNO命中视为受益人命中"
+      ]
+    },
+    {
+      "case_id": "DB-006",
+      "synthetic": true,
+      "split": "development",
+      "description": "领取摘要不冒充现金理赔流水",
+      "input": {
+        "subject_id": "SYN-CUSTOMER",
+        "context": {
+          "role": "policyholder",
+          "policy_id": "SYN-C001"
+        },
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "raw_tables": {
+          "LCCONT": [
+            {
+              "CONTNO": "SYN-C001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "CONTTYPE": "1",
+              "PAYMODE": "1",
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "CURRENCY": "01",
+              "SIGNDATE": "2024-05-01",
+              "SIGNTIME": "09:00:00",
+              "APPFLAG": "1"
+            }
+          ],
+          "LCPOL": [
+            {
+              "CONTNO": "SYN-C001",
+              "POLNO": "SYN-P001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "YEARS": 20,
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "PAYMODE": "1"
+            }
+          ],
+          "LCGET": [
+            {
+              "CONTNO": "SYN-C001",
+              "POLNO": "SYN-P001",
+              "DUTYCODE": "D1",
+              "GETDUTYCODE": "G1",
+              "ACTUGET": "5000.00",
+              "SUMMONEY": "15000.00",
+              "GETMODE": "1",
+              "BALADATE": "2026-01-01",
+              "STATE": "X"
+            }
+          ]
+        },
+        "coverage": {
+          "supplied_tables": {
+            "query_status": "succeeded",
+            "coverage_kind": "snapshot",
+            "complete": true,
+            "note": "仅模拟本例给定表的读取；不代表真实数据库已查询"
+          },
+          "actual_payments": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "preservation_events": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "individual_claims": {
+            "query_status": "not_provided",
+            "complete": false
+          }
+        },
+        "approved_rating_rules_available": false,
+        "codebook_version": null
+      },
+      "expected": {
+        "cash_status": "unknown",
+        "proposed_grade": null,
+        "claim_payment_count": null
+      },
+      "assertions": [
+        "ACTUGET与SUMMONEY各按原标签展示",
+        "GETMODE=1无码表，不映射为现金",
+        "STATE=X未解释，不能确认已支付",
+        "不以LCGET行数当理赔次数"
+      ]
+    },
+    {
+      "case_id": "DB-007",
+      "synthetic": true,
+      "split": "development",
+      "description": "次数及额外风险评分的语义边界",
+      "input": {
+        "subject_id": "SYN-CUSTOMER",
+        "context": {
+          "role": "policyholder",
+          "policy_id": "SYN-C001"
+        },
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "raw_tables": {
+          "LCCONT": [
+            {
+              "CONTNO": "SYN-C001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "CONTTYPE": "1",
+              "PAYMODE": "1",
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "CURRENCY": "01",
+              "SIGNDATE": "2024-05-01",
+              "SIGNTIME": "09:00:00",
+              "APPFLAG": "1"
+            }
+          ],
+          "LCPOL": [
+            {
+              "CONTNO": "SYN-C001",
+              "POLNO": "SYN-P001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "YEARS": 20,
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "PAYMODE": "1",
+              "CLAIMTIMES": 0,
+              "ENDORSETIMES": 3,
+              "LASTLOANDATE": "2025-01-01",
+              "LASTEDORDATE": "2026-01-01"
+            }
+          ],
+          "LCPREM": [
+            {
+              "PolNo": "SYN-P001",
+              "DutyCode": "D1",
+              "PayPlanCode": "A",
+              "SuppRiskScore": "99.00"
+            }
+          ]
+        },
+        "coverage": {
+          "supplied_tables": {
+            "query_status": "succeeded",
+            "coverage_kind": "snapshot",
+            "complete": true,
+            "note": "仅模拟本例给定表的读取；不代表真实数据库已查询"
+          },
+          "actual_payments": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "preservation_events": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "individual_claims": {
+            "query_status": "not_provided",
+            "complete": false
+          }
+        },
+        "approved_rating_rules_available": false,
+        "codebook_version": null
+      },
+      "expected": {
+        "cash_status": "unknown",
+        "proposed_grade": null,
+        "proposed_aml_score": null
+      },
+      "assertions": [
+        "CLAIMTIMES=0不说明全公司历史无理赔",
+        "ENDORSETIMES=3不生成3条虚构保全",
+        "LASTLOANDATE不生成贷款金额",
+        "SuppRiskScore不用于反洗钱评分"
+      ]
+    },
+    {
+      "case_id": "DB-008",
+      "synthetic": true,
+      "split": "development",
+      "description": "签单排序与修改时点区分",
+      "input": {
+        "subject_id": "SYN-CUSTOMER",
+        "context": {
+          "role": "policyholder",
+          "policy_id": "SYN-C001"
+        },
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "raw_tables": {
+          "LCCONT": [
+            {
+              "CONTNO": "SYN-C001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "CONTTYPE": "1",
+              "PAYMODE": "1",
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "CURRENCY": "01",
+              "SIGNDATE": "2024-05-01",
+              "SIGNTIME": "09:00:00",
+              "APPFLAG": "1",
+              "MODIFYDATE": "2026-09-18"
+            },
+            {
+              "CONTNO": "SYN-C002",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "CONTTYPE": "1",
+              "PAYMODE": "1",
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "CURRENCY": "01",
+              "SIGNDATE": "2026-09-01",
+              "SIGNTIME": "09:00:00",
+              "APPFLAG": "1",
+              "MODIFYDATE": "2026-09-02"
+            }
+          ],
+          "LCPOL": [
+            {
+              "CONTNO": "SYN-C001",
+              "POLNO": "SYN-P001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "YEARS": 20,
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "PAYMODE": "1"
+            }
+          ]
+        },
+        "coverage": {
+          "supplied_tables": {
+            "query_status": "succeeded",
+            "coverage_kind": "snapshot",
+            "complete": true,
+            "note": "仅模拟本例给定表的读取；不代表真实数据库已查询"
+          },
+          "actual_payments": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "preservation_events": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "individual_claims": {
+            "query_status": "not_provided",
+            "complete": false
+          }
+        },
+        "approved_rating_rules_available": false,
+        "codebook_version": null
+      },
+      "expected": {
+        "cash_status": "unknown",
+        "proposed_grade": null,
+        "latest_signing_candidate": "SYN-C002"
+      },
+      "assertions": [
+        "按拟定签单时间背景选择SYN-C002，不按修改时间选C001",
+        "不能丢掉旧保单",
+        "排序方案不代表历史完整"
+      ]
+    },
+    {
+      "case_id": "DB-009",
+      "synthetic": true,
+      "split": "development",
+      "description": "码表与联系人不可误映射",
+      "input": {
+        "subject_id": "SYN-CUSTOMER",
+        "context": {
+          "role": "policyholder",
+          "policy_id": "SYN-C001"
+        },
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "raw_tables": {
+          "LCCONT": [
+            {
+              "CONTNO": "SYN-C001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "CONTTYPE": "1",
+              "PAYMODE": "Z",
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "CURRENCY": "01",
+              "SIGNDATE": "2024-05-01",
+              "SIGNTIME": "09:00:00",
+              "APPFLAG": "1",
+              "NEWPAYMODE": "1",
+              "PRTNO": "SYN-PRINT"
+            }
+          ],
+          "LCPOL": [
+            {
+              "CONTNO": "SYN-C001",
+              "POLNO": "SYN-P001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "YEARS": 20,
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "PAYMODE": "Z"
+            }
+          ],
+          "T_SLIS_LC_EXPANSION": [
+            {
+              "PRTNO": "SYN-PRINT",
+              "EMERGENCYCONTACTPHONE": "SYN-PHONE",
+              "AGENTPHONE": "SYN-AGENT-ID"
+            }
+          ]
+        },
+        "coverage": {
+          "supplied_tables": {
+            "query_status": "succeeded",
+            "coverage_kind": "snapshot",
+            "complete": true,
+            "note": "仅模拟本例给定表的读取；不代表真实数据库已查询"
+          },
+          "actual_payments": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "preservation_events": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "individual_claims": {
+            "query_status": "not_provided",
+            "complete": false
+          }
+        },
+        "approved_rating_rules_available": false,
+        "codebook_version": null
+      },
+      "expected": {
+        "cash_status": "unknown",
+        "proposed_grade": null,
+        "customer_phone": null,
+        "new_paymode_status": "codebook_required"
+      },
+      "assertions": [
+        "PAYMODE=Z保留未知",
+        "NEWPAYMODE=1未核实ldcode，不继承另一字段码表",
+        "紧急联系人电话不填客户电话",
+        "代理人工号不填客户电话"
+      ]
+    },
+    {
+      "case_id": "DB-010",
+      "synthetic": true,
+      "split": "development",
+      "description": "同保单主附险期限混合",
+      "input": {
+        "subject_id": "SYN-CUSTOMER",
+        "context": {
+          "role": "policyholder",
+          "policy_id": "SYN-C001"
+        },
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "raw_tables": {
+          "LCCONT": [
+            {
+              "CONTNO": "SYN-C001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "CONTTYPE": "1",
+              "PAYMODE": "1",
+              "PREM": "11000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "CURRENCY": "01",
+              "SIGNDATE": "2024-05-01",
+              "SIGNTIME": "09:00:00",
+              "APPFLAG": "1"
+            }
+          ],
+          "LCPOL": [
+            {
+              "CONTNO": "SYN-C001",
+              "POLNO": "SYN-P001",
+              "APPNTNO": "SYN-CUSTOMER",
+              "INSUREDNO": "SYN-CUSTOMER",
+              "YEARS": 20,
+              "PREM": "10000.00",
+              "SUMPREM": "30000.00",
+              "AMNT": "500000.00",
+              "PAYMODE": "1"
+            },
+            {
+              "CONTNO": "SYN-C001",
+              "POLNO": "SYN-P002",
+              "MAINPOLNO": "SYN-P001",
+              "YEARS": 1,
+              "PREM": "1000.00"
+            }
+          ]
+        },
+        "coverage": {
+          "supplied_tables": {
+            "query_status": "succeeded",
+            "coverage_kind": "snapshot",
+            "complete": true,
+            "note": "仅模拟本例给定表的读取；不代表真实数据库已查询"
+          },
+          "actual_payments": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "preservation_events": {
+            "query_status": "not_provided",
+            "complete": false
+          },
+          "individual_claims": {
+            "query_status": "not_provided",
+            "complete": false
+          }
+        },
+        "approved_rating_rules_available": false,
+        "codebook_version": null
+      },
+      "expected": {
+        "cash_status": "unknown",
+        "proposed_grade": null,
+        "policy_total_eligible_premium": null
+      },
+      "assertions": [
+        "保留20年主险和1年附险的期限及排除候选",
+        "不能将保单11000直接算范围内保费",
+        "混合产品过滤口径及金额拆分待确认",
+        "不因存在一年期附险整单删除"
+      ]
+    }
+  ]
+}

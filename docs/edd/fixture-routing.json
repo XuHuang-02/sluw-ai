@@ -1,0 +1,312 @@
+{
+  "cases": [
+    {
+      "case_id": "SYN-V1-001",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/0/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-002",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/1/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-003",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/2/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-004",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/3/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-005",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/4/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-006",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/5/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-007",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/6/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-008",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/7/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-009",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/8/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-010",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/9/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-011",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/10/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-012",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/11/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-013",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/12/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-014",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/13/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-015",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/14/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-016",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/15/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-017",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/16/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-018",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/17/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-019",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/18/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-020",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/19/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-021",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/20/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "SYN-V1-022",
+      "file": ".scratch/natural-person-edd/synthetic-cases-v1.json",
+      "pointer": "/cases/21/input",
+      "adapter": "legacy_business_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "adapter_pending"
+    },
+    {
+      "case_id": "DB-001",
+      "file": "tools/edd/fixtures/core-db-cases.json",
+      "pointer": "/cases/0/input",
+      "adapter": "core_tables_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "implemented_and_validated",
+      "implementation": "com.sinosig.sluw.application.edd.service.EddInputAdapter.adaptCoreTables",
+      "metadata_note": "调用方显式提供Context；测试使用合成snapshot_id/source_id，未知采集时间与查询版本为null"
+    },
+    {
+      "case_id": "DB-002",
+      "file": "tools/edd/fixtures/core-db-cases.json",
+      "pointer": "/cases/1/input",
+      "adapter": "core_tables_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "implemented_and_validated",
+      "implementation": "com.sinosig.sluw.application.edd.service.EddInputAdapter.adaptCoreTables",
+      "metadata_note": "调用方显式提供Context；测试使用合成snapshot_id/source_id，未知采集时间与查询版本为null"
+    },
+    {
+      "case_id": "DB-003",
+      "file": "tools/edd/fixtures/core-db-cases.json",
+      "pointer": "/cases/2/input",
+      "adapter": "core_tables_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "implemented_and_validated",
+      "implementation": "com.sinosig.sluw.application.edd.service.EddInputAdapter.adaptCoreTables",
+      "metadata_note": "调用方显式提供Context；测试使用合成snapshot_id/source_id，未知采集时间与查询版本为null"
+    },
+    {
+      "case_id": "DB-004",
+      "file": "tools/edd/fixtures/core-db-cases.json",
+      "pointer": "/cases/3/input",
+      "adapter": "core_tables_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "implemented_and_validated",
+      "implementation": "com.sinosig.sluw.application.edd.service.EddInputAdapter.adaptCoreTables",
+      "metadata_note": "调用方显式提供Context；测试使用合成snapshot_id/source_id，未知采集时间与查询版本为null"
+    },
+    {
+      "case_id": "DB-005",
+      "file": "tools/edd/fixtures/core-db-cases.json",
+      "pointer": "/cases/4/input",
+      "adapter": "core_tables_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "implemented_and_validated",
+      "implementation": "com.sinosig.sluw.application.edd.service.EddInputAdapter.adaptCoreTables",
+      "metadata_note": "调用方显式提供Context；测试使用合成snapshot_id/source_id，未知采集时间与查询版本为null"
+    },
+    {
+      "case_id": "DB-006",
+      "file": "tools/edd/fixtures/core-db-cases.json",
+      "pointer": "/cases/5/input",
+      "adapter": "core_tables_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "implemented_and_validated",
+      "implementation": "com.sinosig.sluw.application.edd.service.EddInputAdapter.adaptCoreTables",
+      "metadata_note": "调用方显式提供Context；测试使用合成snapshot_id/source_id，未知采集时间与查询版本为null"
+    },
+    {
+      "case_id": "DB-007",
+      "file": "tools/edd/fixtures/core-db-cases.json",
+      "pointer": "/cases/6/input",
+      "adapter": "core_tables_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "implemented_and_validated",
+      "implementation": "com.sinosig.sluw.application.edd.service.EddInputAdapter.adaptCoreTables",
+      "metadata_note": "调用方显式提供Context；测试使用合成snapshot_id/source_id，未知采集时间与查询版本为null"
+    },
+    {
+      "case_id": "DB-008",
+      "file": "tools/edd/fixtures/core-db-cases.json",
+      "pointer": "/cases/7/input",
+      "adapter": "core_tables_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "implemented_and_validated",
+      "implementation": "com.sinosig.sluw.application.edd.service.EddInputAdapter.adaptCoreTables",
+      "metadata_note": "调用方显式提供Context；测试使用合成snapshot_id/source_id，未知采集时间与查询版本为null"
+    },
+    {
+      "case_id": "DB-009",
+      "file": "tools/edd/fixtures/core-db-cases.json",
+      "pointer": "/cases/8/input",
+      "adapter": "core_tables_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "implemented_and_validated",
+      "implementation": "com.sinosig.sluw.application.edd.service.EddInputAdapter.adaptCoreTables",
+      "metadata_note": "调用方显式提供Context；测试使用合成snapshot_id/source_id，未知采集时间与查询版本为null"
+    },
+    {
+      "case_id": "DB-010",
+      "file": "tools/edd/fixtures/core-db-cases.json",
+      "pointer": "/cases/9/input",
+      "adapter": "core_tables_v1_to_contract_v1",
+      "target_schema": "src/main/resources/edd/contracts/v1/edd.schema.json#/$defs/request",
+      "implementation_task": "02",
+      "status": "implemented_and_validated",
+      "implementation": "com.sinosig.sluw.application.edd.service.EddInputAdapter.adaptCoreTables",
+      "metadata_note": "调用方显式提供Context；测试使用合成snapshot_id/source_id，未知采集时间与查询版本为null"
+    }
+  ]
+}

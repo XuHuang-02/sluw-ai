@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "analysis_id": "SYN-ANALYSIS-1",
+  "input_version": "SYN-SNAPSHOT-1",
+  "parent_analysis_id": null,
+  "status": "queued",
+  "updated_at": "2026-09-18T09:00:00+08:00",
+  "completed_steps": [],
+  "available_sections": [],
+  "result_url": null,
+  "failure": null
+}

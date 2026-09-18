@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "analysis_id": "SYN-ANALYSIS-1",
+  "input_version": "SYN-SNAPSHOT-1",
+  "parent_analysis_id": null,
+  "synthetic": true,
+  "status": "completed_with_gaps",
+  "rule_version": null,
+  "model_config_version": null,
+  "coverage_summary": {
+    "actual_payments": {
+      "query_status": "not_provided",
+      "coverage_kind": "history_events",
+      "from": null,
+      "to": null,
+      "as_of": null,
+      "complete": false,
+      "note": "尚未取得实际支付资料"
+    }
+  },
+  "business_summary": [],
+  "source_metrics": [],
+  "risk_signals": [],
+  "overview_sections": [],
+  "current_risk_grade": null,
+  "grade_recommendation": {
+    "status": "insufficient_rules",
+    "value": null,
+    "reason": "尚未提供批准规则和充分证据",
+    "fact_refs": [],
+    "rule_refs": []
+  },
+  "report_recommendation": {
+    "status": "insufficient_rules",
+    "value": null,
+    "reason": "尚未提供批准规则和充分证据",
+    "fact_refs": [],
+    "rule_refs": []
+  },
+  "disposition_recommendations": [],
+  "missing_items": [
+    {
+      "code": "EVIDENCE_MISSING",
+      "path": "/coverage/actual_payments",
+      "message": "实际支付资料待补充"
+    }
+  ],
+  "conflicts": [],
+  "evidence_index": [],
+  "changes": []
+}
