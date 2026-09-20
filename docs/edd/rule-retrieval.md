@@ -94,3 +94,5 @@ mvn "-Dtest=EddInputAdapterTest,EddFactServiceTest,EddHistoryServiceTest,EddRule
 另机联调需要独立EDD库、实际检索endpoint和密钥，以及与该环境document_id/chunk_id对应的批准目录。需确认实际部署返回kb_id/document_id/id/content和code/data.chunks；不一致时根据真实响应适配后重跑离线测试。核对切片hash、条款位置及版本，再验证实际召回与超时表现。正式知识库未就绪时保留规则缺失，不借用核保资料。
 
 任务04—06原实现及本次客户端复用重构已交付。
+
+另机可执行步骤见 [真实RAGFlow联调指南](ragflow-live-testing.md)。新增EddRuleRetrievalLiveTest默认跳过，显式启用后使用真实客户端，分capture与verify两步；不调用LLM。
