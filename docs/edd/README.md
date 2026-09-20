@@ -1,6 +1,6 @@
 # 自然人尽调开发入口
 
-当前交付：任务01 JSON契约、任务02核心表级JSON适配、任务03事实范围与冲突准备、任务04全历史统计与现金信号、任务05规则包与建议判定、任务06独立RAG规则检索（本机模拟测试已通过）。没有可调用的尽调HTTP端点，不需配置或运行AI/RAG即可测试适配。
+当前交付：任务01 JSON契约、任务02核心表级JSON适配、任务03事实范围与冲突准备、任务04全历史统计与现金信号、任务05规则包与建议判定、任务06独立RAG规则检索（用户已确认另机真实验证通过）、任务07风险概述与建议稿生成（本机fake模型测试通过）。没有可调用的尽调HTTP端点，不需配置或运行AI/RAG即可测试适配。
 
 - [接口与字段契约](contract-v1.md)
 - [核心JSON适配及调用示例](core-json-adapter.md)
@@ -8,6 +8,8 @@
 - [全历史统计、状态轨迹与现金信号](history-statistics.md)
 - [规则包版本与建议判定](rule-evaluation.md)
 - [RAGFlow尽调规则检索](rule-retrieval.md)
+- [风险概述与建议稿生成](draft-generation.md)
+- [任务07另机真实模型验证](llm-live-testing.md)
 - 正式Schema：`src/main/resources/edd/contracts/v1/edd.schema.json`
 - Java实现：`src/main/java/com/sinosig/sluw/application/edd/service/EddInputAdapter.java`
 - 可运行的10例合成输入：`tools/edd/fixtures/core-db-cases.json`
@@ -15,7 +17,7 @@
 在仓库根目录，使用已配置的JDK和Maven：
 
 ```text
-mvn "-Dtest=EddInputAdapterTest,EddFactServiceTest,EddHistoryServiceTest,EddRuleServiceTest,EddRuleRetrievalTest" test
+mvn "-Dtest=EddInputAdapterTest,EddFactServiceTest,EddHistoryServiceTest,EddRuleServiceTest,EddRuleRetrievalTest,EddDraftServiceTest" test
 python -m pip install -r tools/edd/requirements.txt
 python tools/edd/check_adapter_outputs.py
 python tools/edd/check_rule_outputs.py
@@ -31,3 +33,5 @@ fixture-routing.json中的22个legacy场景记录完整分析链路的后续设�
 任务06：131项相关Java测试通过，包含独立检索fake、HTTP模拟及旧核保检索契约验证；真实RAGFlow连接和召回效果待另机联调。
 
 RAG复用调整：尽调通过原RagFlowClient指定库重载读取ConfigReader，配置真实链路与application.config前缀见rule-retrieval.md；不再创建独立HTTP客户端。
+
+任务07：采用独立尽调提示词，复用既有模型隔离与ChatClient；模型仅生成六维概述/处置建议，固定评级和上报建议由程序保留。长历史全量分组，组引用可展开到全部事实。当前输出为待任务08校验的草稿，不是已完成报告。13项新增测试通过，全量328通过、1项真实联网测试默认跳过。
