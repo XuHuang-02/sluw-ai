@@ -4,6 +4,7 @@ import com.sinosig.sluw.application.commons.web.ConfigReader;
 import com.sinosig.sluw.application.dto.RagFlowRequest;
 import com.sinosig.sluw.application.dto.RagFlowResponse;
 import jakarta.annotation.Resource;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -45,80 +46,61 @@ public class RagFlowClient {
      * @return RAGFlow 响应对象
      */
     public RagFlowResponse doRetrieve(String question) {
-        // 构建请求 URL
-        String url = configReader.getProperty("ragFlow", "apiUrl");
-
-        // 设置请求头
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(configReader.getProperty("ragFlow", "apiKey"));
-
-
-        // 构建请求体 DTO
-        RagFlowRequest request = RagFlowRequest.builder()
-                .question(question)
-                .datasetIds(Collections.singletonList(configReader.getProperty("ragFlow", "datasetId")))
-                .page(Integer.valueOf(configReader.getProperty("ragFlow", "page")))
-                .pageSize(Integer.valueOf(configReader.getProperty("ragFlow", "pageSize")))
-                .similarityThreshold(Double.valueOf(configReader.getProperty("ragFlow", "similarityThreshold")))
-                .vectorSimilarityWeight(Double.valueOf(configReader.getProperty("ragFlow", "vectorSimilarityWeight")))
-                .topK(Integer.valueOf(configReader.getProperty("ragFlow", "topK")))
-                .keyword(Boolean.valueOf(configReader.getProperty("ragFlow", "keyword")))
-                .highlight(Boolean.valueOf(configReader.getProperty("ragFlow", "highlight")))
-                .build();
-
-        return getRagFlowResponse(url, headers, request);
+        return retrieveConfigured(question, "ragFlow", "ragFlow", null, null, RagFlowResponse.class);
     }
 
-    /**
-     * 单知识库检索（使用该知识库自己的配置参数）
-     */
+    /** Existing named-library contract; configuration is supplied by Spring Environment. */
     public RagFlowResponse doRetrieve(String question, String kbName) {
-        String url = configReader.getProperty("ragFlow.base", "apiUrl");
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(configReader.getProperty("ragFlow.base", "apiKey"));
-
-        // 从 YAML 中读取该知识库的个性化参数
-        String prefix = "ragFlow." + kbName;  // 例如 ragFlow.dataregular
-        RagFlowRequest request = RagFlowRequest.builder()
-                .question(question)
-                .datasetIds(Collections.singletonList(configReader.getProperty(prefix, "datasetId")))
-                .page(Integer.valueOf(configReader.getProperty(prefix, "page")))
-                .pageSize(Integer.valueOf(configReader.getProperty(prefix, "pageSize")))
-                .similarityThreshold(Double.valueOf(configReader.getProperty(prefix, "similarityThreshold")))
-                .vectorSimilarityWeight(Double.valueOf(configReader.getProperty(prefix, "vectorSimilarityWeight")))
-                .topK(Integer.valueOf(configReader.getProperty(prefix, "topK")))
-                .keyword(Boolean.valueOf(configReader.getProperty(prefix, "keyword")))
-                .highlight(Boolean.valueOf(configReader.getProperty(prefix, "highlight")))
-                .build();
-
-        return getRagFlowResponse(url, headers, request);
+        return retrieveConfigured(question, "ragFlow.base", libraryPrefix(kbName), null, null, RagFlowResponse.class);
     }
 
-    /**
-     * 调用知识库解析返回信息
-     * @param url 请求URL
-     * @param headers 请求头
-     * @param request 请求体
-     * @return
-     */
-    private RagFlowResponse getRagFlowResponse(String url, HttpHeaders headers, RagFlowRequest request) {
-        HttpEntity<RagFlowRequest> entity = new HttpEntity<>(request, headers);
+    /** Restricted retrieval keeps the raw envelope so callers can reject missing code/chunks. */
+    public JsonNode doRetrieve(String question, String kbName, List<String> documentIds, String expectedDatasetId) {
+        if(documentIds==null||documentIds.isEmpty()||documentIds.stream().anyMatch(id->id==null||id.isBlank())
+                ||expectedDatasetId==null||expectedDatasetId.isBlank())
+            throw new IllegalArgumentException("Restricted retrieval requires document IDs and dataset");
+        return retrieveConfigured(question,"ragFlow.base",libraryPrefix(kbName),List.copyOf(documentIds),
+                expectedDatasetId,JsonNode.class);
+    }
 
+    public String getDatasetId(String kbName) {
+        return configReader.getProperty(libraryPrefix(kbName),"datasetId");
+    }
+
+    private static String libraryPrefix(String kbName) {
+        if(kbName==null||!kbName.matches("[A-Za-z0-9_-]+"))
+            throw new IllegalArgumentException("Named library required");
+        return "ragFlow."+kbName;
+    }
+
+    private <T> T retrieveConfigured(String question,String connectionPrefix,String libraryPrefix,
+                                     List<String> documentIds,String expectedDatasetId,Class<T> responseType) {
+        String datasetId=configReader.getProperty(libraryPrefix,"datasetId");
+        if(expectedDatasetId!=null&&!expectedDatasetId.equals(datasetId))
+            throw new IllegalArgumentException("Configured dataset does not match approved catalogue");
+        String url=configReader.getProperty(connectionPrefix,"apiUrl");
+        HttpHeaders headers=new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(configReader.getProperty(connectionPrefix,"apiKey"));
+        RagFlowRequest request=RagFlowRequest.builder()
+                .question(question).datasetIds(Collections.singletonList(datasetId)).documentIds(documentIds)
+                .page(Integer.valueOf(configReader.getProperty(libraryPrefix,"page")))
+                .pageSize(Integer.valueOf(configReader.getProperty(libraryPrefix,"pageSize")))
+                .similarityThreshold(Double.valueOf(configReader.getProperty(libraryPrefix,"similarityThreshold")))
+                .vectorSimilarityWeight(Double.valueOf(configReader.getProperty(libraryPrefix,"vectorSimilarityWeight")))
+                .topK(Integer.valueOf(configReader.getProperty(libraryPrefix,"topK")))
+                .keyword(Boolean.valueOf(configReader.getProperty(libraryPrefix,"keyword")))
+                .highlight(Boolean.valueOf(configReader.getProperty(libraryPrefix,"highlight"))).build();
+        return getRagFlowResponse(url,headers,request,responseType);
+    }
+
+    private <T> T getRagFlowResponse(String url,HttpHeaders headers,RagFlowRequest request,Class<T> responseType) {
         try {
-            RagFlowResponse response = restTemplate.postForObject(
-                    url, entity, RagFlowResponse.class);
-
-            if (response != null && response.getData() != null) {
-                LOGGER.info("RAGFlow 检索成功，返回 {} 条切片，总命中数 {}",
-                        response.getData().getChunks().size(),
-                        response.getData().getTotal());
-            }
-            return response;
-        } catch (RestClientException e) {
-            LOGGER.error("RAGFlow 服务调用异常: {}",e.toString(), e.getMessage(), e);
-            throw new RagFlowServiceException("知识库服务暂时不可用，请稍后重试", e);
+            return restTemplate.postForObject(url,new HttpEntity<>(request,headers),responseType);
+        } catch(RestClientException e) {
+            // Do not log remote response bodies, credentials or customer query text.
+            LOGGER.error("RAGFlow service call failed: {}",e.getClass().getSimpleName());
+            throw new RagFlowServiceException("知识库服务暂时不可用，请稍后重试",e);
         }
     }
 

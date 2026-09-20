@@ -1,25 +1,48 @@
 # 任务06：RAGFlow尽调规则检索适配
 
-2026-09-20完成离线实现与本机测试。真实RAGFlow、正式尽调知识库及条款目录尚未接入；不将模拟测试视为实际召回效果验证。当前为后续任务07/10提供独立Java接口，不注册HTTP业务端点或修改现有核保Bean。
+2026-09-20完成离线实现与本机测试。真实RAGFlow、正式尽调知识库及条款目录尚未接入；不将模拟测试视为实际召回效果验证。当前为后续任务07/10提供Java接口，不注册HTTP业务端点。尽调通过既有RagFlowClient和共享RestTemplate请求，核保旧调用签名保留。
 
 ## 组成与调用
 
 - EddRuleRetrieval：按已批准规则包和服务端条款目录筛选、校验与保留引用。
-- EddRagFlowRetriever：复用现有RagFlowRequest DTO及POST协议，使用独立RestTemplate、连接/读取超时和显式配置。
+- EddRagFlowRetriever：仅转换响应与分类异常，委托原RagFlowClient读取ConfigReader、构建请求、认证和执行HTTP。
 - FakeEddRuleRetriever：显式注入的离线fake，支持返回候选、超时、服务错误；不作为生产降级后备。
 
 ```java
-var transport = new EddRagFlowRetriever(
-    URI.create(eddRetrievalEndpoint), eddApiKey, 2000, 8000);
+// ragFlowClient为现有Spring Bean；目录和规则包仍由服务端受控装载。
+var transport = new EddRagFlowRetriever(ragFlowClient, "edd");
 var retrieval = new EddRuleRetrieval(
-    eddDatasetId, transport, approvedClauseCatalogue, false);
+    ragFlowClient.getDatasetId("edd"), transport, approvedClauseCatalogue, false);
 var result = retrieval.retrieve(
     approvedRulePackage, analysisAsOf, trigger, Set.of("APPROVED-RULE-ID"));
 ```
 
-上述变量由服务端受控配置提供。本模块不读取ragFlow默认库或ragFlow.base，也不自动继承核保datasetId。建议后续装配使用独立edd.rag配置段，具体Spring配置绑定属于任务10；本轮未写真实URL、密钥或知识库ID。未提供dataset或transport时返回NOT_CONFIGURED。
+### 配置真实来源
 
-批准规则包来自任务05受控注册表，精确版本由请求rule_context选择。查询使用规则ID、版本、截止时间和发起事项，不拼接客户姓名、证件、交易明细或人工附件正文。
+ConfigReader本身不打开某个YAML文件，而是向Spring Environment读取application.config.<scope>.<key>。WebAutoconfiguration注册该Bean。当前入口src/main/resources/application.yml设置spring.profiles.active=@profileActive@（Maven过滤），并导入optional:file:./local-settings.properties。
+
+仓库dev/test环境文件包含默认ragFlow库配置；未发现现成的ragFlow.edd配置。实际生效来源还取决于启动profile及外部覆盖，不能认定总在application.yml。以下是可放在运行工作目录local-settings.properties中的配置键示例，URL和密钥需本机提供，不提交：
+
+```properties
+application.config.ragFlow.base.apiUrl=<现有RAGFlow检索接口完整地址>
+application.config.ragFlow.base.apiKey=<本机配置密钥>
+application.config.ragFlow.edd.datasetId=<独立尽调规则库ID>
+application.config.ragFlow.edd.page=1
+application.config.ragFlow.edd.pageSize=100
+application.config.ragFlow.edd.similarityThreshold=0.2
+application.config.ragFlow.edd.vectorSimilarityWeight=0.3
+application.config.ragFlow.edd.topK=100
+application.config.ragFlow.edd.keyword=true
+application.config.ragFlow.edd.highlight=false
+application.config.ragFlow.base.connectTimeoutMillis=10000
+application.config.ragFlow.base.readTimeoutMillis=60000
+```
+
+默认doRetrieve(question)继续读取application.config.ragFlow.*；指定库doRetrieve(question,kbName)使用ragFlow.base的地址/密钥以及ragFlow.<库名>的dataset和检索参数。尽调调用新增重载doRetrieve(question,kbName,documentIds,expectedDatasetId)，复用同一请求构建与HTTP方法；实际配置dataset必须和批准目录一致，空文档限制或不匹配直接拒绝，不退回默认库。
+
+共享RestTemplate在AiClientConfig集中设置连接/读取超时，默认10秒/60秒，使用以上两个可覆盖键，必须为正数。此变更也作用于使用该Bean的原有调用，避免无限等待；不是端到端总时限。尽调适配器不再独立创建客户端、不重复保存URL或API Key，也不引入新的环境变量读取链路。
+
+批准规则包来自任务05受控注册表。查询使用规则ID、版本、截止时间和发起事项，不拼接客户身份或业务明细。fake及目录过滤逻辑保持不变。
 
 ## 为什么使用条款目录
 
@@ -54,11 +77,11 @@ FOUND只表示所请求解释已找到，不表示规则全集完整或客户没
 
 ## HTTP边界
 
-复用现有POST检索字段：question、dataset_ids、document_ids、page=1、page_size=100、top_k=100、similarity_threshold=0.2、vector_similarity_weight=0.3、keyword=true、highlight=false。本期不分页追求全库覆盖；未召回的规则返回缺口，不推断不存在。
+复用现有POST检索字段：question、dataset_ids、document_ids、page、page_size、top_k、similarity_threshold、vector_similarity_weight、keyword、highlight；数值从指定库配置读取，上文给出建议测试配置。本期不分页追求全库覆盖；未召回的规则返回缺口，不推断不存在。
 
 正常响应必须有整数code=0和data.chunks数组；缺code、非零业务码、缺chunks与HTTP错误均不是空结果。单次返回上限200条，单切片超长直接过滤。连接和读取超时显式配置，不自动重试，不额外创建线程池；这些是HTTP阶段超时，不是端到端总耗时保证。错误输出不携带远程正文或密钥。
 
-复用既有RagFlowRequest而不修改RagFlowClient/RagFlowResponse/核保调用链；HTTP模拟额外验证旧doRetrieve(question)仍使用其原知识库配置。
+RagFlowClient内统一配置请求与HTTP方法，旧默认库和指定库调用保持原参数来源及RagFlowResponse返回类型；尽调限定重载返回原始JSON以识别缺失code/chunks。RagFlowResponse未改动，HTTP错误日志不输出远程正文。
 
 ## 验证与另机联调
 
@@ -66,8 +89,8 @@ FOUND只表示所请求解释已找到，不表示规则全集完整或客户没
 mvn "-Dtest=EddInputAdapterTest,EddFactServiceTest,EddHistoryServiceTest,EddRuleServiceTest,EddRuleRetrievalTest" test
 ```
 
-本机131项相关Java测试通过，其中任务06为9项。覆盖命中完整引用、空结果、fake及HTTP超时、服务错误、版本/批准过滤、缺引用、跨库与内容变动、重复/部分命中、HTTP字段及旧核保客户端兼容。测试使用MockRestServiceServer和fake，无真实网络调用。
+首次实现131项相关Java测试通过；本次复用重构新增真实ConfigReader前缀、指定库参数、数据集不匹配和共享超时测试，全量回归313项Java测试通过，其中尽调检索12项。覆盖命中完整引用、空结果、fake及HTTP超时、服务错误、版本/批准过滤、缺引用、跨库与内容变动、重复/部分命中、HTTP字段及旧核保客户端兼容。测试使用MockRestServiceServer和fake，无真实网络调用。
 
 另机联调需要独立EDD库、实际检索endpoint和密钥，以及与该环境document_id/chunk_id对应的批准目录。需确认实际部署返回kb_id/document_id/id/content和code/data.chunks；不一致时根据真实响应适配后重跑离线测试。核对切片hash、条款位置及版本，再验证实际召回与超时表现。正式知识库未就绪时保留规则缺失，不借用核保资料。
 
-代码及文档随任务04—06统一交付。
+任务04—06原实现及本次客户端复用重构已交付。

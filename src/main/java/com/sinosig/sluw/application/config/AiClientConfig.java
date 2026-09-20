@@ -25,6 +25,11 @@ import java.time.Duration;
 public class AiClientConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(AiClientConfig.class);
+    @Value("${application.config.ragFlow.base.connectTimeoutMillis:10000}")
+    private int ragConnectTimeoutMillis=10000;
+    @Value("${application.config.ragFlow.base.readTimeoutMillis:60000}")
+    private int ragReadTimeoutMillis=60000;
+
 
 
     /**
@@ -36,7 +41,12 @@ public class AiClientConfig {
 
     @Bean
     public RestTemplate restTemplate() {
-        return new RestTemplate();
+        if(ragConnectTimeoutMillis<1||ragReadTimeoutMillis<1)
+            throw new IllegalArgumentException("RAG HTTP timeouts must be positive");
+        SimpleClientHttpRequestFactory factory=new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(ragConnectTimeoutMillis);
+        factory.setReadTimeout(ragReadTimeoutMillis);
+        return new RestTemplate(factory);
     }
 
     @Bean

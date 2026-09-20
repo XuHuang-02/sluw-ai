@@ -11,6 +11,8 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 import java.net.*;
+import org.springframework.mock.env.MockEnvironment;
+import com.sinosig.sluw.application.config.AiClientConfig;
 import java.time.OffsetDateTime;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -89,6 +91,41 @@ class EddRuleRetrievalTest {
         assertEquals(1,result.evidence().size());
         assertThrows(UnsupportedOperationException.class,()->result.evidence().clear());
     }
+    private RagFlowClient configuredClient(RestTemplate http) {
+        MockEnvironment env=new MockEnvironment()
+                .withProperty("application.config.ragFlow.base.apiUrl",endpoint.toString())
+                .withProperty("application.config.ragFlow.base.apiKey","SYN-KEY");
+        Map<String,String> values=Map.of("datasetId","EDD","page","1","pageSize","25",
+                "similarityThreshold","0.4","vectorSimilarityWeight","0.6","topK","80","keyword","true","highlight","false");
+        values.forEach((key,value)->env.setProperty("application.config.ragFlow.edd."+key,value));
+        ConfigReader config=new ConfigReader();ReflectionTestUtils.setField(config,"env",env);
+        RagFlowClient client=new RagFlowClient();ReflectionTestUtils.setField(client,"configReader",config);
+        ReflectionTestUtils.setField(client,"restTemplate",http);return client;
+    }
+    @Test void existingNamedLibraryUsesConfigReaderPrefixAndConfiguredParameters() throws Exception {
+        RestTemplate http=new RestTemplate();var server=MockRestServiceServer.bindTo(http).build();
+        var client=configuredClient(http);
+        server.expect(requestTo(endpoint)).andExpect(header("Authorization","Bearer SYN-KEY"))
+                .andExpect(jsonPath("$.dataset_ids[0]").value("EDD")).andExpect(jsonPath("$.page_size").value(25))
+                .andExpect(jsonPath("$.similarity_threshold").value(0.4)).andExpect(jsonPath("$.top_k").value(80))
+                .andExpect(jsonPath("$.document_ids").doesNotExist())
+                .andRespond(withSuccess("{\"code\":0,\"data\":{\"chunks\":[]}}",MediaType.APPLICATION_JSON));
+        assertEquals("EDD",client.getDatasetId("edd"));
+        assertEquals(0,client.doRetrieve("named query","edd").getCode());server.verify();
+    }
+    @Test void wrongDatasetOrEmptyRestrictionsFailBeforeHttp() {
+        var client=configuredClient(new RestTemplate());
+        assertThrows(IllegalArgumentException.class,()->client.doRetrieve("q","edd",List.of("DOC"),"OTHER"));
+        assertThrows(IllegalArgumentException.class,()->client.doRetrieve("q","edd",List.of(),"EDD"));
+    }
+    @Test void sharedHttpFactoryHasBoundedTimeouts() {
+        var config=new AiClientConfig();
+        var factory=config.restTemplate().getRequestFactory();
+        assertEquals(10000,ReflectionTestUtils.getField(factory,"connectTimeout"));
+        assertEquals(60000,ReflectionTestUtils.getField(factory,"readTimeout"));
+        ReflectionTestUtils.setField(config,"ragReadTimeoutMillis",0);
+        assertThrows(IllegalArgumentException.class,config::restTemplate);
+    }
     @Test void httpUsesOnlyDedicatedDatasetAndRestrictedDocuments() throws Exception {
         RestTemplate http=new RestTemplate();var server=MockRestServiceServer.bindTo(http).build();
         server.expect(requestTo(endpoint)).andExpect(method(HttpMethod.POST)).andExpect(header("Authorization","Bearer SYN-KEY"))
@@ -97,7 +134,7 @@ class EddRuleRetrievalTest {
                 .andRespond(withSuccess("""
                     {"code":0,"data":{"chunks":[{"kb_id":"EDD","document_id":"DOC","id":"CHUNK","content":"Synthetic approved explanation."}]}}
                     """,MediaType.APPLICATION_JSON));
-        var service=service(new EddRagFlowRetriever(endpoint,"SYN-KEY",http),List.of(clause("1",true)));
+        var service=service(new EddRagFlowRetriever(configuredClient(http),"edd"),List.of(clause("1",true)));
         assertEquals(EddRuleRetrieval.Status.FOUND,service.retrieve(pack(),asOf,"risk_review",Set.of("R1")).status());
         server.verify();
     }
@@ -105,14 +142,14 @@ class EddRuleRetrievalTest {
         for(String json:List.of("{\"data\":{\"chunks\":[]}}","{\"code\":5,\"data\":{\"chunks\":[]}}","{\"code\":0,\"data\":{}}")) {
             RestTemplate http=new RestTemplate();var server=MockRestServiceServer.bindTo(http).build();
             server.expect(requestTo(endpoint)).andRespond(withSuccess(json,MediaType.APPLICATION_JSON));
-            var result=service(new EddRagFlowRetriever(endpoint,"SYN-KEY",http),List.of(clause("1",true))).retrieve(pack(),asOf,"risk_review",Set.of("R1"));
+            var result=service(new EddRagFlowRetriever(configuredClient(http),"edd"),List.of(clause("1",true))).retrieve(pack(),asOf,"risk_review",Set.of("R1"));
             assertEquals(EddRuleRetrieval.Status.SERVICE_ERROR,result.status());server.verify();
         }
     }
     @Test void httpTimeoutIsClassifiedWithoutExposingRemoteMessage() throws Exception {
         RestTemplate http=new RestTemplate();var server=MockRestServiceServer.bindTo(http).build();
         server.expect(requestTo(endpoint)).andRespond(withException(new SocketTimeoutException("SENSITIVE")));
-        var result=service(new EddRagFlowRetriever(endpoint,"SYN-KEY",http),List.of(clause("1",true))).retrieve(pack(),asOf,"risk_review",Set.of("R1"));
+        var result=service(new EddRagFlowRetriever(configuredClient(http),"edd"),List.of(clause("1",true))).retrieve(pack(),asOf,"risk_review",Set.of("R1"));
         assertEquals(EddRuleRetrieval.Status.TIMEOUT,result.status());assertFalse(result.toString().contains("SENSITIVE"));server.verify();
     }
     @Test void existingUnderwritingClientContractStillWorks() {

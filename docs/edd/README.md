@@ -29,3 +29,5 @@ fixture-routing.json中的22个legacy场景记录完整分析链路的后续设�
 真实AI/RAG由另一台电脑后续运行，当前代码执行本地JSON转换、事实准备和确定性统计。任务05累计验证：122项相关Java测试、30项Python契约测试通过；32组Java实际建议输出符合v1契约。默认不装载正式规则，建议等级保留为空。
 
 任务06：131项相关Java测试通过，包含独立检索fake、HTTP模拟及旧核保检索契约验证；真实RAGFlow连接和召回效果待另机联调。
+
+RAG复用调整：尽调通过原RagFlowClient指定库重载读取ConfigReader，配置真实链路与application.config前缀见rule-retrieval.md；不再创建独立HTTP客户端。
