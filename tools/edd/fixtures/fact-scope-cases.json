@@ -1,0 +1,2109 @@
+{
+  "synthetic": true,
+  "notes": "Task03 subset migrated from proposal fixtures. Date-only coverage uses synthetic midnight +08:00; date-only risk time is unknown. Confirmed excerpt recorded_at is explicitly used as synthetic confirmation time. Not a production adapter.",
+  "cases": [
+    {
+      "case_id": "SYN-V1-004",
+      "input": {
+        "schema_version": "1.0",
+        "synthetic": true,
+        "snapshot_id": "SYN-V1-004-INPUT-1",
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "subject": {
+          "customer_id": "SYN-PERSON",
+          "display_name": "合成客户"
+        },
+        "context": {
+          "policy_id": "SYN-POLICY-001",
+          "role": "policyholder",
+          "trigger": "risk_review"
+        },
+        "coverage": {
+          "underwriting": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "preservation": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "individual_claims": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "judicial": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "blacklist": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "historical_suspicious_reports": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "risk_history": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          }
+        },
+        "events": [
+          {
+            "source_record_id": "T1",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "T1",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          },
+          {
+            "source_record_id": "YEAR-CASH",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": true,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "cash",
+            "claim_channel": null,
+            "fact_id": "YEAR-CASH",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          },
+          {
+            "source_record_id": "GROUP-CLAIM",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "claim_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "claim_payment",
+            "currency": "CNY",
+            "direction": "company_to_customer",
+            "payment_method": "cash",
+            "claim_channel": "group",
+            "fact_id": "GROUP-CLAIM",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "risk_records": [],
+        "manual_excerpts": [],
+        "attachments": [],
+        "conflicts": [],
+        "rule_context": {
+          "rule_package_id": null,
+          "expected_version": null
+        },
+        "parent_analysis_id": null,
+        "core_snapshots": []
+      },
+      "expected": {
+        "included_event_ids": [
+          "T1"
+        ],
+        "excluded_event_ids": [
+          "YEAR-CASH",
+          "GROUP-CLAIM"
+        ],
+        "pending_scope_event_ids": []
+      }
+    },
+    {
+      "case_id": "SYN-V1-005",
+      "input": {
+        "schema_version": "1.0",
+        "synthetic": true,
+        "snapshot_id": "SYN-V1-005-INPUT-1",
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "subject": {
+          "customer_id": "SYN-PERSON",
+          "display_name": "合成客户"
+        },
+        "context": {
+          "policy_id": "SYN-POLICY-001",
+          "role": "policyholder",
+          "trigger": "risk_review"
+        },
+        "coverage": {
+          "underwriting": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "preservation": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "individual_claims": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "judicial": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "blacklist": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "historical_suspicious_reports": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "risk_history": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          }
+        },
+        "events": [
+          {
+            "source_record_id": "T1",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "T1",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          },
+          {
+            "source_record_id": "TERM-UNKNOWN",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": null,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "cash",
+            "claim_channel": null,
+            "fact_id": "TERM-UNKNOWN",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          },
+          {
+            "source_record_id": "CLAIM-UNKNOWN",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "claim_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "claim_payment",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "CLAIM-UNKNOWN",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "risk_records": [],
+        "manual_excerpts": [],
+        "attachments": [],
+        "conflicts": [],
+        "rule_context": {
+          "rule_package_id": null,
+          "expected_version": null
+        },
+        "parent_analysis_id": null,
+        "core_snapshots": []
+      },
+      "expected": {
+        "included_event_ids": [
+          "T1"
+        ],
+        "excluded_event_ids": [],
+        "pending_scope_event_ids": [
+          "TERM-UNKNOWN",
+          "CLAIM-UNKNOWN"
+        ]
+      }
+    },
+    {
+      "case_id": "SYN-V1-006",
+      "input": {
+        "schema_version": "1.0",
+        "synthetic": true,
+        "snapshot_id": "SYN-V1-006-INPUT-1",
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "subject": {
+          "customer_id": "SYN-PERSON",
+          "display_name": "合成客户"
+        },
+        "context": {
+          "policy_id": "SYN-POLICY-001",
+          "role": "policyholder",
+          "trigger": "risk_review"
+        },
+        "coverage": {
+          "underwriting": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "preservation": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "individual_claims": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "judicial": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "blacklist": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "historical_suspicious_reports": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "risk_history": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          }
+        },
+        "events": [
+          {
+            "source_record_id": "T1",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "T1",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          },
+          {
+            "source_record_id": "LOAN",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "policy_loan",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "50000.00",
+            "amount_kind": "loan_principal",
+            "currency": "CNY",
+            "direction": "company_to_customer",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "LOAN",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          },
+          {
+            "source_record_id": "REPAY",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "loan_repayment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "1000.00",
+            "amount_kind": "loan_repayment",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "cash",
+            "claim_channel": null,
+            "fact_id": "REPAY",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          },
+          {
+            "source_record_id": "BENEFICIARY",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "beneficiary_change",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": null,
+            "amount_kind": null,
+            "currency": "CNY",
+            "direction": null,
+            "payment_method": null,
+            "claim_channel": null,
+            "fact_id": "BENEFICIARY",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          },
+          {
+            "source_record_id": "FREEZE",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "policy_freeze",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": null,
+            "amount_kind": null,
+            "currency": "CNY",
+            "direction": null,
+            "payment_method": null,
+            "claim_channel": null,
+            "fact_id": "FREEZE",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "risk_records": [],
+        "manual_excerpts": [],
+        "attachments": [],
+        "conflicts": [],
+        "rule_context": {
+          "rule_package_id": null,
+          "expected_version": null
+        },
+        "parent_analysis_id": null,
+        "core_snapshots": []
+      },
+      "expected": {
+        "included_event_ids": [
+          "T1",
+          "LOAN",
+          "REPAY",
+          "BENEFICIARY",
+          "FREEZE"
+        ],
+        "excluded_event_ids": [],
+        "pending_scope_event_ids": []
+      }
+    },
+    {
+      "case_id": "SYN-V1-008",
+      "input": {
+        "schema_version": "1.0",
+        "synthetic": true,
+        "snapshot_id": "SYN-V1-008-INPUT-1",
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "subject": {
+          "customer_id": "SYN-PERSON",
+          "display_name": "合成客户"
+        },
+        "context": {
+          "policy_id": "SYN-POLICY-001",
+          "role": "policyholder",
+          "trigger": "risk_review"
+        },
+        "coverage": {
+          "underwriting": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "preservation": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "individual_claims": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "judicial": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "blacklist": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "historical_suspicious_reports": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "risk_history": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          }
+        },
+        "events": [
+          {
+            "source_record_id": "T1",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "T1",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          },
+          {
+            "source_record_id": "T1",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "insured"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "T1-ROLE",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "risk_records": [],
+        "manual_excerpts": [],
+        "attachments": [],
+        "conflicts": [],
+        "rule_context": {
+          "rule_package_id": null,
+          "expected_version": null
+        },
+        "parent_analysis_id": null,
+        "core_snapshots": []
+      },
+      "expected": {
+        "included_event_ids": [
+          "T1"
+        ],
+        "excluded_event_ids": [],
+        "pending_scope_event_ids": []
+      }
+    },
+    {
+      "case_id": "SYN-V1-010",
+      "input": {
+        "schema_version": "1.0",
+        "synthetic": true,
+        "snapshot_id": "SYN-V1-010-INPUT-1",
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "subject": {
+          "customer_id": "SYN-PERSON",
+          "display_name": "合成客户"
+        },
+        "context": {
+          "policy_id": "SYN-POLICY-001",
+          "role": "policyholder",
+          "trigger": "risk_review"
+        },
+        "coverage": {
+          "underwriting": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "preservation": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "individual_claims": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "judicial": {
+            "query_status": "failed",
+            "complete": false,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "blacklist": {
+            "query_status": "permission_denied",
+            "complete": false,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "historical_suspicious_reports": {
+            "query_status": "not_queried",
+            "complete": false,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "risk_history": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          }
+        },
+        "events": [
+          {
+            "source_record_id": "T1",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "T1",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "risk_records": [],
+        "manual_excerpts": [],
+        "attachments": [],
+        "conflicts": [],
+        "rule_context": {
+          "rule_package_id": null,
+          "expected_version": null
+        },
+        "parent_analysis_id": null,
+        "core_snapshots": []
+      },
+      "expected": {
+        "included_event_ids": [
+          "T1"
+        ],
+        "excluded_event_ids": [],
+        "pending_scope_event_ids": []
+      }
+    },
+    {
+      "case_id": "SYN-V1-013",
+      "input": {
+        "schema_version": "1.0",
+        "synthetic": true,
+        "snapshot_id": "SYN-V1-013-INPUT-1",
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "subject": {
+          "customer_id": "SYN-PERSON",
+          "display_name": "合成客户"
+        },
+        "context": {
+          "policy_id": "SYN-POLICY-001",
+          "role": "policyholder",
+          "trigger": "risk_review"
+        },
+        "coverage": {
+          "underwriting": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "preservation": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "individual_claims": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "judicial": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "blacklist": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "historical_suspicious_reports": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "risk_history": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          }
+        },
+        "events": [
+          {
+            "source_record_id": "T1",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "T1",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "risk_records": [
+          {
+            "type": "negative_information",
+            "event_time": null,
+            "subject_match": "unconfirmed",
+            "facts": {
+              "description": "仅同名的外部负面线索，身份未匹配"
+            },
+            "fact_id": "NAME-MATCH",
+            "source": {
+              "source_id": "SYN-MANUAL",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "type",
+                "event_time",
+                "subject_match",
+                "facts",
+                "fact_id"
+              ],
+              "extracted_at": null,
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "manual_excerpts": [],
+        "attachments": [],
+        "conflicts": [],
+        "rule_context": {
+          "rule_package_id": null,
+          "expected_version": null
+        },
+        "parent_analysis_id": null,
+        "core_snapshots": []
+      },
+      "expected": {
+        "included_event_ids": [
+          "T1"
+        ],
+        "excluded_event_ids": [],
+        "pending_scope_event_ids": []
+      }
+    },
+    {
+      "case_id": "SYN-V1-014",
+      "input": {
+        "schema_version": "1.0",
+        "synthetic": true,
+        "snapshot_id": "SYN-V1-014-INPUT-1",
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "subject": {
+          "customer_id": "SYN-PERSON",
+          "display_name": "合成客户"
+        },
+        "context": {
+          "policy_id": "SYN-POLICY-001",
+          "role": "policyholder",
+          "trigger": "risk_review"
+        },
+        "coverage": {
+          "underwriting": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "preservation": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "individual_claims": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "judicial": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "blacklist": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "historical_suspicious_reports": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "risk_history": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          }
+        },
+        "events": [
+          {
+            "source_record_id": "T1",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "T1",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "risk_records": [],
+        "manual_excerpts": [
+          {
+            "text": "家庭年收入20万元",
+            "confirmed": false,
+            "fact_id": "INCOME-A",
+            "confirmed_at": null,
+            "attachment_id": null,
+            "source": {
+              "source_id": "SYN-FORM",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "text"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          },
+          {
+            "text": "家庭年收入40万元",
+            "confirmed": false,
+            "fact_id": "INCOME-B",
+            "confirmed_at": null,
+            "attachment_id": null,
+            "source": {
+              "source_id": "SYN-INTERVIEW",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "text"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "attachments": [],
+        "conflicts": [
+          {
+            "conflict_id": "C1",
+            "field": "family_annual_income",
+            "resolved": false,
+            "adopted_fact_id": null,
+            "candidate_fact_ids": [
+              "INCOME-A",
+              "INCOME-B"
+            ]
+          }
+        ],
+        "rule_context": {
+          "rule_package_id": null,
+          "expected_version": null
+        },
+        "parent_analysis_id": null,
+        "core_snapshots": []
+      },
+      "expected": {
+        "included_event_ids": [
+          "T1"
+        ],
+        "excluded_event_ids": [],
+        "pending_scope_event_ids": []
+      }
+    },
+    {
+      "case_id": "SYN-V1-015",
+      "input": {
+        "schema_version": "1.0",
+        "synthetic": true,
+        "snapshot_id": "SYN-V1-015-INPUT-1",
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "subject": {
+          "customer_id": "SYN-PERSON",
+          "display_name": "合成客户"
+        },
+        "context": {
+          "policy_id": "SYN-POLICY-001",
+          "role": "policyholder",
+          "trigger": "risk_review"
+        },
+        "coverage": {
+          "underwriting": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "preservation": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "individual_claims": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "judicial": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "blacklist": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "historical_suspicious_reports": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "risk_history": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          }
+        },
+        "events": [
+          {
+            "source_record_id": "T1",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "T1",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "risk_records": [],
+        "manual_excerpts": [
+          {
+            "text": "家庭年收入20万元",
+            "confirmed": true,
+            "fact_id": "INCOME-A",
+            "confirmed_at": "2026-09-18T09:00:00+08:00",
+            "attachment_id": null,
+            "source": {
+              "source_id": "SYN-FORM",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "text"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          },
+          {
+            "text": "家庭年收入40万元",
+            "confirmed": false,
+            "fact_id": "INCOME-B",
+            "confirmed_at": null,
+            "attachment_id": null,
+            "source": {
+              "source_id": "SYN-INTERVIEW",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "text"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "attachments": [],
+        "conflicts": [
+          {
+            "conflict_id": "C1",
+            "field": "family_annual_income",
+            "resolved": true,
+            "adopted_fact_id": "INCOME-A",
+            "candidate_fact_ids": [
+              "INCOME-A",
+              "INCOME-B"
+            ]
+          }
+        ],
+        "rule_context": {
+          "rule_package_id": null,
+          "expected_version": null
+        },
+        "parent_analysis_id": "SYN-PREVIOUS-ANALYSIS",
+        "core_snapshots": []
+      },
+      "expected": {
+        "included_event_ids": [
+          "T1"
+        ],
+        "excluded_event_ids": [],
+        "pending_scope_event_ids": []
+      }
+    },
+    {
+      "case_id": "SYN-V1-016",
+      "input": {
+        "schema_version": "1.0",
+        "synthetic": true,
+        "snapshot_id": "SYN-V1-016-INPUT-1",
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "subject": {
+          "customer_id": "SYN-PERSON",
+          "display_name": "合成客户"
+        },
+        "context": {
+          "policy_id": "SYN-POLICY-001",
+          "role": "policyholder",
+          "trigger": "risk_review"
+        },
+        "coverage": {
+          "underwriting": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "preservation": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "individual_claims": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "judicial": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "blacklist": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "historical_suspicious_reports": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "risk_history": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          }
+        },
+        "events": [
+          {
+            "source_record_id": "T1",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "T1",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "risk_records": [],
+        "manual_excerpts": [],
+        "attachments": [
+          {
+            "attachment_id": "SYN-ATTACHMENT-1",
+            "description": "机构保存的尽调证据"
+          }
+        ],
+        "conflicts": [],
+        "rule_context": {
+          "rule_package_id": null,
+          "expected_version": null
+        },
+        "parent_analysis_id": null,
+        "core_snapshots": []
+      },
+      "expected": {
+        "included_event_ids": [
+          "T1"
+        ],
+        "excluded_event_ids": [],
+        "pending_scope_event_ids": []
+      }
+    },
+    {
+      "case_id": "SYN-V1-019",
+      "input": {
+        "schema_version": "1.0",
+        "synthetic": true,
+        "snapshot_id": "SYN-V1-019-INPUT-1",
+        "analysis_as_of": "2026-09-18T09:00:00+08:00",
+        "subject": {
+          "customer_id": "SYN-PERSON",
+          "display_name": "合成客户"
+        },
+        "context": {
+          "policy_id": "SYN-POLICY-001",
+          "role": "policyholder",
+          "trigger": "risk_review"
+        },
+        "coverage": {
+          "underwriting": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "preservation": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "individual_claims": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "history_events"
+          },
+          "judicial": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "blacklist": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "historical_suspicious_reports": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          },
+          "risk_history": {
+            "query_status": "succeeded",
+            "complete": true,
+            "from": "2010-01-01T00:00:00+08:00",
+            "to": "2026-09-18T00:00:00+08:00",
+            "as_of": "2026-09-18T09:00:00+08:00",
+            "note": "仅为合成区间完整",
+            "coverage_kind": "risk_information"
+          }
+        },
+        "events": [
+          {
+            "source_record_id": "T1",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "premium_payment",
+            "event_time": "2024-05-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "bank_transfer",
+            "claim_channel": null,
+            "fact_id": "T1",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          },
+          {
+            "source_record_id": "FUTURE-CASH",
+            "policy_id": "SYN-POLICY-001",
+            "customer_id": "SYN-PERSON",
+            "roles": [
+              "policyholder"
+            ],
+            "subject_match": "confirmed",
+            "one_year_product": false,
+            "business_type": "premium_payment",
+            "event_time": "2026-10-01T09:00:00+08:00",
+            "status": "completed",
+            "amount": "10000.00",
+            "amount_kind": "paid_premium",
+            "currency": "CNY",
+            "direction": "customer_to_company",
+            "payment_method": "cash",
+            "claim_channel": null,
+            "fact_id": "FUTURE-CASH",
+            "source": {
+              "source_id": "SYN-CORE",
+              "source_kind": "synthetic",
+              "table": null,
+              "key": {},
+              "fields": [
+                "source_record_id",
+                "policy_id",
+                "customer_id",
+                "roles",
+                "subject_match",
+                "one_year_product",
+                "business_type",
+                "event_time",
+                "status",
+                "amount",
+                "amount_kind",
+                "currency",
+                "direction",
+                "payment_method",
+                "claim_channel",
+                "fact_id"
+              ],
+              "extracted_at": "2026-09-18T09:00:00+08:00",
+              "dictionary_version": null,
+              "query_version": null
+            }
+          }
+        ],
+        "risk_records": [],
+        "manual_excerpts": [],
+        "attachments": [],
+        "conflicts": [],
+        "rule_context": {
+          "rule_package_id": null,
+          "expected_version": null
+        },
+        "parent_analysis_id": null,
+        "core_snapshots": []
+      },
+      "expected": {
+        "included_event_ids": [
+          "T1"
+        ],
+        "excluded_event_ids": [
+          "FUTURE-CASH"
+        ],
+        "pending_scope_event_ids": []
+      }
+    }
+  ]
+}
