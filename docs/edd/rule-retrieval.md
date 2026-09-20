@@ -6,7 +6,7 @@
 
 - EddRuleRetrieval：按已批准规则包和服务端条款目录筛选、校验与保留引用。
 - EddRagFlowRetriever：仅转换响应与分类异常，委托原RagFlowClient读取ConfigReader、构建请求、认证和执行HTTP。
-- FakeEddRuleRetriever：显式注入的离线fake，支持返回候选、超时、服务错误；不作为生产降级后备。
+- FakeEddRuleRetriever：位于src/test/java，仅供回归测试使用，不进入生产包；显式注入的离线fake，支持返回候选、超时、服务错误；不作为生产降级后备。
 
 ```java
 // ragFlowClient为现有Spring Bean；目录和规则包仍由服务端受控装载。

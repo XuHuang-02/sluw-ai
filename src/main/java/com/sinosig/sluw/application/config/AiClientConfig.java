@@ -30,8 +30,6 @@ public class AiClientConfig {
     @Value("${application.config.ragFlow.base.readTimeoutMillis:60000}")
     private int ragReadTimeoutMillis=60000;
 
-
-
     /**
      * 创建RestTemplate Bean
      * 用于HTTP请求
@@ -61,20 +59,6 @@ public class AiClientConfig {
             builder.requestFactory(factory);
         };
     }
-
-//    @Bean
-//    public ChatMemory chatMemory() {
-//        /*
-//        老版本的InMemoryChatMemory删除了，用MessageWindowChatMemory替换
-//        MessageWindowChatMemory 默认缓存的数量为20，此处先设置为5
-//        */
-//        return MessageWindowChatMemory.builder().maxMessages(5).build(); // 默认内存存储
-//    }
-
-//    @Bean
-//    public ChatModel initDeepseekModel(){
-//        return new DeepSeekChatModel();
-//    }
 
     /**
      * 创建普通 ChatClient Bean（无工具，无自动历史注入）。

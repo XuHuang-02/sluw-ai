@@ -35,41 +35,18 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Spring AI Alibaba Starter 依赖 -->
-        <!--dependency>
-            <groupId>com.alibaba.cloud.ai</groupId>
-            <artifactId>spring-ai-alibaba-starter</artifactId>
-        </dependency-->
-
-        <!-- Spring AI Core Dependency -->
-        <!-- dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-core</artifactId>
-            <version>1.0.0-M6</version>
-        </dependency-->
 
         <!-- Spring AI Alibaba Graph Core -->
         <dependency>
             <groupId>com.alibaba.cloud.ai</groupId>
             <artifactId>spring-ai-alibaba-graph-core</artifactId>
-            <!--version>1.1.0.0</version --> <!-- 请使用最新稳定版 -->
-        </dependency>
 
-        <!--dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
-            <version>1.0.0-M6</version>
-        </dependency-->
-        <!--dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
-            <version>1.0.0-M6</version>
-         </dependency-->
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-model-deepseek</artifactId>
-            <!--version>1.1.2</version-->
+
         </dependency>
 
         <dependency>
@@ -202,13 +179,6 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.11</version>
         </dependency>
-        <!--引点新的来测试用-->
-        <!-- Apache POI，用于解析 Excel 文件 -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>5.2.5</version>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -236,23 +206,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <!--repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots><enabled>false</enabled></snapshots>
-            <releases><enabled>true</enabled></releases>
-        </repository>
-        <repository>
-            <id>spring-releases</id>
-            <url>https://repo.spring.io/release</url>
-        </repository>
-        <repository>
-            <id>maven-central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </repository>
-    </repositories -->
 
     <!-- compiler -->
     <build>
