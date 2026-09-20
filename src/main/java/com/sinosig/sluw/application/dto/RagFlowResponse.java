@@ -134,8 +134,8 @@ public class RagFlowResponse {
         private List<String> importantKeywords;
 
         /** 所属知识库 ID */
-        @JsonProperty("kb_id")
-        private String kbId;
+        @JsonProperty("dataset_id")
+        private String datasetId;
 
         /** 切片在文档中的位置信息（如页码、段落） */
         private List<String> positions;
@@ -219,12 +219,12 @@ public class RagFlowResponse {
             this.importantKeywords = importantKeywords;
         }
 
-        public String getKbId() {
-            return kbId;
+        public String getDatasetId() {
+            return datasetId;
         }
 
-        public void setKbId(String kbId) {
-            this.kbId = kbId;
+        public void setDatasetId(String datasetId) {
+            this.datasetId = datasetId;
         }
 
         public List<String> getPositions() {

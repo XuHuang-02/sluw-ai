@@ -22,7 +22,7 @@ public final class EddRagFlowRetriever implements EddRuleRetrieval.Retriever {
                 throw new EddRuleRetrieval.RetrievalFailure(false);
             List<EddRuleRetrieval.Candidate> chunks=new ArrayList<>();
             for(JsonNode n:response.at("/data/chunks"))chunks.add(new EddRuleRetrieval.Candidate(
-                    string(n,"kb_id"),string(n,"document_id"),string(n,"id"),string(n,"content")));
+                    string(n,"dataset_id"),string(n,"document_id"),string(n,"id"),string(n,"content")));
             return List.copyOf(chunks);
         } catch(RagFlowClient.RagFlowServiceException e) {
             Throwable cause=e;boolean timeout=false;

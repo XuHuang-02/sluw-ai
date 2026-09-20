@@ -132,10 +132,31 @@ class EddRuleRetrievalTest {
                 .andExpect(jsonPath("$.dataset_ids[0]").value("EDD")).andExpect(jsonPath("$.document_ids[0]").value("DOC"))
                 .andExpect(jsonPath("$.highlight").value(false))
                 .andRespond(withSuccess("""
-                    {"code":0,"data":{"chunks":[{"kb_id":"EDD","document_id":"DOC","id":"CHUNK","content":"Synthetic approved explanation."}]}}
+                    {"code":0,"data":{"chunks":[{"dataset_id":"EDD","document_id":"DOC","id":"CHUNK","content":"Synthetic approved explanation."}]}}
                     """,MediaType.APPLICATION_JSON));
         var service=service(new EddRagFlowRetriever(configuredClient(http),"edd"),List.of(clause("1",true)));
         assertEquals(EddRuleRetrieval.Status.FOUND,service.retrieve(pack(),asOf,"risk_review",Set.of("R1")).status());
+        server.verify();
+    }
+    @Test void sharedResponseDtoUsesDatasetId() throws Exception {
+        var mapper = new ObjectMapper();
+        var response = mapper.readValue("""
+                {"code":0,"data":{"chunks":[{"dataset_id":"EDD","document_id":"DOC","id":"CHUNK","content":"test"}]}}
+                """, com.sinosig.sluw.application.dto.RagFlowResponse.class);
+        JsonNode chunk = mapper.valueToTree(response.getData().getChunks().get(0));
+        assertEquals("EDD", chunk.path("dataset_id").asText());
+        assertFalse(chunk.has("kb_id"));
+    }
+    @Test void oldDatasetFieldIsNotAcceptedAsProvenance() throws Exception {
+        RestTemplate http = new RestTemplate();
+        var server = MockRestServiceServer.bindTo(http).build();
+        server.expect(requestTo(endpoint)).andRespond(withSuccess("""
+                {"code":0,"data":{"chunks":[{"kb_id":"EDD","document_id":"DOC","id":"CHUNK","content":"Synthetic approved explanation."}]}}
+                """, MediaType.APPLICATION_JSON));
+        var result = service(new EddRagFlowRetriever(configuredClient(http),"edd"), List.of(clause("1",true)))
+                .retrieve(pack(), asOf, "risk_review", Set.of("R1"));
+        assertEquals(EddRuleRetrieval.Status.FILTERED, result.status());
+        assertTrue(result.evidence().isEmpty());
         server.verify();
     }
     @Test void malformedAndRemoteErrorsAreNotEmptySuccesses() throws Exception {

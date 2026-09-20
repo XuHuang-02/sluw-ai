@@ -62,7 +62,7 @@ mvn "-Dtest=EddRuleRetrievalLiveTest" "-Dedd.live=true" "-Dedd.live.mode=capture
 - candidates.json：实际返回的datasetId/documentId/chunkId/content。
 - candidate-0.txt等：对应切片原文，保留精确UTF-8内容。
 
-需要确认返回切片属于测试库/文档，内容与上传的合成条款一致，且标识均非空。capture只证明拿到候选，不把候选自动认定为批准依据。空切片或接口错误会导致测试失败；优先检查解析完成状态、地址、权限和检索阈值。返回结构须满足当前适配器要求：整数code=0、data.chunks数组，以及切片kb_id/document_id/id/content字段。
+需要确认返回切片属于测试库/文档，内容与上传的合成条款一致，且标识均非空。capture只证明拿到候选，不把候选自动认定为批准依据。空切片或接口错误会导致测试失败；优先检查解析完成状态、地址、权限和检索阈值。返回结构须满足当前适配器要求：整数code=0、data.chunks数组，以及切片dataset_id/document_id/id/content字段。
 
 选择核对通过的一条切片，把对应candidate-N.txt复制到 .scratch/edd-live/reviewed-content.txt。例如选择第0条，替换下面的实际目录名：
 

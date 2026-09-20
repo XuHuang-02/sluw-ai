@@ -46,7 +46,7 @@ application.config.ragFlow.base.readTimeoutMillis=60000
 
 ## 为什么使用条款目录
 
-现有RAG响应DTO有document_id、chunk id、kb_id、内容及位置，但没有可依赖的批准状态和内容版本。因此用服务端受控Clause目录登记：
+现有RAG响应DTO有document_id、chunk id、dataset_id、内容及位置，但没有可依赖的批准状态和内容版本。因此用服务端受控Clause目录登记：
 
 - datasetId/documentId/chunkId、packageId/version/ruleId；
 - contentVersion、location、原始文本SHA-256；
@@ -91,7 +91,7 @@ mvn "-Dtest=EddInputAdapterTest,EddFactServiceTest,EddHistoryServiceTest,EddRule
 
 首次实现131项相关Java测试通过；本次复用重构新增真实ConfigReader前缀、指定库参数、数据集不匹配和共享超时测试，全量回归313项Java测试通过，其中尽调检索12项。覆盖命中完整引用、空结果、fake及HTTP超时、服务错误、版本/批准过滤、缺引用、跨库与内容变动、重复/部分命中、HTTP字段及旧核保客户端兼容。测试使用MockRestServiceServer和fake，无真实网络调用。
 
-另机联调需要独立EDD库、实际检索endpoint和密钥，以及与该环境document_id/chunk_id对应的批准目录。需确认实际部署返回kb_id/document_id/id/content和code/data.chunks；不一致时根据真实响应适配后重跑离线测试。核对切片hash、条款位置及版本，再验证实际召回与超时表现。正式知识库未就绪时保留规则缺失，不借用核保资料。
+另机联调需要独立EDD库、实际检索endpoint和密钥，以及与该环境document_id/chunk_id对应的批准目录。需确认实际部署返回dataset_id/document_id/id/content和code/data.chunks；不一致时根据真实响应适配后重跑离线测试。核对切片hash、条款位置及版本，再验证实际召回与超时表现。正式知识库未就绪时保留规则缺失，不借用核保资料。
 
 任务04—06原实现及本次客户端复用重构已交付。
 
