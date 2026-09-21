@@ -35,3 +35,5 @@ fixture-routing.json中的22个legacy场景记录完整分析链路的后续设�
 RAG复用调整：尽调通过原RagFlowClient指定库重载读取ConfigReader，配置真实链路与application.config前缀见rule-retrieval.md；不再创建独立HTTP客户端。
 
 任务07：采用独立尽调提示词，复用既有模型隔离与ChatClient；模型仅生成六维概述/处置建议，固定评级和上报建议由程序保留。长历史全量分组，组引用可展开到全部事实。当前输出为待任务08校验的草稿，不是已完成报告。13项新增测试通过，全量328通过、1项真实联网测试默认跳过。
+
+2026-09-21：任务07接入Spring AI DTO结构化输出，新增脱敏错误分类及最多一次格式修复（共用总预算）；原生JSON_OBJECT为显式另机验证开关。任务08尚未开始，详见draft-generation.md和llm-live-testing.md。

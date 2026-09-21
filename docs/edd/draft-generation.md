@@ -65,11 +65,11 @@ Settings是服务端构造配置，不接受客户JSON覆盖；任务10负责Spr
 | BUSY | 工作线程和队列已满，或服务已关闭 |
 | INTERRUPTED | 调用线程中断，保留中断标志 |
 
-超时是等待截止，不保证底层提供方HTTP立即停止；若调用忽略中断，仍占用固定线程直到结束，不会创建无限线程。底层HTTP超时继续使用原提供方配置。输入整理及JSON校验不计入模型等待超时。
+超时是等待截止，不保证底层提供方HTTP立即停止；若调用忽略中断，仍占用固定线程直到结束，不会创建无限线程。底层HTTP超时继续使用原提供方配置。输入整理发生在调用预算之前；首次排队、生成、校验及格式修复共用同一截止时间，不为第二次调用重置预算。
 
 Result由status、draft（失败时null）、facts（确定性摘要/建议/缺项等）和metadata组成，是内部中间结果，不等于v1完整result。metadata记录input_version/input_hash、prompt_version/prompt_hash、context_hash、model_config_version、返回的model、规则包信息、context_bytes、elapsed_ms；requires_validation恒为true、execution_permitted恒为false。不记录明文输入、模型原文或远端异常消息日志。
 
-本任务只完成结构与引用边界检查。引用存在并不证明文案受其支持；金额、日期、未知写成否、叙述中的等级冲突、互斥建议及定向修复属于任务08。当前不执行修复循环、不保存人工稿、不读写机构结论，结果版本与持久化归任务09/10。
+本任务只完成结构与引用边界检查。引用存在并不证明文案受其支持；金额、日期、未知写成否、叙述中的等级冲突、互斥建议及业务一致性修复属于任务08。当前只允许一次格式/结构修复、不保存人工稿、不读写机构结论，结果版本与持久化归任务09/10。
 
 ## 已验证内容
 
@@ -86,3 +86,19 @@ mvn "-Dtest=EddDraftServiceTest" test
 已提供默认关闭的EddDraftLiveTest及操作步骤：[真实模型验证](llm-live-testing.md)。沿用Spring Boot模型自动配置，仅装载模型组件；不启动数据库/Redis，也不在本机进行真实LLM调用。另有2项离线测试验证DeepSeek/DashScope配置装载及长历史合成输入。
 
 真实入口交付后的最终本机回归：332项中330通过，2项真实联网测试默认跳过；未在本机调用真实LLM。
+
+## 2026-09-21：DTO结构化输出与一次格式修复
+
+本轮只改任务07，任务08仍未开始。新增EddDraftOutput类型化record，使用Spring AI 1.1.2 BeanOutputConverter生成JSON Schema与格式提示，不再手写字段结构。保留六维完整性、引用存在、建议status/value约束和程序评级/上报结果锁定。
+
+该版本BeanOutputConverter默认解析失败会记录原文，且默认映射器忽略未知字段。因此使用其子类，仅替换转换失败处理为无原文日志的严格Jackson类型转换；仍复用DTO Schema生成和格式说明。拒绝重复键、尾随JSON、未知字段、缺必填字段与标量隐式转换。自动生成Schema仅对处置value补充string/null类型，与现有契约保持一致。
+
+新增Settings.outputMode：SCHEMA_PROMPT为默认，不额外要求模型网关原生结构化能力；JSON_OBJECT显式为DeepSeek/DashScope设置各自的response_format=json_object，并复制选项，不修改原聊天模型。不启用或假设严格原生JSON Schema支持；模型网关是否接受JSON_OBJECT须另机确认。不支持时保留MODEL_ERROR，不静默切换格式或叠加网络重试。
+
+首次可修复格式错误后，将错误码、原输出、相同事实与引用范围作为用户数据发起一次修复；原输出不能作为系统指令。第二次必须重新通过全部已有检查，仍失败保留facts和失败状态。最多2次提交（含首次），只在前一次已返回后尝试修复，排队/调用/修复共用总预算。修复加入原输出后超上下文预算则不发请求，metadata.repair_skipped=CONTEXT_LIMIT。超时、模型错误、超长输出、工具调用和无效事实/规则引用不进入格式修复。
+
+metadata新增schema_hash、output_mode、attempt_count、repair_attempted、output_error及attempts（每次状态、错误类别、上下文字节数、耗时）。错误码包括：EMPTY_OUTPUT、MALFORMED_JSON、MISSING_FIELD、SCHEMA_MISMATCH、UNEXPECTED_FIELD、DIMENSION_MISMATCH、FIELD_VALUE_INVALID、INVALID_RECOMMENDATION、OUTPUT_TRUNCATED、OUTPUT_TOO_LARGE、INVALID_FACT_REFERENCE、INVALID_RULE_REFERENCE、TOOL_CALL_NOT_ALLOWED。错误消息、模型原文和凭据不写入日志或metadata。修复成功后顶层output_error为空，首次错误仍留在attempts。
+
+提示词版本更新为edd-draft-v2-structured；业务提示词仍在draft-v1.txt资源内，实际格式约束动态附加，prompt_hash覆盖最终完整系统消息。任务08的金额、日期、事实蕴含、未知改否及互斥建议校验不在本次范围。
+
+本轮最终验收：新增9项结构化输出与修复测试通过，全量341项中339通过，2项真实联网默认跳过。后续任务08应复用同一修复配额与总预算，不叠加另一层修复循环。

@@ -8,10 +8,10 @@
 
 ```powershell
 git pull
-mvn "-Dtest=EddDraftServiceTest,EddDraftLiveConfigurationTest" test
+mvn "-Dtest=EddDraftServiceTest,EddDraftLiveConfigurationTest,EddStructuredOutputTest" test
 ```
 
-预期15项通过：13项生成服务测试和2项入口/配置测试。此步骤不代表模型效果通过。
+包含生成服务、入口/配置及结构化输出修复测试。此步骤不代表模型效果通过。
 
 ## 2. 沿用已有模型配置
 
@@ -41,7 +41,7 @@ DeepSeek所用的既有配置键为spring.ai.deepseek.base-url、spring.ai.deeps
 mvn "-Dtest=EddDraftLiveTest" "-Dedd.llm.live=true" test
 ```
 
-默认只运行SYN-V1-016（附件保存但未摘录），调用模型一次。结果写入：
+默认只运行SYN-V1-016（附件保存但未摘录），首次生成后如有可修复格式错误，最多再调用一次。结果写入：
 
 ```text
 target/edd-llm-live/<时间戳>/summary.json
@@ -58,7 +58,7 @@ DRAFT表示结构与引用检查通过，仍未经过任务08的事实一致性�
 mvn "-Dtest=EddDraftLiveTest" "-Dedd.llm.live=true" "-Dedd.llm.cases=SYN-V1-016,SYN-V1-017,SYN-V1-018,SYN-V1-021" test
 ```
 
-4例串行执行，每例调用模型一次。每例保存独立JSON，结束后保存summary.json；若某例非DRAFT，结果仍保留，Maven最终报失败。
+4例串行执行，每例最多2次调用（首次＋一次格式修复），共用各例总时间预算。每例保存独立JSON，结束后保存summary.json；若某例非DRAFT，结果仍保留，Maven最终报失败。
 
 | 案例 | 人工检查重点 |
 | --- | --- |
@@ -80,4 +80,25 @@ mvn "-Dtest=EddDraftLiveTest" "-Dedd.llm.live=true" "-Dedd.llm.cases=SYN-V1-016,
 - INVALID_OUTPUT：模型输出JSON/字段/引用等未通过边界检查；保留对应JSON回传，不改成默认结论。
 - CONTEXT_LIMIT：必要材料超过预算，未发请求；不截断尾部信号。
 
-密钥和整份local-settings.properties不要回传。结果目录在target内，已被Git忽略。测试会产生真实模型调用费用；默认不开启且每个指定案例只调用一次，不自动重试。
+密钥和整份local-settings.properties不要回传。结果目录在target内，已被Git忽略。测试会产生真实模型调用费用；默认不开启，每例仅允许一次格式修复，不自动重试网络错误。
+
+## 结构化输出改造后的验证
+
+先保持默认模式，使用前面的命令跑四例：
+
+```properties
+edd.llm.model-config-version=edd-structured-v2
+edd.llm.output-mode=SCHEMA_PROMPT
+```
+
+这是DTO生成Schema提示词+严格类型转换，不要求网关原生支持。若已确认当前模型/网关支持JSON对象模式，再显式改为：
+
+```properties
+edd.llm.output-mode=JSON_OBJECT
+```
+
+DeepSeek和DashScope通过各自SDK选项发送，不另建客户端。此开关只保证请求使用原生JSON对象模式，不等于严格JSON Schema或业务正确性；暂不启用原生JSON Schema。网关拒绝时恢复SCHEMA_PROMPT，并保留失败结果，不能当成输出格式修复失败。
+
+检查每例metadata：attempt_count应为1或2，repair_attempted表示第二次是否已提交。成功修复时status=DRAFT，顶层output_error=null，attempts[0].output_error仍保留首次原因；连续两次失败时status=INVALID_OUTPUT，查看output_error类别。若总时间已用完，返回TIMEOUT；不是每次都有独立45秒。repair_skipped=CONTEXT_LIMIT表示修复消息装不进预算，未发第二次请求。
+
+请回传summary.json和案例JSON，尤其是metadata.attempts。格式修复不会自动修复无效引用或业务一致性问题，任务08保持未开始。此次评测仍需人工检查内容，不以自动修复成功代替业务验收。

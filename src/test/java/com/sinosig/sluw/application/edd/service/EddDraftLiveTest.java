@@ -78,7 +78,8 @@ class EddDraftLiveTest {
                 env.getProperty("edd.llm.max-context-bytes",Integer.class,96000),
                 env.getProperty("edd.llm.max-response-bytes",Integer.class,64000),
                 env.getProperty("edd.llm.max-output-tokens",Integer.class,4096),
-                Duration.ofMillis(env.getProperty("edd.llm.timeout-ms",Long.class,45000L)),1,1,version);
+                Duration.ofMillis(env.getProperty("edd.llm.timeout-ms",Long.class,45000L)),1,1,version,
+                EddDraftService.OutputMode.valueOf(env.getProperty("edd.llm.output-mode","SCHEMA_PROMPT")));
             Path dir=Path.of("target/edd-llm-live/"+System.currentTimeMillis());Files.createDirectories(dir);
             ArrayNode summaries=mapper.createArrayNode();
             try(var service=new EddDraftService(context.getBean(ChatModel.class),new RoutingModelFactory(),settings)) {
