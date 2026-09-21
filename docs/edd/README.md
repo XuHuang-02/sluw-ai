@@ -9,7 +9,8 @@
 - [规则包版本与建议判定](rule-evaluation.md)
 - [RAGFlow尽调规则检索](rule-retrieval.md)
 - [风险概述与建议稿生成](draft-generation.md)
-- [任务07另机真实模型验证](llm-live-testing.md)
+- [结果校验与交付边界](result-validation.md)
+- [任务07—08另机真实模型验证](llm-live-testing.md)
 - 正式Schema：`src/main/resources/edd/contracts/v1/edd.schema.json`
 - Java实现：`src/main/java/com/sinosig/sluw/application/edd/service/EddInputAdapter.java`
 - 可运行的10例合成输入：`tools/edd/fixtures/core-db-cases.json`
@@ -17,7 +18,7 @@
 在仓库根目录，使用已配置的JDK和Maven：
 
 ```text
-mvn "-Dtest=EddInputAdapterTest,EddFactServiceTest,EddHistoryServiceTest,EddRuleServiceTest,EddRuleRetrievalTest,EddDraftServiceTest" test
+mvn "-Dtest=EddInputAdapterTest,EddFactServiceTest,EddHistoryServiceTest,EddRuleServiceTest,EddRuleRetrievalTest,EddDraftServiceTest,EddResultValidatorTest" test
 python -m pip install -r tools/edd/requirements.txt
 python tools/edd/check_adapter_outputs.py
 python tools/edd/check_rule_outputs.py
@@ -36,4 +37,6 @@ RAG复用调整：尽调通过原RagFlowClient指定库重载读取ConfigReader�
 
 任务07：采用独立尽调提示词，复用既有模型隔离与ChatClient；模型仅生成六维概述/处置建议，固定评级和上报建议由程序保留。长历史全量分组，组引用可展开到全部事实。当前输出为待任务08校验的草稿，不是已完成报告。13项新增测试通过，全量328通过、1项真实联网测试默认跳过。
 
-2026-09-21：任务07接入Spring AI DTO结构化输出，新增脱敏错误分类及最多一次格式修复（共用总预算）；原生JSON_OBJECT为显式另机验证开关。任务08尚未开始，详见draft-generation.md和llm-live-testing.md。
+2026-09-21：任务07接入Spring AI DTO结构化输出，新增脱敏错误分类及最多一次格式修复（共用总预算）；原生JSON_OBJECT为显式另机验证开关。此项记录为任务07阶段，任务08后续实现见result-validation.md；原实现详见draft-generation.md和llm-live-testing.md。
+
+任务08已接入独立结果校验与同预算的一次修复。业务链路使用analyze，低层generate仍只返回未校验草稿；当前边界及验证说明见result-validation.md。

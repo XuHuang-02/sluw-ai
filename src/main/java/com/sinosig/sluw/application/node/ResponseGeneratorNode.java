@@ -1,9 +1,7 @@
 package com.sinosig.sluw.application.node;
 
-import com.alibaba.cloud.ai.graph.OverAllState;
 import com.sinosig.sluw.application.config.PromptTemplateConfig;
 import com.sinosig.sluw.application.dto.AgentState;
-import com.sinosig.sluw.application.dto.IntentType;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -11,21 +9,19 @@ import org.springframework.ai.chat.metadata.Usage;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * 统一回答生成节点（上下文聚合 + 最终回复生成）。
- * <p>在图执行阶段，仅做上下文聚合标记，不调用 LLM。</p>
- * <p>图执行结束后，由 AgentService 调用本类的 generateSync/generateStream 方法完成实际回复生成。</p>
+ * 风险概述生成器，支持同步和流式输出。
+ * <p>由 AgentService 直接调用；每次请求只执行一次概述生成。</p>
  * <p>异常处理：同步生成时模型返回 null 直接抛出 RuntimeException；流式生成时返回错误提示 Flux。</p>
  *
  * @author SinoSig AI Team
  */
 @Component
-public class ResponseGeneratorNode extends BaseNode {
+public class ResponseGeneratorNode {
 
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ResponseGeneratorNode.class);
     private final ChatClient chatClient;
     private final PromptTemplateConfig templateConfig;
 
@@ -35,50 +31,23 @@ public class ResponseGeneratorNode extends BaseNode {
     }
 
     /**
-     * 图执行阶段的入口：仅做上下文聚合，不生成回复。
-     */
-    @Override
-    protected Map<String, Object> doProcess(OverAllState state) {
-        logger.debug("=== 上下文聚合节点开始 ===");
-        AgentState agentState = extractAgentState(state);
-
-        if (agentState.getContext() == null) {
-            agentState.setContext(new HashMap<>());
-        }
-
-        agentState.getContext().put("aggregated", true);
-        logger.debug("上下文聚合完成，意图类型：{}", agentState.getIntentType());
-
-        Map<String, Object> updateMap = new HashMap<>();
-        updateMap.put("agent_state", agentState);
-        return updateMap;
-    }
-
-    /**
-     * 同步生成最终回复（在图执行后调用）。
+     * 同步生成最终回复。
      *
-     * @param agentState 已聚合上下文的 AgentState
+     * @param agentState 当前会话资料
      * @return 最终回复字符串
      * @throws RuntimeException 当模型返回 null 时
      */
     public String generateSync(AgentState agentState) {
-        String preGenerated = getPreGeneratedResponse(agentState);
-        if (preGenerated != null) {
-            logger.info("命中预生成回复（意图：{}），跳过 LLM 调用", agentState.getIntentType());
-            agentState.setResponse(preGenerated);
-            return preGenerated;
-        }
-
         boolean useHistory = agentState.isUseRefinerMemory();
         String prompt = templateConfig.buildResponseGeneratorPrompt(agentState, useHistory);
-        logger.debug("调用 LLM 生成最终回复，意图类型：{}", agentState.getIntentType());
+        logger.debug("调用 LLM 生成最终回复");
 
         ChatResponse response;
         try {
             response = chatClient.prompt(prompt).call().chatResponse();
         } catch (Exception e) {
             logger.error("LLM 同步生成失败: {}", e.getMessage());
-            throw new RuntimeException("模型繁忙，请主人猛戳左下角进行重试！", e);
+            throw new RuntimeException("生成暂时失败，请稍后重试。", e);
         }
 
         if (response == null || response.getResult() == null) {
@@ -103,22 +72,15 @@ public class ResponseGeneratorNode extends BaseNode {
     }
 
     /**
-     * 流式生成最终回复（在图执行后调用）。
+     * 流式生成最终回复。
      *
-     * @param agentState 已聚合上下文的 AgentState
+     * @param agentState 当前会话资料
      * @return 流式内容 Flux，出错时返回错误提示
      */
     public Flux<String> generateStream(AgentState agentState) {
-        String preGenerated = getPreGeneratedResponse(agentState);
-        if (preGenerated != null) {
-            logger.info("命中预生成回复（意图：{}），直接返回", agentState.getIntentType());
-            agentState.setResponse(preGenerated);
-            return Flux.just(preGenerated);
-        }
-
         boolean useHistory = agentState.isUseRefinerMemory();
         String prompt = templateConfig.buildResponseGeneratorPrompt(agentState, useHistory);
-        logger.debug("调用 LLM 流式生成最终回复，意图类型：{}", agentState.getIntentType());
+        logger.debug("调用 LLM 流式生成最终回复");
 
         // 发起流式调用，获取 Flux<ChatResponse>
         Flux<ChatResponse> responseFlux = chatClient.prompt(prompt)
@@ -159,22 +121,8 @@ public class ResponseGeneratorNode extends BaseNode {
                 })
                 .onErrorResume(e -> {
                     logger.error("流式生成错误: {}", e.getMessage(), e);
-                    return Flux.just("模型繁忙，请主人猛戳左下角进行重试！");
+                    return Flux.just("生成暂时失败，请稍后重试。");
                 });
     }
 
-    private String getPreGeneratedResponse(AgentState agentState) {
-        Map<String, Object> context = agentState.getContext();
-        if (context == null) return null;
-
-        if (agentState.getIntentType() == IntentType.TOOL_EXECUTION && context.containsKey("tool_execution_result")) {
-            return (String) context.get("tool_execution_result");
-        }
-
-        if (agentState.getIntentType() == IntentType.CLARIFICATION && context.containsKey("clarification_response")) {
-            return (String) context.get("clarification_response");
-        }
-
-        return null;
-    }
 }

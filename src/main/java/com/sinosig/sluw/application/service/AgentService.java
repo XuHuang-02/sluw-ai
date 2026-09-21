@@ -1,7 +1,5 @@
 package com.sinosig.sluw.application.service;
 
-import com.alibaba.cloud.ai.graph.CompiledGraph;
-import com.alibaba.cloud.ai.graph.OverAllState;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sinosig.sluw.application.commons.entity.AssistantTrackEntity;
@@ -25,8 +23,8 @@ import java.util.UUID;
 
 /**
  * 智能体对外服务类。
- * <p>提供同步和流式两种对话入口，内部封装工作流图的执行和最终回复生成。</p>
- * <p>异常处理：统一捕获图执行过程中的异常，记录一次错误日志，返回友好提示。</p>
+ * <p>提供同步和流式两种对话入口，直接调用风险概述生成器。</p>
+ * <p>异常处理：统一捕获生成过程中的异常，记录一次错误日志，返回友好提示。</p>
  *
  * @author SinoSig AI Team
  */
@@ -34,20 +32,17 @@ import java.util.UUID;
 public class AgentService {
 
     private static final Logger logger = LoggerFactory.getLogger(AgentService.class);
-    private static final String MODEL_BUSY_MESSAGE = "模型繁忙，请主人猛戳左下角进行重试！";
+    private static final String MODEL_BUSY_MESSAGE = "生成暂时失败，请稍后重试。";
 
-    private final CompiledGraph compiledGraph;
     private final AgentStateMemoryService agentStateMemoryService;
     private final ResponseGeneratorNode responseGeneratorNode;
     private final RedisTemplate<String, Object> redisTemplate;
     private final AssistantTrackService assistantTrackService;
 
-    public AgentService(CompiledGraph compiledGraph,
-                        AgentStateMemoryService agentStateMemoryService,
+    public AgentService(AgentStateMemoryService agentStateMemoryService,
                         ResponseGeneratorNode responseGeneratorNode,
                         RedisTemplate<String, Object> redisTemplate,
                         AssistantTrackService assistantTrackService) {
-        this.compiledGraph = compiledGraph;
         this.agentStateMemoryService = agentStateMemoryService;
         this.responseGeneratorNode = responseGeneratorNode;
         this.redisTemplate = redisTemplate;
@@ -64,30 +59,24 @@ public class AgentService {
                 traceId, conversationId, useRefiner, useRefinerMemory);
 
         AgentState currentState = prepareInitialState(conversationId, userInput, useRefiner, useRefinerMemory);
-        OverAllState initialState = buildInitialState(currentState);
-        logger.debug("[{}] 初始状态构建完成", traceId);
-        return Mono.fromCallable(() -> compiledGraph.invoke(initialState.data()))
-                .subscribeOn(Schedulers.boundedElastic())
-                .map(optionalResult -> {
-                    OverAllState result = optionalResult.orElseThrow(() -> new RuntimeException("Graph execution failed"));
-                    AgentState afterGraph = (AgentState) result.data().get("agent_state");
-                    logger.info("[{}] 工作流图执行完成, 意图={}", traceId, afterGraph.getIntentType());
+        return Mono.fromCallable(() -> {
+                    AgentState generatedState = currentState;
+                    String finalResponse = responseGeneratorNode.generateSync(generatedState);
+                    generatedState.setResponse(finalResponse);
 
-                    String finalResponse = responseGeneratorNode.generateSync(afterGraph);
-                    afterGraph.setResponse(finalResponse);
+                    String actualUserInput = generatedState.getUserInput();
+                    generatedState.addHistory("user", actualUserInput);
+                    generatedState.addHistory("assistant", finalResponse);
 
-                    String actualUserInput = afterGraph.getUserInput();
-                    afterGraph.addHistory("user", actualUserInput);
-                    afterGraph.addHistory("assistant", finalResponse);
-
-                    agentStateMemoryService.saveState(conversationId, afterGraph);
+                    agentStateMemoryService.saveState(conversationId, generatedState);
                     logger.info("[{}] 同步聊天完成，回复长度={}, Token 消耗 - 输入: {}, 输出: {}, 总计: {}",
                             traceId, finalResponse.length(),
-                            afterGraph.getTotalPromptTokens(),
-                            afterGraph.getTotalCompletionTokens(),
-                            afterGraph.getTotalTokens());
-                    return afterGraph;
+                            generatedState.getTotalPromptTokens(),
+                            generatedState.getTotalCompletionTokens(),
+                            generatedState.getTotalTokens());
+                    return generatedState;
                 })
+                .subscribeOn(Schedulers.boundedElastic())
                 .onErrorResume(e -> {
                     logger.error("[{}] 同步聊天失败: {}", traceId, e.getMessage());
                     AgentState errorState = createModelBusyErrorState(userInput);
@@ -109,14 +98,10 @@ public class AgentService {
                 .map(state -> {
                     // 可以在这里将messageId存入AgentState的上下文中，以备后用
                     state.getContext().put("message_id", messageId);
-                    return buildInitialState(state);
+                    return state;
                 })
-                .flatMap(initialState -> Mono.fromCallable(() -> compiledGraph.invoke(initialState.data()))
-                        .subscribeOn(Schedulers.boundedElastic())
-                        .map(optionalResult -> optionalResult.orElseThrow(() -> new RuntimeException("Graph execution failed")))
-                        .map(resultMap -> (AgentState) resultMap.data().get("agent_state")))
                 .onErrorResume(e -> {
-                    logger.error("[{}] 图执行失败: {}", traceId, e.getMessage());
+                    logger.error("[{}] 资料准备失败: {}", traceId, e.getMessage());
                     AgentState errorState = createModelBusyErrorState(userInput);
                     agentStateMemoryService.saveState(conversationId, errorState);
                     saveAssistantTrack(userInput,MODEL_BUSY_MESSAGE+e.getMessage(),conversationId,userToken,messageId,startTime,0,0,0);
@@ -223,26 +208,13 @@ public class AgentService {
         }
         state.setOriginalInput(userInput);
         state.setUserInput(userInput);
-        state.setUseRefiner(useRefiner);
+        state.setUseRefiner(false);
         state.setUseRefinerMemory(useRefinerMemory);
         state.setResponse(null);
         state.getContext().remove("retrieved_documents");
         state.getContext().remove("tool_execution_result");
         state.getContext().remove("needs_clarification");
         return state;
-    }
-
-    /**
-     * 构建工作流图执行所需的初始状态数据。
-     *
-     * @param agentState 智能体当前状态
-     * @return 封装后的 OverAllState 对象
-     */
-    private OverAllState buildInitialState(AgentState agentState) {
-        Map<String, Object> data = new HashMap<>();
-        data.put("user_input", agentState.getUserInput());
-        data.put("agent_state", agentState);
-        return new OverAllState(data);
     }
 
     /**

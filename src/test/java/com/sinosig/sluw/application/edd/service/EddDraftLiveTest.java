@@ -87,7 +87,7 @@ class EddDraftLiveTest {
                     var input=requests.get(i);
                     var evaluation=new EddRuleService().evaluate(new EddHistoryService().analyze(new EddFactService().prepare(input)));
                     var retrieval=new EddRuleRetrieval.Result(EddRuleRetrieval.Status.RULES_MISSING,false,List.of(),List.of(),List.of("LIVE_TEST_NO_APPROVED_RULES"));
-                    var result=service.generate(evaluation,retrieval);
+                    var result=service.analyze(evaluation,retrieval);
                     mapper.writerWithDefaultPrettyPrinter().writeValue(dir.resolve(cases.get(i)+".json").toFile(),result);
                     summaries.addObject().put("case_id",cases.get(i)).put("status",result.status().name())
                             .put("elapsed_ms",result.metadata().path("elapsed_ms").asLong());
@@ -95,7 +95,7 @@ class EddDraftLiveTest {
             }
             mapper.writerWithDefaultPrettyPrinter().writeValue(dir.resolve("summary.json").toFile(),summaries);
             System.out.println("EDD real model results (require human review): "+dir);
-            for(JsonNode row:summaries)assertEquals("DRAFT",row.path("status").asText(),"Inspect case report: "+row.path("case_id").asText());
+            for(JsonNode row:summaries)assertTrue(Set.of("COMPLETED","COMPLETED_WITH_GAPS").contains(row.path("status").asText()),"Inspect case report: "+row.path("case_id").asText());
         }
     }
 }

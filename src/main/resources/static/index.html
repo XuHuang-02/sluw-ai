@@ -751,8 +751,6 @@
         }
 
     </style>
-    <link rel="stylesheet" href="/trial/routing-trial.css">
-    <script src="/trial/routing-trial.js" defer></script>
 </head>
 <body>
 <div class="app">
@@ -798,7 +796,7 @@
                                     <img src="images/logo-icac.svg">
                                 </div>
                                 <div class="message-content">
-                                    主人好！我是ICAC。请问有什么交代？
+                                    请提供客户基本情况、业务交易、财务来源、交易目的及其他风险信息，我将生成风险概述与分析建议。
                                 </div>
                             </div>
                         </div>
@@ -808,26 +806,10 @@
                     <div class="input-area-inner">
                         <div class="input-box">
                             <div class="input-field">
-                                <textarea id="messageInput" placeholder="输入主人的问题，例如：肺炎在寿险产品下是什么核保结论..." rows="1" onkeydown="handleKeyPress(event)"></textarea>
+                                <textarea id="messageInput" placeholder="直接输入客户资料，生成风险概述、洗钱嫌疑判断和操作建议…" rows="1" onkeydown="handleKeyPress(event)"></textarea>
                             </div>
                             <div class="input-actions">
                                 <div class="options-group">
-                                    <label class="option-item issue-trial-option">
-                                        <input type="checkbox" id="issueSubmissionTrial">
-                                        <span class="option-text">问题件选路实验</span>
-                                    </label>
-                                    <a class="trial-action" href="/trial/deal-issue-template.json" download>下载模板</a>
-                                    <a class="trial-action" href="/trial/deal-issue-example.json" download>下载示例</a>
-                                    <select id="routingMode" class="trial-action" aria-label="选路实验模式" disabled>
-                                        <option value="CONDITIONS">条件模式（默认）</option>
-                                        <option value="RECORDS">记录模式</option>
-                                        <option value="COMPARE">双模式对比（两次调用）</option>
-                                    </select>
-                                    <button type="button" class="trial-action trial-example" id="loadTrialExample">填入合成示例</button>
-                                    <label class="option-item">
-                                        <input type="checkbox" id="useRefiner">
-                                        <span class="option-text">问题润色</span>
-                                    </label>
                                     <label class="option-item">
                                         <input type="checkbox" id="useRefinerMemory" checked>
                                         <span class="option-text">引入上下文</span>
@@ -842,7 +824,6 @@
                                     </button>
                                 </div>
                             </div>
-                            <p id="trialStatus" class="trial-status" role="status" aria-live="polite"></p>
                         </div>
                     </div>
                 </div>
@@ -851,54 +832,7 @@
     </div>
 </div>
 
-<script>
-    // Bind trial controls independently of optional Markdown/highlight libraries.
-    (() => {
-        const button = document.getElementById('loadTrialExample');
-        const input = document.getElementById('messageInput');
-        const toggle = document.getElementById('issueSubmissionTrial');
-        const status = document.getElementById('trialStatus');
-        const normalPlaceholder = input.placeholder;
-        function showStatus(message, error = false) {
-            status.textContent = message;
-            status.dataset.error = String(error);
-        }
-        toggle.addEventListener('change', () => {
-            input.placeholder = toggle.checked ? '粘贴本单完整 JSON，或点击“填入合成示例”开始选路…' : normalPlaceholder;
-            showStatus(toggle.checked ? '已开启问题件选路实验；每次请提交完整资料。' : '已切换为普通问答。');
-        });
-        button.addEventListener('click', async () => {
-            if (input.value.trim() && !window.confirm('用合成示例替换当前尚未发送的内容？')) return;
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 10000);
-            button.disabled = true;
-            button.textContent = '正在填入…';
-            showStatus('正在读取合成示例…');
-            try {
-                const response = await fetch('/trial/deal-issue-example.json', { signal: controller.signal });
-                if (!response.ok) throw new Error('unavailable');
-                const sample = await response.json();
-                if (!Number.isInteger(sample.uwno) || sample.uwno < 1 || !Array.isArray(sample.currentErrors)) throw new Error('invalid sample');
-                input.value = JSON.stringify(sample, null, 2);
-                toggle.checked = true;
-                toggle.dispatchEvent(new Event('change', { bubbles: true }));
-                input.style.height = 'auto';
-                input.style.height = Math.min(input.scrollHeight, 160) + 'px';
-                input.dispatchEvent(new Event('input', { bubbles: true }));
-                input.focus();
-                input.setSelectionRange(0, 0);
-                input.scrollTop = 0;
-                showStatus('合成示例已填入，选路实验已开启。点击右侧发送按钮开始。');
-            } catch (error) {
-                showStatus('示例读取失败，请重试或点击“下载示例”。原输入内容已保留。', true);
-            } finally {
-                clearTimeout(timeout);
-                button.disabled = false;
-                button.textContent = '填入合成示例';
-            }
-        });
-    })();
-</script>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -1038,7 +972,6 @@
 
         const messageInput = document.getElementById('messageInput');
         const sendButton = document.getElementById('sendButton');
-        const useRefinerCheckbox = document.getElementById('useRefiner');
         const useRefinerMemoryCheckbox = document.getElementById('useRefinerMemory');
         const sidebar = document.getElementById('sidebar');
         const collapseBtn = document.getElementById('sidebarCollapseBtn');
@@ -1077,7 +1010,7 @@
             welcomeMessageDiv.innerHTML = `
                 <div class="message-wrapper">
                     <div class="message-icon ai-icon"><img src="images/logo-icac.svg"></div>
-                    <div class="message-content">主人好！我是ICAC。请问有什么交代？</div>
+                    <div class="message-content">请提供客户基本情况、业务交易、财务来源、交易目的及其他风险信息，我将生成风险概述与分析建议。</div>
                 </div>
             `;
             chatMessages.appendChild(welcomeMessageDiv);
@@ -1182,12 +1115,6 @@
 
         function renderMarkdown(contentDiv, markdownText, isFinal = false) {
             if (!contentDiv) return;
-            if (contentDiv.dataset.issueTrial === 'true') {
-                contentDiv.textContent = markdownText;
-                contentDiv.style.whiteSpace = 'pre-wrap';
-                conditionalScrollToBottom();
-                return;
-            }
             try {
                 let html;
                 try {
@@ -1228,21 +1155,6 @@
         }
 
         async function performStreamRequest(questionText, aiMessageDiv, aiContentDiv) {
-            if (document.getElementById('issueSubmissionTrial').checked) {
-                if (abortController) abortController.abort();
-                const controller = new AbortController();
-                abortController = controller;
-                aiContentDiv.dataset.issueTrial = 'true';
-                try {
-                    await window.runRoutingTrial(questionText, document.getElementById('routingMode').value,
-                        aiContentDiv, controller.signal);
-                    attachRatingBar(aiMessageDiv);
-                    conditionalScrollToBottom();
-                    return true;
-                } finally {
-                    if (abortController === controller) abortController = null;
-                }
-            }
             let streamStarted = false;
             if (abortController) {
                 abortController.abort();
@@ -1255,17 +1167,13 @@
             let timeoutId = null;
             const TIMEOUT_MS = 60000;
 
-            const isIssueTrial = document.getElementById("issueSubmissionTrial").checked;
-            aiContentDiv.dataset.issueTrial = String(isIssueTrial);
             const encryptedQuestion = await encryptChatRequest(questionText);
             const currentMessageId = generateMessageId();
 
             try {
                 const requestData = {
                     question: encryptedQuestion,
-                    issueSubmissionTrial: isIssueTrial,
-                    useRefiner: !document.getElementById("issueSubmissionTrial").checked && useRefinerCheckbox.checked,
-                    useRefinerMemory: !document.getElementById("issueSubmissionTrial").checked && useRefinerMemoryCheckbox.checked,
+                    useRefinerMemory: useRefinerMemoryCheckbox.checked,
                     conversationId: conversationId,
                     userId: userId,
                     messageId: currentMessageId
@@ -1526,7 +1434,7 @@
         };
 
         window.sendMessage = async function() {
-            if (!document.getElementById('issueSubmissionTrial').checked) await ensureAesKeyLoaded();
+            await ensureAesKeyLoaded();
 
             const message = messageInput.value.trim();
             if (!message || isProcessing) return;

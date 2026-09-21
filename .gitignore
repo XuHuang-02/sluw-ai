@@ -84,3 +84,11 @@ node_modules/
 !/src/test/java/com/sinosig/sluw/application/
 /src/test/java/com/sinosig/sluw/application/*
 !/src/test/java/com/sinosig/sluw/application/edd/
+
+# Direct risk-overview chat regressions; other local tests remain private.
+!/src/test/java/com/sinosig/sluw/application/service/
+/src/test/java/com/sinosig/sluw/application/service/*
+!/src/test/java/com/sinosig/sluw/application/service/RiskOverviewChatTest.java
+!/src/test/java/com/sinosig/sluw/application/controller/
+/src/test/java/com/sinosig/sluw/application/controller/*
+!/src/test/java/com/sinosig/sluw/application/controller/IssueSubmissionRoutingTest.java

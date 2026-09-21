@@ -1,3 +1,5 @@
+> 当前入口已升级到任务08：EddDraftLiveTest调用analyze，成功状态为COMPLETED或COMPLETED_WITH_GAPS；原任务07的DRAFT说明仅适用于低层generate。两者都需要机构审核。
+
 # 任务07另机真实模型验证
 
 此入口使用现有Spring AI提供方自动配置、AiClientConfig和RoutingModelFactory，调用真实LLM。只启动模型所需组件，不启动业务Controller、数据库或Redis。输入仅为仓库合成样本；不向模型发送真实客户资料。普通测试不联网，只有显式edd.llm.live=true才执行本入口。
@@ -102,3 +104,17 @@ DeepSeek和DashScope通过各自SDK选项发送，不另建客户端。此开关
 检查每例metadata：attempt_count应为1或2，repair_attempted表示第二次是否已提交。成功修复时status=DRAFT，顶层output_error=null，attempts[0].output_error仍保留首次原因；连续两次失败时status=INVALID_OUTPUT，查看output_error类别。若总时间已用完，返回TIMEOUT；不是每次都有独立45秒。repair_skipped=CONTEXT_LIMIT表示修复消息装不进预算，未发第二次请求。
 
 请回传summary.json和案例JSON，尤其是metadata.attempts。格式修复不会自动修复无效引用或业务一致性问题，任务08保持未开始。此次评测仍需人工检查内容，不以自动修复成功代替业务验收。
+
+## 任务08另机验收
+
+先运行离线测试，再沿用上述模型配置运行真实入口：
+
+```text
+mvn "-Dtest=EddResultValidatorTest,EddDraftServiceTest,EddStructuredOutputTest" test
+mvn "-Dtest=EddDraftLiveTest" "-Dedd.llm.live=true" test
+mvn "-Dtest=EddDraftLiveTest" "-Dedd.llm.live=true" "-Dedd.llm.cases=SYN-V1-016,SYN-V1-017,SYN-V1-018,SYN-V1-021" test
+```
+
+配置版本可更新为edd-validation-v1。输入仍为合成案例，不装载正式规则；这些案例预期通常为COMPLETED_WITH_GAPS，建议等级仍为空。重点查看数量证据标记是否被模型正确使用、现金风险是否保留、metadata.validation_errors/review_items/attempts，以及attempt_count不超过2。
+
+出现VALIDATION_FAILED时保留报告，检查错误类型，不要通过取消校验来让测试通过。模型输出的裸数字会触发UNBOUND_QUANTITATIVE_CLAIM；需要按提示使用metric/event/count等证据标记。标记和校验边界见[result-validation.md](result-validation.md)。本机离线测试不能替代真实模型对新提示词的遵循度验证。

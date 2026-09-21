@@ -1,6 +1,6 @@
 # 任务07：风险概述与建议稿生成
 
-状态：本机fake ChatModel验收完成。任务06另机真实RAGFlow验证已由用户确认通过；任务07真实模型效果留待另机及任务11评测。本模块提供Java接口，不注册HTTP端点、不发布completed结果。
+状态：本机fake ChatModel验收完成。任务08已提供analyze校验入口，本文generate仍描述低层草稿阶段；当前交付边界见[result-validation.md](result-validation.md)。任务06另机真实RAGFlow验证已由用户确认通过；任务07真实模型效果留待另机及任务11评测。本模块提供Java接口，不注册HTTP端点、不发布completed结果。
 
 ## 调用与复用
 
