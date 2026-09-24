@@ -100,12 +100,13 @@ public class ResponseGeneratorNode {
                     }
                 })
                 .map(response -> {
-                    // 将 ChatResponse 转换为文本内容
-                    if (response == null || response.getResult() == null) {
-                        logger.info("最终回答流式原始块: null or empty result");
+                    // 结束或用量统计块可能没有正文，不能向 Reactor map 返回 null。
+                    if (response == null || response.getResult() == null
+                            || response.getResult().getOutput() == null) {
                         return "";
                     }
-                    return response.getResult().getOutput().getText();
+                    String text = response.getResult().getOutput().getText();
+                    return text == null ? "" : text;
                 })
                 .filter(text -> !text.isEmpty()) // 过滤空字符串
                 .doOnComplete(() -> {

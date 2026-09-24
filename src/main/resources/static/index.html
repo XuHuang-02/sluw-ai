@@ -796,7 +796,7 @@
                                     <img src="images/logo-icac.svg">
                                 </div>
                                 <div class="message-content">
-                                    请提供客户基本情况、业务交易、财务来源、交易目的及其他风险信息，我将生成风险概述与分析建议。
+                                    请提供系统客户资料与外包人员报告；如含网络查询信息，请附来源、查询日期及主体匹配依据。我将核对一致性、风险遗漏并提出修改建议。
                                 </div>
                             </div>
                         </div>
@@ -806,7 +806,7 @@
                     <div class="input-area-inner">
                         <div class="input-box">
                             <div class="input-field">
-                                <textarea id="messageInput" placeholder="直接输入客户资料，生成风险概述、洗钱嫌疑判断和操作建议…" rows="1" onkeydown="handleKeyPress(event)"></textarea>
+                                <textarea id="messageInput" placeholder="请分别粘贴【系统客户资料】【外包人员报告】【外部查询依据（如有）】…" rows="1" onkeydown="handleKeyPress(event)"></textarea>
                             </div>
                             <div class="input-actions">
                                 <div class="options-group">
@@ -1010,7 +1010,7 @@
             welcomeMessageDiv.innerHTML = `
                 <div class="message-wrapper">
                     <div class="message-icon ai-icon"><img src="images/logo-icac.svg"></div>
-                    <div class="message-content">请提供客户基本情况、业务交易、财务来源、交易目的及其他风险信息，我将生成风险概述与分析建议。</div>
+                    <div class="message-content">请提供系统客户资料与外包人员报告；如含网络查询信息，请附来源、查询日期及主体匹配依据。我将核对一致性、风险遗漏并提出修改建议。</div>
                 </div>
             `;
             chatMessages.appendChild(welcomeMessageDiv);

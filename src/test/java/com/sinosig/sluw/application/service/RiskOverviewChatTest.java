@@ -46,4 +46,22 @@ class RiskOverviewChatTest {
         var saved=org.mockito.ArgumentCaptor.forClass(AgentState.class);verify(memory).saveState(eq("C2"),saved.capture());
         assertEquals("风险概述",saved.getValue().getResponse());assertEquals("年收入20万元",saved.getValue().getHistory().get(0).get("content"));
     }
+
+    @Test void nullTextEndChunkDoesNotAppendFailureAndPreservesUsage() {
+        var tail=mock(AssistantMessage.class);when(tail.getText()).thenReturn(null);
+        var usage=mock(org.springframework.ai.chat.metadata.Usage.class);
+        when(usage.getPromptTokens()).thenReturn(12);when(usage.getCompletionTokens()).thenReturn(8);when(usage.getTotalTokens()).thenReturn(20);
+        var metadata=org.springframework.ai.chat.metadata.ChatResponseMetadata.builder().usage(usage).build();
+        var model=mock(ChatModel.class);
+        when(model.stream(any(Prompt.class))).thenReturn(Flux.just(
+                new ChatResponse(List.of(new Generation(new AssistantMessage("审核正文已完成。")))),
+                new ChatResponse(List.of(new Generation(tail)),metadata)));
+        var memory=mock(AgentStateMemoryService.class);
+        var generator=new ResponseGeneratorNode(ChatClient.builder(model).build(),new PromptTemplateConfig());
+        var service=new AgentService(memory,generator,mock(RedisTemplate.class),mock(AssistantTrackService.class));
+        var chunks=service.chatStream("TAIL","合成输入",false,false,"","M-END",System.currentTimeMillis()).collectList().block();
+        assertNotNull(chunks);assertFalse(String.join("",chunks).contains("生成暂时失败"),chunks.toString());
+        var saved=org.mockito.ArgumentCaptor.forClass(AgentState.class);verify(memory).saveState(eq("TAIL"),saved.capture());
+        assertEquals("审核正文已完成。",saved.getValue().getResponse());assertEquals(20,saved.getValue().getTotalTokens());
+    }
 }
